@@ -26,17 +26,14 @@ import {
     AlertTitle,
     AlertDescription,
     Text,
-    VStack,
     Checkbox,
-    CheckboxGroup,
-    propNames
+    CheckboxGroup
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import Section from '../components/section'
-import { EmailIcon, CheckIcon, WarningIcon } from '@chakra-ui/icons'
+import { EmailIcon, CheckIcon } from '@chakra-ui/icons'
 import Layout from '../components/layouts/article'
 import React from 'react'
-import { Formik, Field, Form, useFormik } from 'formik'
+import { useFormik } from 'formik'
 
 const Contact = () => {
 

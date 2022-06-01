@@ -1,8 +1,6 @@
 import Logo from './logo'
 import NextLink from 'next/link'
-import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import {
-    Button,
     Container,
     Box,
     Link,
