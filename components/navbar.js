@@ -86,7 +86,7 @@ const Navbar = props => {
                                 aria-label="Options"
                             />
                             <MenuList>
-                                <NextLink href="/works" passHref>
+                                <NextLink href="/work" passHref>
                                     <MenuItem as={Link}>Work</MenuItem>
                                 </NextLink>
                                 {/* TODO: Add Post/Blog here later */}
