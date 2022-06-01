@@ -275,4 +275,3 @@ const Page = () => {
 }
 
 export default Page
-export { getServerSideProps } from '../components/chakra-prefs'
