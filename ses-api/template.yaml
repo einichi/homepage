@@ -43,7 +43,7 @@ Resources:
         - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: A simple example includes a HTTP get method to get all items from a DynamoDB table.
+      Description: Serverless function to expose limited SES functionality for use on the contact form of my personal homepage
       Policies:
         - SESCrudPolicy:
             IdentityName: !Ref FromEmail
