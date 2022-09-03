@@ -31,10 +31,31 @@ const Work = () => {
                             </Button>
                         </NextLink>
                     </Box>
+
+                    <WorkSection>
+                        <Flex>
+                            <WorkTitle>
+                                SRE Manager - APAC
+                            </WorkTitle>
+                            <Spacer />
+                            <WorkCompany>
+                                Cheetah Digital Japan
+                            </WorkCompany>
+                        </Flex>
+                        <WorkDate>
+                            2022 - Present
+                        </WorkDate>
+                        <WorkDetails>
+                            Currently working as the SRE Manager for the APAC region of Cheetah Digital.
+                            Responsibilities include Resource Planning, Project Management,
+                            Team/People Management, Hiring, Mediating on regional/cultural differences and much more.
+                            Projects include expansion of on-premise Infrastructure and the migration of a large enterprise
+                            application from on-premise to AWS.
+                        </WorkDetails>
+                    </WorkSection>
                     
                     <WorkSection>
                         <Flex>
-                            {/* Make titles teal? */}
                             <WorkTitle>
                                 Security Engineer
                             </WorkTitle>
@@ -44,7 +65,7 @@ const Work = () => {
                             </WorkCompany>
                         </Flex>
                         <WorkDate>
-                            2019 - Present
+                            2019 - 2022
                         </WorkDate>
                         <WorkDetails>
                             Moved to Infosec to help with EDR solution onboarding and TLS 1.2 switchover project. 

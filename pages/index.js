@@ -27,7 +27,7 @@ const Page = () => {
         <Layout>
             <Container>
                 <Box borderRadius="lg" bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')} p={3} mb={6} align="center">
-                    Hi there, I&apos;m a DevSecOps engineer based in Japan.
+                    Hi there! I&apos;m an SRE Manager based in Japan.
                 </Box>
 
                 <Box display={{md:'flex'}}>
@@ -35,7 +35,7 @@ const Page = () => {
                         <Heading as="h2" variant="page-title">
                             Ricky Burgin
                         </Heading>
-                        <p>DevSecOps Engineer 🇬🇧→🇯🇵</p>
+                        <p>SRE Manager 🇬🇧→🇯🇵</p>
                         <Link href="https://www.github.com/einichi" target="_blank">
                             <Button
                                 variant="ghost"

@@ -222,7 +222,7 @@ const Contact = () => {
             <Flex>
               <FormControl>
                 <FormLabel htmlFor="recruiting" mb="0">
-                  Recruiting for a job?
+                  Recruiting me for a job?
                 </FormLabel>
                 <Switch
                   id="recruiting"
