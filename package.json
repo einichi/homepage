@@ -14,26 +14,26 @@
   "author": "Ricky Burgin<ricky@burg.in>",
   "license": "MIT",
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.0",
-    "@chakra-ui/react": "^2.0.2",
-    "@emotion/react": "^11.9.0",
-    "@emotion/styled": "^11.8.1",
+    "@chakra-ui/icons": "^2.0.9",
+    "@chakra-ui/react": "^2.3.1",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "axios": "^0.27.2",
     "email-templates": "^10.0.1",
     "formik": "^2.2.9",
     "framer-motion": "^7.2.1",
     "messageformat": "^2.3.0",
-    "next": "^12.0.1",
+    "next": "^12.2.5",
     "pug": "^3.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.3.1",
     "smtp-client": "^0.4.0",
-    "three": "^0.140.2"
+    "three": "^0.144.0"
   },
   "devDependencies": {
-    "eslint": "^8.15.0",
-    "eslint-config-next": "^12.1.6",
-    "prettier": "^2.6.2"
+    "eslint": "^8.23.0",
+    "eslint-config-next": "^12.2.5",
+    "prettier": "^2.7.1"
   }
 }

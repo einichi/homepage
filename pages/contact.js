@@ -32,13 +32,12 @@ import {
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
-  NumberDecrementStepper,
-  useTimeout
+  NumberDecrementStepper
 } from '@chakra-ui/react'
 import Section from '../components/section'
 import { EmailIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Layout from '../components/layouts/article'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import { formatJPY, jpyToUSD } from '../libs/numberFormat'
@@ -98,6 +97,7 @@ const usePostContactInfo = () => {
     setSubmitStatus('sending')
     postContactInfo(values)
       .then(res => {
+        console.debug(res)
         setSubmitStatus('sent')
         onFinishSubmit()
       })
@@ -508,3 +508,4 @@ const Contact = () => {
 }
 
 export default Contact
+export { getServerSideProps } from '../components/chakra'
