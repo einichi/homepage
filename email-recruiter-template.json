@@ -1,7 +1,7 @@
 {
   "Template": {
     "TemplateName": "ContactFormRecruiterTemplate",
-    "SubjectPart": "Recruiter Email from {{sender}} at {{email}}!",
+    "SubjectPart": "Recruiter Email from {{sender}} at {{email}}",
     "HtmlPart": "<p>{{message}}</p><p>From Company: {{fromCompany}} <br> From Agency: {{fromAgency}} <br> Role: {{role}} <br> SalaryRange: {{salaryLower}} - {{salaryUpper}} Benefits: {{benefits}}</p>",
     "TextPart": "{{message}} \r\n From Company: {{fromCompany}} \r\n From Agency: {{fromAgency}} \r\n Role: {{role}} \r\n SalaryRange: {{salaryLower}} - {{salaryUpper}} Benefits: {{benefits}}"
   }

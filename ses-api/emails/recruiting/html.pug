@@ -1,9 +1,13 @@
-h2 Message from #{fromCompany}, #{fromAgency} with #{role} role
-p Salary Range: #{jpySalaryRange} | #{usdSalaryRange}
-p #{message}
-h2 Benefits:
+h2 Message from #{fromCompany}, #{fromAgency}
+h3 Salary Range
+p #{jpySalaryRange}
+h3 Role 
+p #{role} role
+h3 Benefits:
 ul
     li Fully Remote: #{benefitFullRemote ? "✅" : "❎"}
     li Hybrid Remote: #{benefitHybridRemote ? "✅" : "❎"}
     li Flexible Hours: #{benefitFlexibleHours ? "✅" : "❎"}
     li Other: #{benefitOther ? "✅" : "❎"}
+h3 Message
+p #{message}
