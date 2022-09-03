@@ -1,0 +1,17 @@
+{
+  "body": {
+    "sender": "Test Recruiter",
+    "email": "TestRecruiter@gmail.com",
+    "message": "Hi, I have a job for you!",
+    "fromCompany": "Recruiters Inc",
+    "fromAgency": "Agency Inc",
+    "role": "Programmer",
+    "salaryLower": "100000",
+    "salaryUpper": "20000000",
+    "benefitFullRemote": true,
+    "benefitHybridRemote": false,
+    "benefitFlexibleHours": true,
+    "benefitOther": false,
+    "recruiting": true
+  }
+}

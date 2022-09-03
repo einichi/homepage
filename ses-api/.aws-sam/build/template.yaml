@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: homepage-ricky-ses
+Transform:
+- AWS::Serverless-2016-10-31
+Parameters:
+  FromEmail:
+    Type: String
+    Default: your@email.com
+    Description: (Required) Represents the email sender. Must be a SES verified email.
+      If you attempt to send email using a non-verified address or domain, the operation
+      results in an "Email address not verified" error. Minimum 4 characters.
+    ConstraintDescription: Required. Must be a SES verified email address.
+  ToEmail:
+    Type: String
+    Default: your@email.com
+    Description: (Required) Represents the email to send to. If you're in the sandbox
+      environment, must be a SES verified email. .
+    ConstraintDescription: Required. Must be a valid SES email address.
+  CorsOrigin:
+    Type: String
+    Default: ''
+    Description: (Optional) Cross-origin resource sharing (CORS) Origin. You can specify
+      a single origin, all "*" or leave empty and no CORS will be applied.
+    MaxLength: 250
+Resources:
+  sendEmailFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/send-email.handler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP get method to get all items from
+        a DynamoDB table.
+      Policies:
+      - SESCrudPolicy:
+          IdentityName:
+            Ref: FromEmail
+      Environment:
+        Variables:
+          FROM_EMAIL:
+            Ref: FromEmail
+          TO_EMAIL:
+            Ref: ToEmail
+          CORS_ORIGIN:
+            Ref: CorsOrigin
+      Events:
+        EmailApi:
+          Type: Api
+          Properties:
+            Path: /send
+            Method: POST
+        EmailOptionsApi:
+          Type: Api
+          Properties:
+            Path: /send
+            Method: OPTIONS
+      CodeUri: sendEmailFunction
+    Metadata:
+      SamResourceId: sendEmailFunction
+Outputs:
+  WebEndpoint:
+    Description: API Gateway endpoint URL for Prod stage
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/send

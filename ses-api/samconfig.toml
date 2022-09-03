@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "personal-site-ses-emailer-sam-app"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-16ll2km0fcrdq"
+s3_prefix = "personal-site-ses-emailer-sam-app"
+region = "ap-northeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "FromEmail=\"website-contact@burg.in\" ToEmail=\"ricky@burg.in\" CorsOrigin=\"*\""
+image_repositories = []
