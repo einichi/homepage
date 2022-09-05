@@ -3,7 +3,7 @@ import {
     Button,
     Box,
     Heading,
-    Image,
+    Img,
     List,
     ListItem,
     ListIcon,
@@ -64,15 +64,17 @@ const Page = () => {
                         <picture>
                             <source srcSet="/images/ricky/ricky.avif" type="image/avif" />
                             <source srcSet="/images/ricky/ricky.webp" type="image/webp" />
-                            <source srcSet="/images/ricky/ricky.jpg" type="image/jpg" />
-                            <Image borderColor="whiteAlpha.800"
-                            borderWidth={2}
-                            borderStyle="solid"
-                            maxWidth="100px"
-                            display="inline-block"
-                            borderRadius="full"
-                            src="/images/ricky/ricky.jpg"
-                            alt="Ricky Burgin" />
+                            <Img
+                                borderColor="whiteAlpha.800"
+                                borderWidth={2}
+                                borderStyle="solid"
+                                maxWidth="100px"
+                                maxHeight="100px"
+                                display="inline-block"
+                                borderRadius="full"
+                                src="/images/ricky/ricky.jpg"
+                                alt="Ricky Burgin"
+                            />
                         </picture>
                     </Box>
                 </Box>
