@@ -46,7 +46,7 @@ Resources:
       Description: Serverless function to expose limited SES functionality for use on the contact form of my personal homepage
       Policies:
         - SESCrudPolicy:
-            IdentityName: !Ref FromEmail
+            IdentityName: burg.in
       Environment:
         Variables:
           FROM_EMAIL: !Ref FromEmail
@@ -70,8 +70,7 @@ Resources:
 
   # DynamoDB table to store item: {id: &lt;ID&gt;, name: &lt;NAME&gt;}
 
-
 Outputs:
   WebEndpoint:
-    Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/send"
+    Description: 'API Gateway endpoint URL for Prod stage'
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/send'
