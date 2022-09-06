@@ -41,7 +41,6 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import { formatJPY, jpyToUSD } from '../libs/numberFormat'
-import { format } from 'prettier'
 
 //Useful for testing the retry functionality
 /*
