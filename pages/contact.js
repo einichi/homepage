@@ -232,9 +232,9 @@ const Contact = () => {
                   <RadioGroup
                     defaultValue="company"
                     colorScheme="teal"
-                    value={format.values.jobSource}
+                    value={formik.values.jobSource}
                     onChange={(value) => {
-                      format.setFieldValue('jobSource', value)
+                      formik.setFieldValue('jobSource', value)
                     }}
                   >
                     <Stack>
