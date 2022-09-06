@@ -1,3 +1,3 @@
 # Ricky Burgin's Homepage
 
-In progress. Put URL here when done.
+Personal website/CV of Ricky Burgin: https://ricky.burg.in
