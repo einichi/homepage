@@ -41,6 +41,7 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import { formatJPY, jpyToUSD } from '../libs/numberFormat'
+import { format } from 'prettier'
 
 //Useful for testing the retry functionality
 /*
@@ -78,15 +79,6 @@ const postContactInfo = async ({
 
 const usePostContactInfo = () => {
   const [submitStatus, setSubmitStatus] = useState(null)
-  /*const submitTimeout = useRef(null)
-                                                          
-                                                            useEffect(() => {
-                                                                                if (submitStatus !== 'error') return
-                                                                                submitTimeout.current = setTimeout(() => {
-                                                                                  if (submitStatus === 'error') setSubmitStatus(null)
-                                                                                }, 2000)
-                                                                                return () => clearTimeout(submitTimeout.current)
-                                                                              }, [submitStatus])*/
 
   useEffect(() => {
     console.log(submitStatus)
@@ -164,6 +156,7 @@ const Contact = () => {
       fromCompany: '',
       fromAgency: '',
       role: '',
+      jobSource: 'company',
       salaryLower: 2000000,
       salaryUpper: 20000000,
       exchangeRate: 0.0073,
@@ -236,7 +229,14 @@ const Contact = () => {
             {formik.values.recruiting && (
               <Box id="recruitingBox" name="recruitingBox">
                 <FormControl>
-                  <RadioGroup defaultValue="company" colorScheme="teal">
+                  <RadioGroup
+                    defaultValue="company"
+                    colorScheme="teal"
+                    value={format.values.jobSource}
+                    onChange={(value) => {
+                      format.setFieldValue('jobSource', value)
+                    }}
+                  >
                     <Stack>
                       <Radio id="company" name="company" value="company">
                         Direct Hire
@@ -247,18 +247,20 @@ const Contact = () => {
                     </Stack>
                   </RadioGroup>
                 </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="fromAgency">Agency name</FormLabel>
-                  <Input
-                    id="fromAgency"
-                    name="fromAgency"
-                    placeholder="Executive Recruiters Inc | 有琉余案件株式会社"
-                    border="2px"
-                    borderColor="teal"
-                    onChange={formik.handleChange}
-                    value={formik.values.fromAgency}
-                  />
-                </FormControl>
+                {formik.values.jobSource === 'agency' && (
+                  <FormControl isRequired>
+                    <FormLabel htmlFor="fromAgency">Agency name</FormLabel>
+                    <Input
+                      id="fromAgency"
+                      name="fromAgency"
+                      placeholder="Executive Recruiters Inc | 有琉余案件株式会社"
+                      border="2px"
+                      borderColor="teal"
+                      onChange={formik.handleChange}
+                      value={formik.values.fromAgency}
+                    />
+                  </FormControl>
+                )}
                 <FormControl isRequired>
                   <FormLabel htmlFor="fromCompany">Company name</FormLabel>
                   <Input
