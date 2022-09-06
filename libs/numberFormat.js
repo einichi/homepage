@@ -3,12 +3,12 @@ const roundToNearest = (value, step) => {
 }
 
 //TODO: If there's no differences between JPY and USD other than Yen not having the fractional amount, these could be simplified
-export const formatJPY = number =>
+export const formatJPY = (number) =>
   new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' })
     .format(number)
     .slice(1) //To remove the curency symbol
 
-export const formatUSD = number =>
+export const formatUSD = (number) =>
   new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',

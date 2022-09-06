@@ -96,12 +96,12 @@ const usePostContactInfo = () => {
     console.log('Submitting', values)
     setSubmitStatus('sending')
     postContactInfo(values)
-      .then(res => {
+      .then((res) => {
         console.debug(res)
         setSubmitStatus('sent')
         onFinishSubmit()
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
         setSubmitStatus('error')
         onFinishSubmit()
@@ -173,7 +173,7 @@ const Contact = () => {
       benefitOther: false,
       recruiting: false
     },
-    onSubmit: value => onSubmit(value, () => formik.setSubmitting(false))
+    onSubmit: (value) => onSubmit(value, () => formik.setSubmitting(false))
   })
 
   useEffect(() => {
@@ -359,7 +359,7 @@ const Contact = () => {
                         min={1000000}
                         max={30000000}
                         step={100000}
-                        onChange={value => {
+                        onChange={(value) => {
                           formik.setFieldValue('salaryLower', value[0])
                           formik.setFieldValue('salaryUpper', value[1])
                         }}
@@ -389,7 +389,7 @@ const Contact = () => {
                           max={1}
                           step={0.0001}
                           value={formik.values.exchangeRate}
-                          onChange={value => {
+                          onChange={(value) => {
                             formik.setFieldValue('exchangeRate', value)
                           }}
                         >
