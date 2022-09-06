@@ -61,7 +61,7 @@ const postContactInfo = async ({
   ...rest
 }) => {
   const API_URL =
-    'https://96c1av92k3.execute-api.ap-northeast-1.amazonaws.com/Prod/send'
+    'https://qsp2z496q5.execute-api.ap-northeast-1.amazonaws.com/Prod/send'
   let valuesToPost = {
     sender,
     email,

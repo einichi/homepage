@@ -46,7 +46,7 @@ Resources:
       Description: Serverless function to expose limited SES functionality for use on the contact form of my personal homepage
       Policies:
         - SESCrudPolicy:
-            IdentityName: burg.in
+            IdentityName: 'burg.in'
       Environment:
         Variables:
           FROM_EMAIL: !Ref FromEmail
