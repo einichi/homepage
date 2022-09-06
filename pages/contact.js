@@ -96,7 +96,7 @@ const usePostContactInfo = () => {
     console.log('Submitting', values)
     setSubmitStatus('sending')
     postContactInfo(values)
-      .then((res) => {
+      .then(() => {
         console.debug(res)
         setSubmitStatus('sent')
         onFinishSubmit()
