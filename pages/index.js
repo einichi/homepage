@@ -115,7 +115,7 @@ const Page = () => {
             Experience
           </Heading>
           <ExperienceSection>
-            <ExperienceYears>10 years</ExperienceYears>
+            <ExperienceYears>11 years</ExperienceYears>
             Infra Engineering (incl. DevOps)
           </ExperienceSection>
           <ExperienceSection>
