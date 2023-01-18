@@ -137,7 +137,7 @@ const Work = () => {
             <Flex>
               <WorkTitle>Senior Support Engineer</WorkTitle>
               <Spacer />
-              <WorkCompany>Experian UK</WorkCompany>
+              <WorkCompany>Appliansys</WorkCompany>
             </Flex>
             <WorkDate>2014 - 2015</WorkDate>
             <WorkDetails>
