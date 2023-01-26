@@ -35,7 +35,7 @@ const Work = () => {
             <Flex>
               <WorkTitle>SRE Manager - APAC</WorkTitle>
               <Spacer />
-              <WorkCompany>Cheetah Digital Japan</WorkCompany>
+              <WorkCompany>Marigold / Cheetah Digital Japan</WorkCompany>
             </Flex>
             <WorkDate>2022 - Present</WorkDate>
             <WorkDetails>
@@ -44,7 +44,8 @@ const Work = () => {
               Project Management, Team/People Management, Hiring, Mediating on
               regional/cultural differences and much more. Projects include
               expansion of on-premise Infrastructure and the migration of a
-              large enterprise application from on-premise to AWS.
+              large enterprise application from on-premise to AWS. Cheetah
+              Digital moved under the Marigold brand in 2023.
             </WorkDetails>
           </WorkSection>
 
