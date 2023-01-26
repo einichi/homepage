@@ -93,7 +93,8 @@ const Page = () => {
           </Heading>
           <Paragraph>
             Veteran in Infrastructure and Networking. Experienced in Security
-            Engineering, DevOps/DevSecOps and Business Management.
+            Engineering, DevOps/DevSecOps, minor Development, Team Management
+            and Business Management.
           </Paragraph>
           <br />
           <Paragraph>
