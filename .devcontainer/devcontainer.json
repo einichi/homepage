@@ -8,9 +8,8 @@
     "ghcr.io/devcontainers-contrib/features/jshint:2": {},
     "ghcr.io/customink/codespaces-features/sam-cli:1": {}
   },
-  "waitFor": "onCreateCommand",
   "updateContentCommand": "npm install && npm run build",
-  "postCreateCommand": "npm install",
+  // "postCreateCommand": "npm install",
   "postAttachCommand": {
     "server": "npm run dev"
   },
