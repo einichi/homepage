@@ -1,0 +1,33 @@
+{
+  "name": "Homepage Dev Env",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:1": {},
+    "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
+    "ghcr.io/devcontainers-contrib/features/jshint:2": {},
+    "ghcr.io/customink/codespaces-features/sam-cli:1": {}
+  },
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "npm install && npm run build",
+  "postCreateCommand": "npm install",
+  "postAttachCommand": {
+    "server": "npm run dev"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode"]
+    },
+    "codespaces": {
+      "openFiles": ["pages/index.js", "pages/work.js"]
+    }
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "Homepage",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "forwardPorts": [3000]
+}
