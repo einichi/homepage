@@ -6,7 +6,7 @@ import ModelLoader from '../model-loader'
 import Footer from '../footer.js'
 
 const LazyModel = dynamic(() => import('../3d-model'), {
-  ssr: false,
+  ssr: true,
   loading: () => <ModelLoader />
 })
 
