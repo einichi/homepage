@@ -15,9 +15,6 @@ const ThreeDModel = () => {
   const [_camera, setCamera] = useState()
   const [target] = useState(new THREE.Vector3(0, 0, 0))
   const [initialCameraPosition] = useState(new THREE.Vector3(0, 6, 24))
-  const [spotLightPositionA] = useState(new THREE.Vector3(20, 30, 20))
-  const [spotLightPositionB] = useState(new THREE.Vector3(-40, 30, 20))
-  const [spotLightPositionC] = useState(new THREE.Vector3(-40, 30, -80))
   const [scene] = useState(new THREE.Scene())
   const [_controls, setControls] = useState()
 
@@ -50,20 +47,21 @@ const ThreeDModel = () => {
       const camera = new THREE.PerspectiveCamera(50, scW / scH, 0.1, 1000)
 
       camera.position.copy(initialCameraPosition)
-      scene.add(camera)
+      camera.lookAt(target)
+      setCamera(camera)
 
       const spotLightA = new THREE.SpotLight(0xffffff)
       const spotLightB = new THREE.SpotLight(0xffffff)
       const spotLightC = new THREE.SpotLight(0xffffff)
-      spotLightA.position.copy(spotLightPositionA)
+      spotLightA.position.set(20, 30, 20)
       spotLightA.angle = 0.3
       spotLightA.intensity = 1.25
       scene.add(spotLightA)
-      spotLightB.position.copy(spotLightPositionB)
+      spotLightB.position.set(-40, 30, 20)
       spotLightB.angle = 0.3
       spotLightB.intensity = 1.25
       scene.add(spotLightB)
-      spotLightC.position.copy(spotLightPositionC)
+      spotLightC.position.set(-40, 30, -80)
       spotLightC.angle = 0.3
       spotLightC.intensity = 0.5
       scene.add(spotLightC)
@@ -115,7 +113,7 @@ const ThreeDModel = () => {
     return () => {
       window.removeEventListener('resize', handleWindowResize, false)
     }
-  }, [renderer, handleWindowResize])
+  }, [renderer, handleWindowResize, initialCameraPosition, scene, target])
 
   return (
     <ModelContainer ref={refContainer}>
