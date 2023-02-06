@@ -13,14 +13,11 @@ const ThreeDModel = () => {
   const [loading, setLoading] = useState(true)
   const [renderer, setRenderer] = useState()
   const [_camera, setCamera] = useState()
-  const [target] = useState(new THREE.Vector3(0, -0.5, 0))
-  const [initialCameraPosition] = useState(
-    new THREE.Vector3(
-      20 * Math.sin(0.2 * Math.PI),
-      10,
-      20 * Math.cos(0.2 * Math.PI)
-    )
-  )
+  const [target] = useState(new THREE.Vector3(0, 0, 0))
+  const [initialCameraPosition] = useState(new THREE.Vector3(0, 6, 24))
+  const [spotLightPositionA] = useState(new THREE.Vector3(20, 30, 20))
+  const [spotLightPositionB] = useState(new THREE.Vector3(-40, 30, 20))
+  const [spotLightPositionC] = useState(new THREE.Vector3(-40, 30, -80))
   const [scene] = useState(new THREE.Scene())
   const [_controls, setControls] = useState()
 
@@ -34,7 +31,6 @@ const ThreeDModel = () => {
     }
   }, [renderer])
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const { current: container } = refContainer
     if (container && !renderer) {
@@ -51,29 +47,33 @@ const ThreeDModel = () => {
       container.appendChild(renderer.domElement)
       setRenderer(renderer)
 
-      const scale = scH * 0.005 + 4.8
-      const camera = new THREE.OrthographicCamera(
-        -scale,
-        scale,
-        scale,
-        -scale,
-        0.01,
-        50000
-      )
-      camera.position.copy(initialCameraPosition)
-      camera.lookAt(target)
-      setCamera(camera)
+      const camera = new THREE.PerspectiveCamera(50, scW / scH, 0.1, 1000)
 
-      const ambientLight = new THREE.AmbientLight(0xcccccc, 1)
-      scene.add(ambientLight)
+      camera.position.copy(initialCameraPosition)
+      scene.add(camera)
+
+      const spotLightA = new THREE.SpotLight(0xffffff)
+      const spotLightB = new THREE.SpotLight(0xffffff)
+      const spotLightC = new THREE.SpotLight(0xffffff)
+      spotLightA.position.copy(spotLightPositionA)
+      spotLightA.angle = 0.3
+      spotLightA.intensity = 1.25
+      scene.add(spotLightA)
+      spotLightB.position.copy(spotLightPositionB)
+      spotLightB.angle = 0.3
+      spotLightB.intensity = 1.25
+      scene.add(spotLightB)
+      spotLightC.position.copy(spotLightPositionC)
+      spotLightC.angle = 0.3
+      spotLightC.intensity = 0.5
+      scene.add(spotLightC)
 
       const controls = new OrbitControls(camera, renderer.domElement)
       controls.autoRotate = true
       controls.target = target
       setControls(controls)
 
-      // ""My Computer"" (https://skfb.ly/6ZPtS) by Tobalation is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-      loadGLTFModel(scene, '/models/computer.glb', {
+      loadGLTFModel(scene, '/models/ricky.glb', {
         receiveShadow: false,
         castShadow: false
       }).then(() => {
@@ -91,7 +91,6 @@ const ThreeDModel = () => {
           const p = initialCameraPosition
           const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
 
-          camera.position.y = 10
           camera.position.x =
             p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
           camera.position.z =
