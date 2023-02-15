@@ -232,7 +232,7 @@ const Page = () => {
           <Flex>
             <SkillsSection flex="1">
               <Skill>Javascript (Node/Next/React)</Skill>
-              <Progress value={60} colorScheme="teal" />
+              <Progress value={70} colorScheme="teal" />
             </SkillsSection>
             <SkillsSection flex="1">
               <Skill>HTML/CSS</Skill>
@@ -261,6 +261,10 @@ const Page = () => {
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
               Machine Learning
+            </ListItem>
+            <ListItem>
+              <ListIcon as={GoHeart} color="red" />
+              3D Design / Printing
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
