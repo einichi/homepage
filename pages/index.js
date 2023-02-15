@@ -212,21 +212,17 @@ const Page = () => {
           <Flex>
             <SkillsSection flex="1">
               <Skill>Python</Skill>
-              <Progress value={75} colorScheme="teal" />
+              <Progress value={80} colorScheme="teal" />
             </SkillsSection>
             <SkillsSection flex="1">
               <Skill>Go</Skill>
-              <Progress value={70} colorScheme="teal" />
+              <Progress value={60} colorScheme="teal" />
             </SkillsSection>
           </Flex>
           <Flex>
             <SkillsSection flex="1">
               <Skill>Bash</Skill>
               <Progress value={70} colorScheme="teal" />
-            </SkillsSection>
-            <SkillsSection flex="1">
-              <Skill>C#</Skill>
-              <Progress value={60} colorScheme="teal" />
             </SkillsSection>
           </Flex>
           <Flex>
