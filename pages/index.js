@@ -283,27 +283,27 @@ const Page = () => {
           <List spacing={1}>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Machine Learning
+              Machine Learning 🤖
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              3D Design / Printing
+              3D Design / Printing 🖨️
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Open Source
+              Open Source 🌐
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Languages (Korean, Mandarin)
+              Languages (Casually learning Korean🇰🇷 and Mandarin Chinese🇨🇳)
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Games
+              Games 🎮
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Travel
+              Travel ✈️
             </ListItem>
             <Box>
               <ListItem>
