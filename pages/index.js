@@ -21,6 +21,7 @@ import { LanguagesSection, Language } from '../components/languages'
 import { TimeIcon } from '@chakra-ui/icons'
 import { GoHeart } from 'react-icons/go'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
+import { HiCube } from 'react-icons/hi'
 import Layout from '../components/layouts/article'
 const Page = () => {
   return (
@@ -48,7 +49,15 @@ const Page = () => {
                 colorScheme="teal"
                 leftIcon={<FaGithub />}
               >
-                @einichi
+                GitHub
+              </Button>
+            </Link>
+            <Link
+              href="https://www.printables.com/@einichi_862656/models"
+              target="_blank"
+            >
+              <Button variant="ghost" colorScheme="teal" leftIcon={<HiCube />}>
+                3D Designs
               </Button>
             </Link>
             <Link
@@ -60,7 +69,7 @@ const Page = () => {
                 colorScheme="teal"
                 leftIcon={<FaLinkedin />}
               >
-                @rickyburgin
+                LinkedIn
               </Button>
             </Link>
           </Box>
