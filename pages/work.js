@@ -40,12 +40,14 @@ const Work = () => {
             <WorkDate>2022 - Present</WorkDate>
             <WorkDetails>
               Currently working as the SRE Manager for the APAC region of
-              Cheetah Digital. Responsibilities include Resource Planning,
-              Project Management, Team/People Management, Hiring, Mediating on
-              regional/cultural differences and much more. Projects include
-              expansion of on-premise Infrastructure and the migration of a
-              large enterprise application from on-premise to AWS. Cheetah
-              Digital moved under the Marigold brand in 2023.
+              Cheetah Digital, my role encompasses various responsibilities such
+              as resource planning, project management, team/people management,
+              hiring, and fostering collaboration across diverse regional and
+              cultural contexts. Additionally, I oversee significant projects
+              involving the expansion of on-premise infrastructure and the
+              migration of a large enterprise application from on-premise to
+              AWS. Cheetah Digital transitioned under the Marigold brand in
+              2023.
             </WorkDetails>
           </WorkSection>
 
