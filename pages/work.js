@@ -72,7 +72,7 @@ const Work = () => {
 
           <WorkSection>
             <Flex>
-              <WorkTitle>Internal IT Japan Team Lead</WorkTitle>
+              <WorkTitle>Corporate IT Japan Team Lead</WorkTitle>
               <Spacer />
               <WorkCompany>Experian / Cheetah Digital Japan</WorkCompany>
             </Flex>
