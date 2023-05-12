@@ -100,19 +100,29 @@ const Page = () => {
           <Heading as="h3" variant="section-title">
             About Ricky
           </Heading>
+          <Paragraph>SRE Manager, Leader and Engineer.</Paragraph>
+          <br />
           <Paragraph>
-            Veteran in Infrastructure and Networking. Experienced in Security
-            Engineering, DevOps/DevSecOps, minor Development, Team Management
-            and Business Management.
+            With a robust background in IT Infrastructure and DevOps,
+            complemented by leadership and team management experience, as well
+            as exposure to security and corporate IT, I bring a broad range of
+            expertise to cross-functional organizations. My holistic approach
+            fosters an environment where teams are empowered to excel,
+            operational efficiency is driven, and a culture of self-improvement
+            and collaboration is nurtured. My strong passion for team mentoring,
+            combined with a proven track record in ensuring employee
+            satisfaction, significantly contributes to the retention of
+            high-performing team members.
           </Paragraph>
           <br />
           <Paragraph>
-            Difficult technical challenges are what get me out of bed in the
-            morning. I love working through stack traces, network packet dumps
-            and tracing through code execution like your average puzzle addict
-            loves solving crosswords. I also love to improve things, especially
-            with automation and simplification of processes. Always interested
-            in new ways of solving problems.
+            Drawing on my experience as an accomplished engineer I am not only
+            able to bridge the gap between technical and management roles, but
+            can also drive innovative solutions and inspire the trust and
+            confidence of my team. My background allows me and my teams to
+            approach problems with a solution-oriented mindset, fostering an
+            environment of technical excellence, innovation, and continuous
+            improvement.
           </Paragraph>
           <br />
           <Paragraph>
@@ -126,7 +136,7 @@ const Page = () => {
           </Heading>
           <ExperienceSection>
             <ExperienceYears>11 years</ExperienceYears>
-            Infra Engineering (incl. DevOps)
+            DevOps / Infra Engineering
           </ExperienceSection>
           <ExperienceSection>
             <ExperienceYears>7 years</ExperienceYears>
@@ -135,6 +145,10 @@ const Page = () => {
           <ExperienceSection>
             <ExperienceYears>3 years</ExperienceYears>
             Security Engineering
+          </ExperienceSection>
+          <ExperienceSection>
+            <ExperienceYears>2 years</ExperienceYears>
+            Corporate IT
           </ExperienceSection>
           <Box align="center" my={4}>
             <NextLink href="/work">
@@ -150,7 +164,7 @@ const Page = () => {
         </Section>
         <Section>
           <Heading as="h3" variant="section-title">
-            Skills
+            Technical Skills
           </Heading>
           <Heading as="h4" variant={'section-subtitle'}>
             Infrastructure
@@ -201,8 +215,8 @@ const Page = () => {
               <Progress value={80} colorScheme="teal" />
             </SkillsSection>
             <SkillsSection flex="1">
-              <Skill>VoIP (SIP/RSTP/IAX, PBXs)</Skill>
-              <Progress value={80} colorScheme="teal" />
+              <Skill>Infra-as-Code (Terraform etc)</Skill>
+              <Progress value={75} colorScheme="teal" />
             </SkillsSection>
           </Flex>
           <Flex>
@@ -233,11 +247,15 @@ const Page = () => {
               <Skill>Bash</Skill>
               <Progress value={70} colorScheme="teal" />
             </SkillsSection>
-          </Flex>
-          <Flex>
             <SkillsSection flex="1">
               <Skill>Javascript (Node/Next/React)</Skill>
               <Progress value={70} colorScheme="teal" />
+            </SkillsSection>
+          </Flex>
+          <Flex>
+            <SkillsSection flex="1">
+              <Skill>Powershell</Skill>
+              <Progress value={60} colorScheme="teal" />
             </SkillsSection>
             <SkillsSection flex="1">
               <Skill>HTML/CSS</Skill>
