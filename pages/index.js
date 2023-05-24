@@ -105,13 +105,13 @@ const Page = () => {
           <Paragraph>
             With a robust background in IT Infrastructure and DevOps,
             complemented by leadership and team management experience, as well
-            as exposure to security and corporate IT, I bring a broad range of
-            expertise to cross-functional organizations. My holistic approach
-            fosters an environment where teams are empowered to excel,
-            operational efficiency is driven, and a culture of self-improvement
-            and collaboration is nurtured. My strong passion for team mentoring,
-            combined with a proven track record in ensuring employee
-            satisfaction, significantly contributes to the retention of
+            as significant exposure to security and corporate IT, I bring a
+            broad range of expertise to cross-functional organizations. My
+            holistic approach fosters an environment where teams are empowered
+            to excel, operational efficiency is driven, and a culture of
+            self-improvement and collaboration is nurtured. My strong passion
+            for team mentoring, combined with a proven track record in ensuring
+            employee satisfaction, significantly contributes to the retention of
             high-performing team members.
           </Paragraph>
           <br />
