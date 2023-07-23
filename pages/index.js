@@ -118,11 +118,10 @@ const Page = () => {
           <Paragraph>
             Drawing on my experience as an accomplished engineer I am not only
             able to bridge the gap between technical and management roles, but
-            can also drive innovative solutions and inspire the trust and
-            confidence of my team. My background allows me and my teams to
-            approach problems with a solution-oriented mindset, fostering an
-            environment of technical excellence, innovation, and continuous
-            improvement.
+            can also drive smart solutions and inspire the trust and confidence
+            of my team. My background allows me and my teams to approach
+            problems with a solution-oriented mindset, fostering an environment
+            of technical excellence, innovation, and continuous improvement.
           </Paragraph>
           <br />
           <Paragraph>
