@@ -294,7 +294,7 @@ const Page = () => {
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Languages (Casually learning Korean🇰🇷 and Mandarin Chinese🇨🇳)
+              Languages (Casually studying Mandarin Chinese🇨🇳)
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
@@ -307,7 +307,7 @@ const Page = () => {
             <Box>
               <ListItem>
                 <ListIcon as={GoHeart} color="red" />
-                {/* TODO: Add easy preview photo of Jumbo here */}
+                {/* TODO: Add easy preview photo of Chip here */}
                 Geckos 🦎
               </ListItem>
             </Box>
