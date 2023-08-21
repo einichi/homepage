@@ -282,6 +282,10 @@ const Page = () => {
           <List spacing={1}>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
+              Flying Drones 🛸
+            </ListItem>
+            <ListItem>
+              <ListIcon as={GoHeart} color="red" />
               Machine Learning 🤖
             </ListItem>
             <ListItem>
