@@ -157,7 +157,7 @@ const Contact = () => {
       jobSource: 'company',
       salaryLower: 2000000,
       salaryUpper: 20000000,
-      exchangeRate: 0.0073,
+      exchangeRate: 0.0069,
       benefitFullRemote: false,
       benefitHybridRemote: false,
       benefitFlexibleHours: false,
@@ -251,7 +251,7 @@ const Contact = () => {
                     <Input
                       id="fromAgency"
                       name="fromAgency"
-                      placeholder="Executive Recruiters Inc | 有琉余案件株式会社"
+                      placeholder="Executive Recruiters Inc | 案件豊富株式会社"
                       border="2px"
                       borderColor="teal"
                       onChange={formik.handleChange}
