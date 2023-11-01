@@ -298,7 +298,7 @@ const Page = () => {
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
-              Languages (Casually studying Mandarin Chinese🇨🇳)
+              Languages (🇯🇵流暢な日本語に加えて我也在学习中文🇨🇳)
             </ListItem>
             <ListItem>
               <ListIcon as={GoHeart} color="red" />
