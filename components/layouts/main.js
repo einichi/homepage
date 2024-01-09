@@ -16,7 +16,7 @@ const Main = ({ children, router }) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="author" content="Ricky Burgin" />
-        <title>Ricky Burgin - Homepage</title>
+        <title>Ricky Burgin バーギン　リッキー | Homepage</title>
       </Head>
 
       <Navbar path={router.asPath} />
