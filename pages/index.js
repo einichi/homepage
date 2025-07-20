@@ -312,13 +312,6 @@ const Page = () => {
               <ListIcon as={GoHeart} color="red" />
               Travel ✈️
             </ListItem>
-            <Box>
-              <ListItem>
-                <ListIcon as={GoHeart} color="red" />
-                {/* TODO: Add easy preview photo of Chip here */}
-                Geckos 🦎
-              </ListItem>
-            </Box>
           </List>
         </Section>
       </Container>
