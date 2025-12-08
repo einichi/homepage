@@ -1,3 +1,5 @@
+'use client'
+
 import NextLink from 'next/link'
 import {
   Box,
@@ -7,8 +9,9 @@ import {
   Button,
   ButtonGroup
 } from '@chakra-ui/react'
-import Layout from '../components/layouts/article'
 import { ArrowBackIcon, EmailIcon } from '@chakra-ui/icons'
+// Layout article isn't strictly needed for 404 but provides consistent spacing/animation
+import Layout from '../components/layouts/article' 
 
 const NotFound = () => {
   return (
@@ -23,16 +26,22 @@ const NotFound = () => {
         </Text>
         <Box my={6} align="center">
           <ButtonGroup gap="2">
-            <NextLink href="/contact">
-              <Button leftIcon={<EmailIcon />} colorScheme="teal">
-                Let me know
-              </Button>
-            </NextLink>
-            <NextLink href="/">
-              <Button leftIcon={<ArrowBackIcon />} colorScheme="teal">
-                Back to main
-              </Button>
-            </NextLink>
+            <Button
+              as={NextLink}
+              href="/contact"
+              leftIcon={<EmailIcon />}
+              colorScheme="teal"
+            >
+              Let me know
+            </Button>
+            <Button
+              as={NextLink}
+              href="/"
+              leftIcon={<ArrowBackIcon />}
+              colorScheme="teal"
+            >
+              Back to main
+            </Button>
           </ButtonGroup>
         </Box>
       </Container>
