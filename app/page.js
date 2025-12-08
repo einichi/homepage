@@ -115,16 +115,15 @@ const Page = () => {
             as significant exposure to security and corporate IT, I bring a
             broad range of expertise to cross-functional organizations. My
             holistic approach brings about an environment where teams are
-            empowered to excel, operational efficiency is driven, and creates a
-            culture of self-improvement and collaboration. My strong passion for
-            team mentoring, combined with a proven track record in ensuring
-            employee satisfaction, significantly contributes to the retention of
-            high-performing team members.
+            empowered and creates a culture of self-improvement and
+            collaboration. My strong passion for team mentoring, combined with a
+            proven track record in ensuring employee satisfaction, significantly
+            contributes to the retention of high-performing team members.
           </Paragraph>
           <br />
           <Paragraph>
             Drawing on my experience as an accomplished engineer I am not only
-            able to bridge the gap between technical and management roles, but
+            able to bridge the gap between technical and leadership roles, but
             can also drive smart solutions and inspire the trust and confidence
             of my team. My background allows me and my teams to approach
             problems with a solution-oriented mindset, fostering an environment
@@ -132,7 +131,9 @@ const Page = () => {
           </Paragraph>
           <br />
           <Paragraph>
-            Japanese Language JLPT N1 certified 日本語能力試験N1認定者
+            Japanese Language JLPT N1 certified and Japan permanent resident
+            <br />
+            日本語能力試験N1認定者及び日本永住者
           </Paragraph>
         </Section>
 
