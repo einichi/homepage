@@ -13,7 +13,7 @@ import LazyModel from '../components/lazy-model'
 // Client-side only model loader needs to be handled carefully in App Router
 
 
-const mplus = M_PLUS_Rounded_1c({ subsets: ['latin'], weight: ['300', '700'] })
+const mplus = M_PLUS_Rounded_1c({ subsets: ['latin'], weight: ['400', '700'] })
 
 export const metadata = {
   title: 'Ricky Burgin バーギン　リッキー | Homepage',
