@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
+import config from './theme-config'
 
 const styles = {
   global: (props) => ({
@@ -37,17 +38,8 @@ const components = {
   }
 }
 
-const fonts = {
-  heading: "'M PLUS Rounded 1c'"
-}
-
 const colors = {
   glassTeal: '#88ccca'
-}
-
-const config = {
-  initialColorMode: 'system',
-  useSystemColorMode: true
 }
 
 const theme = extendTheme({
@@ -55,7 +47,17 @@ const theme = extendTheme({
   styles,
   components,
   colors,
-  fonts
+  fonts: {
+    heading: 'var(--font-mplus)'
+  },
+  semanticTokens: {
+    colors: {
+      navbarBg: {
+        default: '#ffffff40',
+        _dark: '#20202380'
+      }
+    }
+  }
 })
 
 export default theme
