@@ -1,3 +1,5 @@
+'use client'
+
 import Logo from './logo'
 import NextLink from 'next/link'
 import {
@@ -16,32 +18,34 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import ThemeToggleButton from './theme-toggle-button'
+import { usePathname } from 'next/navigation'
 
 const LinkItem = ({ href, path, children }) => {
   const active = path === href
   const inactiveColor = useColorModeValue('gray200', 'whiteAlpha.900')
   return (
-    <NextLink href={href} legacyBehavior passHref>
-      <Link
-        p={2}
-        bg={active ? 'glassTeal' : undefined}
-        color={active ? '#202023' : inactiveColor}
-      >
-        {children}
-      </Link>
-    </NextLink>
+    <Link
+      as={NextLink}
+      href={href}
+      p={2}
+      bg={active ? 'glassTeal' : undefined}
+      color={active ? '#202023' : inactiveColor}
+    >
+      {children}
+    </Link>
   )
 }
 
 const Navbar = (props) => {
-  const { path } = props
+  const pathname = usePathname()
+  const path = props.path || pathname
 
   return (
     <Box
       position="fixed"
       as="nav"
       w="100%"
-      bg={useColorModeValue('#ffffff40', '#20202380')}
+      bg="navbarBg"
       style={{ backdropFilter: 'blur(10px)' }}
       zIndex={1}
       {...props}
@@ -86,13 +90,13 @@ const Navbar = (props) => {
                 aria-label="Options"
               />
               <MenuList>
-                <NextLink href="/work" passHref legacyBehavior>
-                  <MenuItem as={Link}>Work</MenuItem>
-                </NextLink>
+                <MenuItem as={NextLink} href="/work">
+                  Work
+                </MenuItem>
                 {/* TODO: Add Post/Blog here later */}
-                <NextLink href="/contact" passHref legacyBehavior>
-                  <MenuItem as={Link}>Contact</MenuItem>
-                </NextLink>
+                <MenuItem as={NextLink} href="/contact">
+                  Contact
+                </MenuItem>
               </MenuList>
             </Menu>
           </Box>
