@@ -1,3 +1,5 @@
+'use client'
+
 import { Container, Button, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import {
@@ -6,10 +8,11 @@ import {
   WorkTitle,
   WorkDate,
   WorkDetails
-} from '../components/work'
-import Section from '../components/section'
+} from '../../components/work' // adjusted import
+import Section from '../../components/section' // adjusted import
 import { ChatIcon } from '@chakra-ui/icons'
-import Layout from '../components/layouts/article'
+import Layout from '../../components/layouts/article' // adjusted import
+
 const Work = () => {
   return (
     <Layout>
@@ -20,15 +23,15 @@ const Work = () => {
           </Heading>
 
           <Box align="center" my={4}>
-            <NextLink href="/contact?hireme">
-              <Button
-                leftIcon={<ChatIcon />}
-                colorScheme="teal"
-                variant="outline"
-              >
-                Hire me!
-              </Button>
-            </NextLink>
+            <Button
+              as={NextLink}
+              href="/contact?hireme"
+              leftIcon={<ChatIcon />}
+              colorScheme="teal"
+              variant="outline"
+            >
+              Hire me!
+            </Button>
           </Box>
 
           <WorkSection>
@@ -166,15 +169,15 @@ const Work = () => {
           </WorkSection>
 
           <Box align="center" my={4}>
-            <NextLink href="/contact?hireme">
-              <Button
-                leftIcon={<ChatIcon />}
-                colorScheme="teal"
-                variant="outline"
-              >
-                Hire me!
-              </Button>
-            </NextLink>
+            <Button
+              as={NextLink}
+              href="/contact?hireme"
+              leftIcon={<ChatIcon />}
+              colorScheme="teal"
+              variant="outline"
+            >
+              Hire me!
+            </Button>
           </Box>
         </Section>
       </Container>
@@ -183,4 +186,3 @@ const Work = () => {
 }
 
 export default Work
-export { getServerSideProps } from '../components/chakra'

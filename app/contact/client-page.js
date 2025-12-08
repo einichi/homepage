@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Container,
   Button,
@@ -34,24 +36,13 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper
 } from '@chakra-ui/react'
-import Section from '../components/section'
+import Section from '../../components/section' // adjusted import
 import { EmailIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
-import Layout from '../components/layouts/article'
+import Layout from '../../components/layouts/article' // adjusted import
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
-import { formatJPY, jpyToUSD } from '../libs/numberFormat'
-
-//Useful for testing the retry functionality
-/*
-const throwErrorAfter = async ms => {
-  const timeout = ms => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
-  await timeout(1000)
-  throw new Error()
-}*/
+import { formatJPY, jpyToUSD } from '../../libs/numberFormat' // adjusted import
 
 const postContactInfo = async ({
   sender,
@@ -508,4 +499,3 @@ const Contact = () => {
 }
 
 export default Contact
-export { getServerSideProps } from '../components/chakra'
