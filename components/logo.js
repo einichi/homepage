@@ -20,8 +20,6 @@ const LogoBox = styled.span`
 
 const Logo = () => {
   const footPrintImg = `/images/logo.png`
-  // Use below if need different logo for light/dark mode
-  // const footPrintImg = `/images/logo${useColorModeValue('', '-dark')}.png`
   return (
     <Link href="/">
       <LogoBox>
