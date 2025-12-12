@@ -1,7 +1,7 @@
 'use client'
 
 import Logo from './logo'
-import NextLink from 'next/link'
+import { Link as NextLink } from '../i18n/routing'
 import {
   Container,
   Box,
@@ -18,7 +18,9 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon } from '@chakra-ui/icons'
 import ThemeToggleButton from './theme-toggle-button'
-import { usePathname } from 'next/navigation'
+import LanguageToggleButton from './language-toggle-button'
+import { usePathname } from '../i18n/routing'
+import { useTranslations } from 'next-intl'
 
 const LinkItem = ({ href, path, children }) => {
   const active = path === href
@@ -37,6 +39,7 @@ const LinkItem = ({ href, path, children }) => {
 }
 
 const Navbar = (props) => {
+  const t = useTranslations('Navbar')
   const pathname = usePathname()
   const path = props.path || pathname
 
@@ -72,14 +75,15 @@ const Navbar = (props) => {
           mt={{ base: 4, nmd: 0 }}
         >
           <LinkItem href="/work" path={path}>
-            Work
+            {t('work')}
           </LinkItem>
           {/* TODO: Add Post/Blog here later */}
           <LinkItem href="/contact" path={path}>
-            Contact
+            {t('contact')}
           </LinkItem>
         </Stack>
         <Box flex={1} align="right">
+          <LanguageToggleButton />
           <ThemeToggleButton />
           <Box ml={2} display={{ base: 'inline-block', md: 'none' }}>
             <Menu>
@@ -91,11 +95,11 @@ const Navbar = (props) => {
               />
               <MenuList>
                 <MenuItem as={NextLink} href="/work">
-                  Work
+                  {t('work')}
                 </MenuItem>
                 {/* TODO: Add Post/Blog here later */}
                 <MenuItem as={NextLink} href="/contact">
-                  Contact
+                  {t('contact')}
                 </MenuItem>
               </MenuList>
             </Menu>

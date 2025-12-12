@@ -1,0 +1,170 @@
+{
+  "Navbar": {
+    "work": "Work",
+    "contact": "Contact"
+  },
+  "HomePage": {
+    "title": "Ricky Burgin",
+    "hero_text": "Hi there! I'm an SRE Manager based in Japan.",
+    "role": "SRE Manager 🇬🇧→🇯🇵",
+    "links": {
+      "github": "GitHub",
+      "designs": "3D Designs",
+      "linkedin": "LinkedIn"
+    },
+    "about": {
+      "title": "About Ricky",
+      "intro": "SRE Manager, Leader and Engineer.",
+      "p1": "With a robust background in IT Infrastructure and DevOps, complemented by leadership and team management experience, as well as significant exposure to security and corporate IT, I bring a broad range of expertise to cross-functional organizations. My holistic approach brings about an environment where teams are empowered and creates a culture of self-improvement and collaboration. My strong passion for team mentoring, combined with a proven track record in ensuring employee satisfaction, significantly contributes to the retention of high-performing team members.",
+      "p2": "Drawing on my experience as an accomplished engineer I am not only able to bridge the gap between technical and leadership roles, but can also drive smart solutions and inspire the trust and confidence of my team. My background allows me and my teams to approach problems with a solution-oriented mindset, fostering an environment of technical excellence, innovation, and continuous improvement.",
+      "p3": "Japanese Language JLPT N1 certified and Japan permanent resident"
+    },
+    "headers": {
+      "experience": "Experience",
+      "technical_skills": "Technical Skills",
+      "infrastructure": "Infrastructure",
+      "programming": "Programming",
+      "languages": "Languages",
+      "interests": "Other Things I Love"
+    },
+    "buttons": {
+      "job_history": "Job history"
+    }
+  },
+  "Profile": {
+    "Experience": {
+      "devops": "DevOps / Infra Engineering",
+      "management": "Business Management (UK)",
+      "security": "Security Engineering",
+      "app_support": "Application Support",
+      "corporate_it": "Corporate IT"
+    },
+    "Levels": {
+      "Native": "Native",
+      "Fluent": "Fluent",
+      "Elementary": "Elementary"
+    },
+    "Languages": {
+      "english": "English",
+      "japanese": "Japanese",
+      "chinese": "Chinese"
+    },
+    "Interests": {
+      "daughter": "My daughter 👶",
+      "drones": "Flying Drones 🛸",
+      "ml": "Machine Learning (not just LLMs) 🤖",
+      "3d_design": "3D Design / Printing 🖨️",
+      "languages": "Languages (🇯🇵流暢な日本語に加えて我也在学习中文🇨🇳)",
+      "games": "Games 🎮",
+      "travel": "Travel ✈️"
+    }
+  },
+  "Work": {
+    "title": "Work History",
+    "hire_me": "Hire me!",
+    "jobs": {
+      "marigold_sre": {
+        "title": "SRE Manager - APAC",
+        "company": "Marigold / Cheetah Digital Japan",
+        "date": "2022 - Present",
+        "details": "Currently working as the SRE Manager for the APAC region of Cheetah Digital, my role encompasses various responsibilities such as resource planning, project management, team/people management, hiring, and fostering collaboration across diverse regional and cultural contexts. Additionally, I oversee significant projects involving the expansion of on-premise infrastructure and the migration of a large enterprise application from on-premise to AWS. Cheetah Digital transitioned under the Marigold brand in 2023."
+      },
+      "cheetah_security": {
+        "title": "Security Engineer",
+        "company": "Cheetah Digital Japan",
+        "date": "2019 - 2022",
+        "details": "Moved to Infosec to help with EDR solution onboarding and TLS 1.2 switchover project. Heavily involved in the securing of existing and new AWS environments. Also assisted with technical topics brought up during ISMS/PrivacyMark audits and frequently bridged between Japan and Global to ascertain further required details. Everyday work involved monitoring, responding to detections/incidents, vulnerability management/patching and change control."
+      },
+      "cheetah_it": {
+        "title": "Corporate IT Japan Team Lead",
+        "company": "Experian / Cheetah Digital Japan",
+        "date": "2018 - 2019",
+        "details": "Handled the roll-out of a brand new IT environment for the Japan region. While working with the wider global IT organisation, I would support each and every employee in Japan. After around 1 year in the role, I finished the replacement of approx 250 laptops with a completely new IT stack (moved from on-prem corporate IT to Okta/G-Suite). Also completely replaced legacy networks in Tokyo and Niigata offices with an entirely new network. The Tokyo office was moved to another building shortly after, and I co-ordinated the shift of the entire network and ISP circuits to occur over the weekend and complete just in time for the open of the new office on following Monday. To assist with everyday support, I recruited and managed a small, efficient team of 3 and reported to the APAC IT Manager."
+      },
+      "cheetah_devops": {
+        "title": "DevOps Engineer",
+        "company": "Experian / Cheetah Digital Japan",
+        "date": "2017 - 2018",
+        "details": "As part of a new project being built on AWS, I assisted in building a new CI/CD environment for initial use with a new project and with a view to bring all other existing development projects into the CI/CD environment. Deployed the CI tool Concourse and set up a fully automated development pipeline that tested, built and deployed web services to AWS. During this time, Experian sold its marketing division to become Cheetah Digital, which I was a part of. As a result of this divestment, product development in Japan was ceased. The VP of Internal IT then asked me to join them to help them stand up a new IT org for Cheetah Digital."
+      },
+      "experian_uk": {
+        "title": "Senior Technical Analyst",
+        "company": "Experian UK",
+        "date": "2015 - 2017",
+        "details": "Supported an array of bespoke applications, providing payment services and consumer credit information to a very significant portion of the UK's businesses. Co-ordinated the response to patching two severe PCI vulnerabilities on the production hosted services. Was the go-to escalation point for any technical issue that cannot be resolved and handled other routine 3rd line issues. Learned a lot about corporate environments and processes, and a lot of specialist knowledge of the payment systems in the UK and the EU."
+      },
+      "appliansys": {
+        "title": "Senior Support Engineer",
+        "company": "Appliansys",
+        "date": "2014 - 2015",
+        "details": "Pre and post sales engineer supporting a wide range of bespoke custom server appliances, including Web Caching, DNS and IPAM/DDI appliances."
+      },
+      "exoware": {
+        "title": "Sole Proprietor",
+        "company": "Exoware",
+        "date": "2008 - 2014",
+        "details": "Web hosting and virtual server business. Performed all business tasks. General admin, system admin (Linux), billing/finance/tax, compliance, customer/technical support, marketing and so forth. Sold in 2014."
+      }
+    }
+  },
+  "Contact": {
+    "title": "Contact Ricky",
+    "labels": {
+      "name": "Your name",
+      "email": "Your email",
+      "recruiting": "Recruiting me for a job?",
+      "job_source": "Job Source",
+      "direct_hire": "Direct Hire",
+      "agency": "Recruiting Agency",
+      "agency_name": "Agency name",
+      "company_name": "Company name",
+      "role_type": "Role type",
+      "employment_type": "Employment Type",
+      "salary_range": "Salary range",
+      "exchange_rate": "Exchange Rate",
+      "benefits": "Benefits",
+      "message": "Message"
+    },
+    "placeholders": {
+      "name": "John Doe | タレント太郎",
+      "email": "you@some.domain",
+      "agency": "Executive Recruiters Inc | 案件豊富株式会社",
+      "company": "Come Pany Ltd. | 来手星意株式会社",
+      "select": "Select one",
+      "message": "Your message here"
+    },
+    "roles": {
+      "sre": "Infra / SRE",
+      "security": "Information Security",
+      "devops": "DevOps/DevSecOps",
+      "other": "Something different"
+    },
+    "employment": {
+      "full_time": "Full Time Employee",
+      "contractor": "Contractor",
+      "dispatch": "Dispatch",
+      "part_time": "Part Time",
+      "helper": "Only interested in full-time roles right now, sorry!"
+    },
+    "benefits": {
+      "full_remote": "Full Remote",
+      "hybrid_remote": "Hybrid Remote",
+      "flexible_hours": "Flexible Hours",
+      "other": "Other (mention in Message)"
+    },
+    "buttons": {
+      "send": "Send",
+      "sending": "Sending...",
+      "retry": "Retry?",
+      "sent": "Sent!"
+    },
+    "alerts": {
+      "error_title": "Sending failed",
+      "error_desc": "Please wait a moment and try again. Or contact me at {email} if the problem persists."
+    },
+    "validation": {
+      "email": "Please enter a valid email address",
+      "email_helper": "Used only to reply to your message"
+    }
+  }
+}
