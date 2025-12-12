@@ -25,7 +25,7 @@
       "infrastructure": "インフラストラクチャー",
       "programming": "プログラミング",
       "languages": "言語",
-      "interests": "趣味・関心"
+      "interests": "好きなこと・面白いこと"
     },
     "buttons": {
       "job_history": "職務経歴"
@@ -156,7 +156,7 @@
       "send": "送信",
       "sending": "送信中...",
       "retry": "再試行",
-      "sent": "送信完了！"
+      "sent": "送信済み！"
     },
     "alerts": {
       "error_title": "送信失敗",
