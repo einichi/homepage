@@ -15,19 +15,22 @@ import {
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import NextLink from 'next/link'
-import Section from '../components/section'
-import Paragraph from '../components/paragraph'
-import { ExperienceSection, ExperienceYears } from '../components/experience'
-import { SkillsSection, Skill } from '../components/skills'
-import { LanguagesSection, Language } from '../components/languages'
+import Section from '../../components/section'
+import Paragraph from '../../components/paragraph'
+import { ExperienceSection, ExperienceYears } from '../../components/experience'
+import { SkillsSection, Skill } from '../../components/skills'
+import { LanguagesSection, Language } from '../../components/languages'
 import { TimeIcon } from '@chakra-ui/icons'
 import { GoHeart } from 'react-icons/go'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { HiCube } from 'react-icons/hi'
-import Layout from '../components/layouts/article'
-import { EXPERIENCE, SKILLS, LANGUAGES, INTERESTS } from '../lib/profile-data'
+import Layout from '../../components/layouts/article'
+import { useTranslations } from 'next-intl'
+import { EXPERIENCE, SKILLS, LANGUAGES, INTERESTS } from '../../lib/profile-data'
 
 const Page = () => {
+  const t = useTranslations('HomePage')
+  const tProfile = useTranslations('Profile')
   return (
     <Layout>
       <Container>
@@ -38,22 +41,22 @@ const Page = () => {
           mb={6}
           align="center"
         >
-          Hi there! I&apos;m an SRE Manager based in Japan.
+          {t('hero_text')}
         </Box>
 
         <Box display={{ md: 'flex' }}>
           <Box flexGrow={1}>
             <Heading as="h2" variant="page-title">
-              Ricky Burgin
+              {t('title')}
             </Heading>
-            <p>SRE Manager 🇬🇧→🇯🇵</p>
+            <p>{t('role')}</p>
             <Link href="https://www.github.com/einichi" target="_blank">
               <Button
                 variant="ghost"
                 colorScheme="teal"
                 leftIcon={<FaGithub />}
               >
-                GitHub
+                {t('links.github')}
               </Button>
             </Link>
             <Link
@@ -61,7 +64,7 @@ const Page = () => {
               target="_blank"
             >
               <Button variant="ghost" colorScheme="teal" leftIcon={<HiCube />}>
-                3D Designs
+                {t('links.designs')}
               </Button>
             </Link>
             <Link
@@ -73,7 +76,7 @@ const Page = () => {
                 colorScheme="teal"
                 leftIcon={<FaLinkedin />}
               >
-                LinkedIn
+                {t('links.linkedin')}
               </Button>
             </Link>
           </Box>
@@ -105,46 +108,31 @@ const Page = () => {
         </Box>
         <Section>
           <Heading as="h3" variant="section-title">
-            About Ricky
+            {t('about.title')}
           </Heading>
-          <Paragraph>SRE Manager, Leader and Engineer.</Paragraph>
+          <Paragraph>{t('about.intro')}</Paragraph>
           <br />
           <Paragraph>
-            With a robust background in IT Infrastructure and DevOps,
-            complemented by leadership and team management experience, as well
-            as significant exposure to security and corporate IT, I bring a
-            broad range of expertise to cross-functional organizations. My
-            holistic approach brings about an environment where teams are
-            empowered and creates a culture of self-improvement and
-            collaboration. My strong passion for team mentoring, combined with a
-            proven track record in ensuring employee satisfaction, significantly
-            contributes to the retention of high-performing team members.
+            {t('about.p1')}
           </Paragraph>
           <br />
           <Paragraph>
-            Drawing on my experience as an accomplished engineer I am not only
-            able to bridge the gap between technical and leadership roles, but
-            can also drive smart solutions and inspire the trust and confidence
-            of my team. My background allows me and my teams to approach
-            problems with a solution-oriented mindset, fostering an environment
-            of technical excellence, innovation, and continuous improvement.
+            {t('about.p2')}
           </Paragraph>
           <br />
           <Paragraph>
-            Japanese Language JLPT N1 certified and Japan permanent resident
-            <br />
-            日本語能力試験N1認定者及び日本永住者
+            {t('about.p3')}
           </Paragraph>
         </Section>
 
         <Section>
           <Heading as="h3" variant="section-title">
-            Experience
+            {t('headers.experience')}
           </Heading>
           {EXPERIENCE.map((exp, index) => (
             <ExperienceSection key={index}>
               <ExperienceYears>{exp.years}</ExperienceYears>
-              {exp.title}
+              {tProfile(`Experience.${exp.titleKey}`)}
             </ExperienceSection>
           ))}
           <Box align="center" my={4}>
@@ -154,17 +142,17 @@ const Page = () => {
                 colorScheme="teal"
                 variant="outline"
               >
-                Job history
+                {t('buttons.job_history')}
               </Button>
             </NextLink>
           </Box>
         </Section>
         <Section>
           <Heading as="h3" variant="section-title">
-            Technical Skills
+            {t('headers.technical_skills')}
           </Heading>
           <Heading as="h4" variant={'section-subtitle'}>
-            Infrastructure
+            {t('headers.infrastructure')}
           </Heading>
           {SKILLS.infrastructure.reduce((rows, key, index) => {
             if (index % 2 === 0) rows.push([])
@@ -182,7 +170,7 @@ const Page = () => {
           ))}
           
           <Heading as="h4" variant={'section-subtitle'}>
-            Programming
+            {t('headers.programming')}
           </Heading>
           {SKILLS.programming.reduce((rows, key, index) => {
             if (index % 2 === 0) rows.push([])
@@ -201,24 +189,24 @@ const Page = () => {
         </Section>
         <Section>
           <Heading as="h3" variant="section-title">
-            Languages
+            {t('headers.languages')}
           </Heading>
           {LANGUAGES.map((lang, index) => (
             <LanguagesSection key={index}>
-              <Language>{lang.level}</Language>
-              {lang.name}
+              <Language>{tProfile(`Levels.${lang.levelKey}`)}</Language>
+              {tProfile(`Languages.${lang.nameKey}`)}
             </LanguagesSection>
           ))}
         </Section>
         <Section>
           <Heading as="h3" variant="section-title">
-            Other Things I Love
+            {t('headers.interests')}
           </Heading>
           <List spacing={1}>
             {INTERESTS.map((interest, index) => (
               <ListItem key={index}>
                 <ListIcon as={GoHeart} color={interest.color} />
-                {interest.name}
+                {tProfile(`Interests.${interest.nameKey}`)}
               </ListItem>
             ))}
           </List>

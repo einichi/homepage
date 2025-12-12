@@ -36,13 +36,14 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper
 } from '@chakra-ui/react'
-import Section from '../../components/section' // adjusted import
+import Section from '../../../components/section'
 import { EmailIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
-import Layout from '../../components/layouts/article' // adjusted import
+import Layout from '../../../components/layouts/article'
 import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
-import { formatJPY, jpyToUSD } from '../../libs/numberFormat' // adjusted import
+import { formatJPY, jpyToUSD } from '../../../libs/numberFormat'
+import { useTranslations } from 'next-intl'
 
 const postContactInfo = async ({
   sender,
@@ -92,17 +93,19 @@ const usePostContactInfo = () => {
 }
 
 const SubmitButton = ({ status }) => {
+  const t = useTranslations('Contact')
+  
   if (!status || status === 'sending')
     return (
       <Button
         type="submit"
         leftIcon={<EmailIcon />}
         size="lg"
-        loadingText="Sending..."
+        loadingText={t('buttons.sending')}
         colorScheme="teal"
-        isLoading={Boolean(status)} //Here, status is either null or its sending
+        isLoading={Boolean(status)}
       >
-        Send
+        {t('buttons.send')}
       </Button>
     )
 
@@ -113,9 +116,9 @@ const SubmitButton = ({ status }) => {
         leftIcon={<CloseIcon />}
         size="lg"
         colorScheme="red"
-        loadingText="Sending..."
+        loadingText={t('buttons.sending')}
       >
-        Retry?
+        {t('buttons.retry')}
       </Button>
     )
   }
@@ -125,16 +128,17 @@ const SubmitButton = ({ status }) => {
       type="submit"
       leftIcon={<CheckIcon />}
       size="lg"
-      loadingText="Sending..."
+      loadingText={t('buttons.sending')}
       disabled
-      colorScheme="teal" //Here, status is either null or its sending
+      colorScheme="teal"
     >
-      Sent!
+      {t('buttons.sent')}
     </Button>
   )
 }
 
 const Contact = () => {
+  const t = useTranslations('Contact')
   const [submitStatus, onSubmit] = usePostContactInfo()
 
   const formik = useFormik({
@@ -148,7 +152,7 @@ const Contact = () => {
       jobSource: 'company',
       salaryLower: 2000000,
       salaryUpper: 20000000,
-      exchangeRate: 0.0069,
+      exchangeRate: 0.0064,
       benefitFullRemote: false,
       benefitHybridRemote: false,
       benefitFlexibleHours: false,
@@ -166,15 +170,15 @@ const Contact = () => {
       <Container>
         <Section>
           <Heading as="h3" variant="section-title">
-            Contact Ricky
+            {t('title')}
           </Heading>
           <form onSubmit={formik.handleSubmit}>
             <FormControl isRequired>
-              <FormLabel htmlFor="sender">Your name</FormLabel>
+              <FormLabel htmlFor="sender">{t('labels.name')}</FormLabel>
               <Input
                 id="sender"
                 name="sender"
-                placeholder="John Doe | タレント太郎"
+                placeholder={t('placeholders.name')}
                 border="2px"
                 borderColor="teal"
                 onChange={formik.handleChange}
@@ -182,11 +186,11 @@ const Contact = () => {
               />
             </FormControl>
             <FormControl isRequired>
-              <FormLabel htmlFor="email">Your email</FormLabel>
+              <FormLabel htmlFor="email">{t('labels.email')}</FormLabel>
               <Input
                 id="email"
                 name="email"
-                placeholder="you@some.domain"
+                placeholder={t('placeholders.email')}
                 type="email"
                 border="2px"
                 borderColor="teal"
@@ -197,14 +201,14 @@ const Contact = () => {
                 Please enter a valid email address
               </FormErrorMessage>
               <FormHelperText>
-                Used only to reply to your message
+                {t('validation.email_helper')}
               </FormHelperText>
             </FormControl>
             <br />
             <Flex>
               <FormControl>
                 <FormLabel htmlFor="recruiting" mb="0">
-                  Recruiting me for a job?
+                  {t('labels.recruiting')}
                 </FormLabel>
                 <Switch
                   id="recruiting"
@@ -227,22 +231,22 @@ const Contact = () => {
                     }}
                   >
                     <Stack>
-                      <Radio id="company" name="company" value="company">
-                        Direct Hire
+                      <Radio id="jobSource_company" name="company" value="company">
+                        {t('labels.direct_hire')}
                       </Radio>
-                      <Radio id="company" name="company" value="agency">
-                        Recruiting Agency
+                      <Radio id="jobSource_agency" name="company" value="agency">
+                        {t('labels.agency')}
                       </Radio>
                     </Stack>
                   </RadioGroup>
                 </FormControl>
                 {formik.values.jobSource === 'agency' && (
                   <FormControl isRequired>
-                    <FormLabel htmlFor="fromAgency">Agency name</FormLabel>
+                    <FormLabel htmlFor="fromAgency">{t('labels.agency_name')}</FormLabel>
                     <Input
                       id="fromAgency"
                       name="fromAgency"
-                      placeholder="Executive Recruiters Inc | 案件豊富株式会社"
+                      placeholder={t('placeholders.agency')}
                       border="2px"
                       borderColor="teal"
                       onChange={formik.handleChange}
@@ -251,11 +255,11 @@ const Contact = () => {
                   </FormControl>
                 )}
                 <FormControl isRequired>
-                  <FormLabel htmlFor="fromCompany">Company name</FormLabel>
+                  <FormLabel htmlFor="fromCompany">{t('labels.company_name')}</FormLabel>
                   <Input
                     id="fromCompany"
                     name="fromCompany"
-                    placeholder="Come Pany Ltd. | 来手星意株式会社"
+                    placeholder={t('placeholders.company')}
                     border="2px"
                     borderColor="teal"
                     onChange={formik.handleChange}
@@ -263,11 +267,11 @@ const Contact = () => {
                   />
                 </FormControl>
                 <FormControl isRequired>
-                  <FormLabel htmlFor="role">Role type</FormLabel>
+                  <FormLabel htmlFor="role">{t('labels.role_type')}</FormLabel>
                   <Select
                     id="role"
                     name="role"
-                    placeholder="Select one"
+                    placeholder={t('placeholders.select')}
                     variant="outline"
                     border="2px"
                     borderColor="teal"
@@ -276,25 +280,25 @@ const Contact = () => {
                   >
                     <option disabled>---</option>
                     <option id="roleSRE" name="roleSRE" value="sre">
-                      Infra / SRE
+                      {t('roles.sre')}
                     </option>
                     <option
                       id="roleSecurity"
                       name="roleSecurity"
                       value="security"
                     >
-                      Information Security
+                      {t('roles.security')}
                     </option>
                     <option id="roleDevops" name="roleDevops" value="devops">
-                      DevOps/DevSecOps
+                      {t('roles.devops')}
                     </option>
                     <option disabled>---</option>
-                    <option value="roleOther">Something different</option>
+                    <option value="roleOther">{t('roles.other')}</option>
                   </Select>
                 </FormControl>
                 <FormControl isRequired>
                   <FormLabel htmlFor="employmentType">
-                    Employment Type
+                    {t('labels.employment_type')}
                   </FormLabel>
                   <RadioGroup
                     id="employmentType"
@@ -308,7 +312,7 @@ const Contact = () => {
                         name="fullEmployee"
                         value="fullEmployee"
                       >
-                        Full Time Employee
+                        {t('employment.full_time')}
                       </Radio>
                       <Radio
                         isDisabled
@@ -316,7 +320,7 @@ const Contact = () => {
                         name="contractor"
                         value="contractor"
                       >
-                        Contractor
+                        {t('employment.contractor')}
                       </Radio>
                       <Radio
                         isDisabled
@@ -324,7 +328,7 @@ const Contact = () => {
                         name="dispatch"
                         value="dispatch"
                       >
-                        Dispatch
+                        {t('employment.dispatch')}
                       </Radio>
                       <Radio
                         isDisabled
@@ -332,18 +336,18 @@ const Contact = () => {
                         name="partTime"
                         value="partTime"
                       >
-                        Part Time
+                        {t('employment.part_time')}
                       </Radio>
                     </Stack>
                     <FormHelperText>
-                      Only interested in full-time roles right now, sorry!
+                      {t('employment.helper')}
                     </FormHelperText>
                   </RadioGroup>
                 </FormControl>
                 <FormControl>
                   <Flex w="100%" gap="1rem" alignItems="center">
                     <Box flexGrow={1}>
-                      <FormLabel htmlFor="salary">Salary range</FormLabel>
+                      <FormLabel htmlFor="salary">{t('labels.salary_range')}</FormLabel>
                       <RangeSlider
                         id="salary"
                         name="salary"
@@ -371,7 +375,7 @@ const Contact = () => {
                     <Box w="25%">
                       <FormControl>
                         <FormLabel htmlFor="exchangeRate">
-                          Exchange Rate
+                          {t('labels.exchange_rate')}
                         </FormLabel>
                         <NumberInput
                           id="exchangeRate"
@@ -421,7 +425,7 @@ const Contact = () => {
                   </Flex>
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="benefits">Benefits</FormLabel>
+                  <FormLabel htmlFor="benefits">{t('labels.benefits')}</FormLabel>
                   <CheckboxGroup colorScheme="teal">
                     <Stack spacing={[1, 10]} direction={['column', 'row']}>
                       <Checkbox
@@ -430,7 +434,7 @@ const Contact = () => {
                         onChange={formik.handleChange}
                         isChecked={formik.values.benefitFullRemote}
                       >
-                        Full Remote
+                        {t('benefits.full_remote')}
                       </Checkbox>
                       <Checkbox
                         id="benefitHybridRemote"
@@ -438,7 +442,7 @@ const Contact = () => {
                         onChange={formik.handleChange}
                         isChecked={formik.values.benefitHybridRemote}
                       >
-                        Hybrid Remote
+                        {t('benefits.hybrid_remote')}
                       </Checkbox>
                       <Checkbox
                         id="benefitFlexibleHours"
@@ -446,7 +450,7 @@ const Contact = () => {
                         onChange={formik.handleChange}
                         isChecked={formik.values.benefitFlexibleHours}
                       >
-                        Flexible Hours
+                        {t('benefits.flexible_hours')}
                       </Checkbox>
                       <Checkbox
                         id="benefitOther"
@@ -454,7 +458,7 @@ const Contact = () => {
                         onChange={formik.handleChange}
                         isChecked={formik.values.benefitOther}
                       >
-                        Other (mention in Message)
+                        {t('benefits.other')}
                       </Checkbox>
                     </Stack>
                   </CheckboxGroup>
@@ -462,12 +466,12 @@ const Contact = () => {
               </Box>
             )}
             <FormLabel htmlFor="message" mt="1em">
-              Message
+              {t('labels.message')}
             </FormLabel>
             <Textarea
               id="message"
               name="message"
-              placeholder="Your message here"
+              placeholder={t('placeholders.message')}
               border="2px"
               borderColor="teal"
               onChange={formik.handleChange}
@@ -480,14 +484,15 @@ const Contact = () => {
             {submitStatus === 'error' && (
               <Alert status="error">
                 <AlertIcon />
-                <AlertTitle mr={2}>Sending failed</AlertTitle>
+                <AlertTitle mr={2}>{t('alerts.error_title')}</AlertTitle>
                 <AlertDescription>
-                  Please wait a moment and try again. Or contact me at{' '}
-                  <Link href="mailto:ricky@burg.in?subject=Website Contact (send failure)">
-                    ricky@burg.in
-                  </Link>{' '}
-                  if the problem persists.
-                  {/* TODO: Have the href value updated to contain the contents of the message on failure */}
+                  {t.rich('alerts.error_desc', {
+                    email: (chunks) => (
+                      <Link href="mailto:ricky@burg.in?subject=Website Contact (send failure)">
+                        ricky@burg.in
+                      </Link>
+                    )
+                  })}
                 </AlertDescription>
               </Alert>
             )}
