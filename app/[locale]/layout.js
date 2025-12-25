@@ -14,6 +14,7 @@ import {notFound} from 'next/navigation';
 const mplus = M_PLUS_Rounded_1c({ subsets: ['latin'], weight: ['400', '700'] })
 
 export const metadata = {
+  metadataBase: new URL('https://ricky.burg.in'),
   title: 'Ricky Burgin バーギン　リッキー | Homepage',
   description: "Ricky's homepage",
   authors: [{ name: 'Ricky Burgin' }],
@@ -28,6 +29,13 @@ export const metadata = {
       { rel: 'mask-icon', url: '/favicon/safari-pinned-tab.svg', color: '#5bbad5' },
       { rel: 'manifest', url: '/favicon/site.webmanifest' }
     ]
+  },
+  alternates: {
+    canonical: './',
+    languages: {
+      en: '/en',
+      ja: '/ja'
+    }
   }
 }
 
