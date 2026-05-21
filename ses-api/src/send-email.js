@@ -1,4 +1,14 @@
 const AWS = require('aws-sdk')
+const AWS_REGION_PATTERN =
+  /^(af|ap|ca|cn|eu|il|me|mx|sa|us|us-gov)-(central|north|northeast|northwest|south|southeast|southwest|east|west)-\d$/
+
+const validateAwsRegion = region => {
+  if (region && !AWS_REGION_PATTERN.test(region)) {
+    throw new Error(`Invalid AWS region: ${region}`)
+  }
+}
+
+validateAwsRegion(process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION)
 const SES = new AWS.SES()
 const processResponse = require('./process-response.js')
 const nodemailer = require('nodemailer')

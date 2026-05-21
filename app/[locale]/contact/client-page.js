@@ -487,7 +487,7 @@ const Contact = () => {
                 <AlertTitle mr={2}>{t('alerts.error_title')}</AlertTitle>
                 <AlertDescription>
                   {t.rich('alerts.error_desc', {
-                    email: (chunks) => (
+                    email: () => (
                       <Link href="mailto:ricky@burg.in?subject=Website Contact (send failure)">
                         ricky@burg.in
                       </Link>
