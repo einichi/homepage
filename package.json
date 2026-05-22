@@ -7,7 +7,7 @@
     "dev": "next dev -H 127.0.0.1",
     "build": "next build",
     "start": "next start",
-    "prettier": "prettier -write .",
+    "prettier": "prettier --write .",
     "lint": "eslint ."
   },
   "keywords": [],

@@ -14,7 +14,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 import Image from 'next/image'
-import NextLink from 'next/link'
+import { Link as NextLink } from '../../i18n/routing'
 import Section from '../../components/section'
 import Paragraph from '../../components/paragraph'
 import { ExperienceSection, ExperienceYears } from '../../components/experience'
@@ -26,7 +26,12 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { HiCube } from 'react-icons/hi'
 import Layout from '../../components/layouts/article'
 import { useTranslations } from 'next-intl'
-import { EXPERIENCE, SKILLS, LANGUAGES, INTERESTS } from '../../lib/profile-data'
+import {
+  EXPERIENCE,
+  SKILLS,
+  LANGUAGES,
+  INTERESTS
+} from '../../lib/profile-data'
 
 const Page = () => {
   const t = useTranslations('HomePage')
@@ -112,17 +117,11 @@ const Page = () => {
           </Heading>
           <Paragraph>{t('about.intro')}</Paragraph>
           <br />
-          <Paragraph>
-            {t('about.p1')}
-          </Paragraph>
+          <Paragraph>{t('about.p1')}</Paragraph>
           <br />
-          <Paragraph>
-            {t('about.p2')}
-          </Paragraph>
+          <Paragraph>{t('about.p2')}</Paragraph>
           <br />
-          <Paragraph>
-            {t('about.p3')}
-          </Paragraph>
+          <Paragraph>{t('about.p3')}</Paragraph>
         </Section>
 
         <Section>
@@ -154,38 +153,42 @@ const Page = () => {
           <Heading as="h4" variant={'section-subtitle'}>
             {t('headers.infrastructure')}
           </Heading>
-          {SKILLS.infrastructure.reduce((rows, key, index) => {
-            if (index % 2 === 0) rows.push([])
-            rows[rows.length - 1].push(key)
-            return rows
-          }, []).map((row, index) => (
-            <Flex key={index}>
-              {row.map((skill, i) => (
-                <SkillsSection key={i} flex="1">
-                  <Skill>{skill.name}</Skill>
-                  <Progress value={skill.value} colorScheme="teal" />
-                </SkillsSection>
-              ))}
-            </Flex>
-          ))}
-          
+          {SKILLS.infrastructure
+            .reduce((rows, key, index) => {
+              if (index % 2 === 0) rows.push([])
+              rows[rows.length - 1].push(key)
+              return rows
+            }, [])
+            .map((row, index) => (
+              <Flex key={index}>
+                {row.map((skill, i) => (
+                  <SkillsSection key={i} flex="1">
+                    <Skill>{skill.name}</Skill>
+                    <Progress value={skill.value} colorScheme="teal" />
+                  </SkillsSection>
+                ))}
+              </Flex>
+            ))}
+
           <Heading as="h4" variant={'section-subtitle'}>
             {t('headers.programming')}
           </Heading>
-          {SKILLS.programming.reduce((rows, key, index) => {
-            if (index % 2 === 0) rows.push([])
-            rows[rows.length - 1].push(key)
-            return rows
-          }, []).map((row, index) => (
-            <Flex key={index}>
-              {row.map((skill, i) => (
-                <SkillsSection key={i} flex="1">
-                  <Skill>{skill.name}</Skill>
-                  <Progress value={skill.value} colorScheme="teal" />
-                </SkillsSection>
-              ))}
-            </Flex>
-          ))}
+          {SKILLS.programming
+            .reduce((rows, key, index) => {
+              if (index % 2 === 0) rows.push([])
+              rows[rows.length - 1].push(key)
+              return rows
+            }, [])
+            .map((row, index) => (
+              <Flex key={index}>
+                {row.map((skill, i) => (
+                  <SkillsSection key={i} flex="1">
+                    <Skill>{skill.name}</Skill>
+                    <Progress value={skill.value} colorScheme="teal" />
+                  </SkillsSection>
+                ))}
+              </Flex>
+            ))}
         </Section>
         <Section>
           <Heading as="h3" variant="section-title">

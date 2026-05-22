@@ -1,7 +1,7 @@
 'use client'
 
 import { Container, Button, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { Link as NextLink } from '../../../i18n/routing'
 import {
   WorkSection,
   WorkCompany,
@@ -16,7 +16,7 @@ import { useTranslations } from 'next-intl'
 
 const Work = () => {
   const t = useTranslations('Work')
-  
+
   const jobs = [
     'marigold_sre',
     'cheetah_security',
@@ -55,9 +55,7 @@ const Work = () => {
                 <WorkCompany>{t(`jobs.${jobKey}.company`)}</WorkCompany>
               </Flex>
               <WorkDate>{t(`jobs.${jobKey}.date`)}</WorkDate>
-              <WorkDetails>
-                {t(`jobs.${jobKey}.details`)}
-              </WorkDetails>
+              <WorkDetails>{t(`jobs.${jobKey}.details`)}</WorkDetails>
             </WorkSection>
           ))}
 

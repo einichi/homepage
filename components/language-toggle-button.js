@@ -1,15 +1,18 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { IconButton } from '@chakra-ui/react'
 import { useRouter, usePathname } from '../i18n/routing'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 const LanguageToggleButton = () => {
   const locale = useLocale()
+  const t = useTranslations('Navbar')
   const router = useRouter()
   const pathname = usePathname()
+  const nextLocale = locale === 'en' ? 'ja' : 'en'
+  const label =
+    nextLocale === 'ja' ? t('switch_to_japanese') : t('switch_to_english')
 
   const toggleLanguage = () => {
-    const nextLocale = locale === 'en' ? 'ja' : 'en'
     router.replace(pathname, { locale: nextLocale })
   }
 
@@ -25,7 +28,8 @@ const LanguageToggleButton = () => {
       >
         <IconButton
           mr={2}
-          aria-label="Toggle language"
+          aria-label={label}
+          title={label}
           colorScheme="teal"
           icon={
             <div style={{ fontSize: '1.2em', lineHeight: '1' }}>

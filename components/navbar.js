@@ -91,7 +91,7 @@ const Navbar = (props) => {
                 as={IconButton}
                 icon={<HamburgerIcon />}
                 variant="outline"
-                aria-label="Options"
+                aria-label={t('open_menu')}
               />
               <MenuList>
                 <MenuItem as={NextLink} href="/work">
