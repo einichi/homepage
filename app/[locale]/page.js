@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Container,
   Button,
@@ -11,21 +9,11 @@ import {
   Progress,
   Flex,
   Link,
-  useColorModeValue
+  Text
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { Link as NextLink } from '../../i18n/routing'
-import Section from '../../components/section'
-import Paragraph from '../../components/paragraph'
-import { ExperienceSection, ExperienceYears } from '../../components/experience'
-import { SkillsSection, Skill } from '../../components/skills'
-import { LanguagesSection, Language } from '../../components/languages'
-import { TimeIcon } from '@chakra-ui/icons'
-import { GoHeart } from 'react-icons/go'
-import { FaGithub, FaLinkedin } from 'react-icons/fa'
-import { HiCube } from 'react-icons/hi'
-import Layout from '../../components/layouts/article'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import {
   EXPERIENCE,
   SKILLS,
@@ -33,15 +21,53 @@ import {
   INTERESTS
 } from '../../lib/profile-data'
 
-const Page = () => {
-  const t = useTranslations('HomePage')
-  const tProfile = useTranslations('Profile')
+const chunkPairs = (items) =>
+  items.reduce((rows, item, index) => {
+    if (index % 2 === 0) rows.push([])
+    rows[rows.length - 1].push(item)
+    return rows
+  }, [])
+
+const Section = ({ children }) => (
+  <Box as="section" mb={6}>
+    {children}
+  </Box>
+)
+
+const Paragraph = ({ children }) => (
+  <Text as="p" textAlign="justify">
+    {children}
+  </Text>
+)
+
+const ProfileLine = ({ label, children }) => (
+  <Box pl="3.4em" textIndent="-1.5em" textAlign="justify">
+    <Box as="span" fontWeight="bold" mr="1em" display="inline-block">
+      {label}
+    </Box>
+    {children}
+  </Box>
+)
+
+const SkillLine = ({ name, value }) => (
+  <Box flex="1" pl="3.4em" textIndent="-1.5em">
+    <Box as="span" mr="1em" display="inline-block">
+      {name}
+    </Box>
+    <Progress value={value} colorScheme="teal" />
+  </Box>
+)
+
+const Page = async () => {
+  const t = await getTranslations('HomePage')
+  const tProfile = await getTranslations('Profile')
+
   return (
-    <Layout>
+    <Box as="article" position="relative">
       <Container>
         <Box
           borderRadius="lg"
-          bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
+          bg="heroBg"
           p={3}
           mb={6}
           align="center"
@@ -56,11 +82,7 @@ const Page = () => {
             </Heading>
             <p>{t('role')}</p>
             <Link href="https://www.github.com/einichi" target="_blank">
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<FaGithub />}
-              >
+              <Button variant="ghost" colorScheme="teal">
                 {t('links.github')}
               </Button>
             </Link>
@@ -68,7 +90,7 @@ const Page = () => {
               href="https://www.printables.com/@einichi_862656/models"
               target="_blank"
             >
-              <Button variant="ghost" colorScheme="teal" leftIcon={<HiCube />}>
+              <Button variant="ghost" colorScheme="teal">
                 {t('links.designs')}
               </Button>
             </Link>
@@ -76,11 +98,7 @@ const Page = () => {
               href="https://www.linkedin.com/in/rickyburgin/"
               target="_blank"
             >
-              <Button
-                variant="ghost"
-                colorScheme="teal"
-                leftIcon={<FaLinkedin />}
-              >
+              <Button variant="ghost" colorScheme="teal">
                 {t('links.linkedin')}
               </Button>
             </Link>
@@ -129,18 +147,13 @@ const Page = () => {
             {t('headers.experience')}
           </Heading>
           {EXPERIENCE.map((exp, index) => (
-            <ExperienceSection key={index}>
-              <ExperienceYears>{exp.years}</ExperienceYears>
+            <ProfileLine key={index} label={exp.years}>
               {tProfile(`Experience.${exp.titleKey}`)}
-            </ExperienceSection>
+            </ProfileLine>
           ))}
           <Box align="center" my={4}>
             <NextLink href="/work" passHref>
-              <Button
-                leftIcon={<TimeIcon />}
-                colorScheme="teal"
-                variant="outline"
-              >
+              <Button colorScheme="teal" variant="outline">
                 {t('buttons.job_history')}
               </Button>
             </NextLink>
@@ -153,52 +166,36 @@ const Page = () => {
           <Heading as="h4" variant={'section-subtitle'}>
             {t('headers.infrastructure')}
           </Heading>
-          {SKILLS.infrastructure
-            .reduce((rows, key, index) => {
-              if (index % 2 === 0) rows.push([])
-              rows[rows.length - 1].push(key)
-              return rows
-            }, [])
-            .map((row, index) => (
-              <Flex key={index}>
-                {row.map((skill, i) => (
-                  <SkillsSection key={i} flex="1">
-                    <Skill>{skill.name}</Skill>
-                    <Progress value={skill.value} colorScheme="teal" />
-                  </SkillsSection>
-                ))}
-              </Flex>
-            ))}
+          {chunkPairs(SKILLS.infrastructure).map((row, index) => (
+            <Flex key={index}>
+              {row.map((skill) => (
+                <SkillLine key={skill.name} name={skill.name} value={skill.value} />
+              ))}
+            </Flex>
+          ))}
 
           <Heading as="h4" variant={'section-subtitle'}>
             {t('headers.programming')}
           </Heading>
-          {SKILLS.programming
-            .reduce((rows, key, index) => {
-              if (index % 2 === 0) rows.push([])
-              rows[rows.length - 1].push(key)
-              return rows
-            }, [])
-            .map((row, index) => (
-              <Flex key={index}>
-                {row.map((skill, i) => (
-                  <SkillsSection key={i} flex="1">
-                    <Skill>{skill.name}</Skill>
-                    <Progress value={skill.value} colorScheme="teal" />
-                  </SkillsSection>
-                ))}
-              </Flex>
-            ))}
+          {chunkPairs(SKILLS.programming).map((row, index) => (
+            <Flex key={index}>
+              {row.map((skill) => (
+                <SkillLine key={skill.name} name={skill.name} value={skill.value} />
+              ))}
+            </Flex>
+          ))}
         </Section>
         <Section>
           <Heading as="h3" variant="section-title">
             {t('headers.languages')}
           </Heading>
           {LANGUAGES.map((lang, index) => (
-            <LanguagesSection key={index}>
-              <Language>{tProfile(`Levels.${lang.levelKey}`)}</Language>
+            <ProfileLine
+              key={index}
+              label={tProfile(`Levels.${lang.levelKey}`)}
+            >
               {tProfile(`Languages.${lang.nameKey}`)}
-            </LanguagesSection>
+            </ProfileLine>
           ))}
         </Section>
         <Section>
@@ -208,14 +205,16 @@ const Page = () => {
           <List spacing={1}>
             {INTERESTS.map((interest, index) => (
               <ListItem key={index}>
-                <ListIcon as={GoHeart} color={interest.color} />
+                <ListIcon as="span" color={interest.color}>
+                  {'\u2665'}
+                </ListIcon>
                 {tProfile(`Interests.${interest.nameKey}`)}
               </ListItem>
             ))}
           </List>
         </Section>
       </Container>
-    </Layout>
+    </Box>
   )
 }
 
