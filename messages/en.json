@@ -1,7 +1,12 @@
 {
   "Navbar": {
     "work": "Work",
-    "contact": "Contact"
+    "contact": "Contact",
+    "open_menu": "Open navigation menu",
+    "switch_to_dark": "Switch to dark theme",
+    "switch_to_light": "Switch to light theme",
+    "switch_to_japanese": "Switch language to Japanese",
+    "switch_to_english": "Switch language to English"
   },
   "HomePage": {
     "title": "Ricky Burgin",
@@ -160,11 +165,16 @@
     },
     "alerts": {
       "error_title": "Sending failed",
-      "error_desc": "Please wait a moment and try again. Or contact me at {email} if the problem persists."
+      "error_desc": "Please wait a moment and try again. Or contact me at {email} if the problem persists.",
+      "success_title": "Message sent",
+      "success_desc": "Thanks for getting in touch. I will reply when I can."
     },
     "validation": {
       "email": "Please enter a valid email address",
-      "email_helper": "Used only to reply to your message"
+      "email_helper": "Used only to reply to your message",
+      "required": "This field is required",
+      "salary_order": "The upper salary must be higher than the lower salary",
+      "exchange_rate": "Enter an exchange rate greater than 0"
     }
   }
 }

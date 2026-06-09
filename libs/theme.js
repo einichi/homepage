@@ -52,6 +52,10 @@ const theme = extendTheme({
   },
   semanticTokens: {
     colors: {
+      heroBg: {
+        default: 'whiteAlpha.500',
+        _dark: 'whiteAlpha.200'
+      },
       navbarBg: {
         default: '#ffffff40',
         _dark: '#20202380'

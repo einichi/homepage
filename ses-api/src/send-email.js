@@ -2,7 +2,7 @@ const AWS = require('aws-sdk')
 const AWS_REGION_PATTERN =
   /^(af|ap|ca|cn|eu|il|me|mx|sa|us|us-gov)-(central|north|northeast|northwest|south|southeast|southwest|east|west)-\d$/
 
-const validateAwsRegion = region => {
+const validateAwsRegion = (region) => {
   if (region && !AWS_REGION_PATTERN.test(region)) {
     throw new Error(`Invalid AWS region: ${region}`)
   }
@@ -13,17 +13,43 @@ const SES = new AWS.SES()
 const processResponse = require('./process-response.js')
 const nodemailer = require('nodemailer')
 const Email = require('email-templates')
+const crypto = require('crypto')
+
+const anonymize = (value) => {
+  const input = String(value || '')
+    .trim()
+    .toLowerCase()
+  const secret = process.env.LOG_HASH_SECRET || 'contact-log'
+
+  if (!input) return undefined
+
+  return crypto
+    .createHmac('sha256', secret)
+    .update(input)
+    .digest('hex')
+    .slice(0, 12)
+}
+
+const anonymizedContactLog = (body) => ({
+  contactId: anonymize([body.sender, body.email].join('|')),
+  companyId: anonymize(body.fromCompany),
+  agencyId: anonymize(body.fromAgency),
+  recruiting: Boolean(body.recruiting),
+  hasMessage: Boolean(body.message && body.message.trim()),
+  role: body.role || undefined,
+  jobSource: body.jobSource || undefined
+})
 
 const roundToNearest = (value, step) => {
   return Math.round(value / step) * step
 }
 
-const formatJPY = number =>
+const formatJPY = (number) =>
   new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' })
     .format(number)
     .slice(1) //To remove the curency symbol
 
-const formatUSD = number =>
+const formatUSD = (number) =>
   new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -41,7 +67,7 @@ let transporter = nodemailer.createTransport({
   SES: { ses: SES, aws: AWS }
 })
 
-exports.handler = async event => {
+exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return processResponse(true)
   }
@@ -54,7 +80,7 @@ exports.handler = async event => {
 
   body = typeof body === 'string' ? JSON.parse(body) : body
 
-  console.log('Body:', body, typeof body)
+  console.log('Contact form request:', anonymizedContactLog(body), typeof body)
 
   /*if (!emailData.toEmails || !Array.isArray(emailData.toEmails) || !emailData.subject || !emailData.message) {
                                                 return processResponse(true, 'Please specify email parameters: toEmails, subject and message', 400);

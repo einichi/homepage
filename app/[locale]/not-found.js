@@ -1,6 +1,6 @@
 'use client'
 
-import NextLink from 'next/link'
+import { Link as NextLink } from '../../i18n/routing'
 import {
   Box,
   Heading,
@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { ArrowBackIcon, EmailIcon } from '@chakra-ui/icons'
 // Layout article isn't strictly needed for 404 but provides consistent spacing/animation
-import Layout from '../../components/layouts/article' 
+import Layout from '../../components/layouts/article'
 
 const NotFound = () => {
   return (
