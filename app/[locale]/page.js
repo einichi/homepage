@@ -1,18 +1,14 @@
 import {
   Container,
-  Button,
   Box,
   Heading,
   List,
   ListItem,
-  ListIcon,
   Progress,
   Flex,
-  Link,
   Text
 } from '@chakra-ui/react'
 import Image from 'next/image'
-import { Link as NextLink } from '../../i18n/routing'
 import { getTranslations } from 'next-intl/server'
 import {
   EXPERIENCE,
@@ -20,6 +16,11 @@ import {
   LANGUAGES,
   INTERESTS
 } from '../../lib/profile-data'
+import {
+  ExternalIconButton,
+  HeartListIcon,
+  InternalIconButton
+} from '../../components/icon-actions'
 
 const chunkPairs = (items) =>
   items.reduce((rows, item, index) => {
@@ -81,27 +82,24 @@ const Page = async () => {
               {t('title')}
             </Heading>
             <p>{t('role')}</p>
-            <Link href="https://www.github.com/einichi" target="_blank">
-              <Button variant="ghost" colorScheme="teal">
-                {t('links.github')}
-              </Button>
-            </Link>
-            <Link
+            <ExternalIconButton
+              href="https://www.github.com/einichi"
+              icon="github"
+            >
+              {t('links.github')}
+            </ExternalIconButton>
+            <ExternalIconButton
               href="https://www.printables.com/@einichi_862656/models"
-              target="_blank"
+              icon="designs"
             >
-              <Button variant="ghost" colorScheme="teal">
-                {t('links.designs')}
-              </Button>
-            </Link>
-            <Link
+              {t('links.designs')}
+            </ExternalIconButton>
+            <ExternalIconButton
               href="https://www.linkedin.com/in/rickyburgin/"
-              target="_blank"
+              icon="linkedin"
             >
-              <Button variant="ghost" colorScheme="teal">
-                {t('links.linkedin')}
-              </Button>
-            </Link>
+              {t('links.linkedin')}
+            </ExternalIconButton>
           </Box>
           <Box
             flexShrink={0}
@@ -152,11 +150,9 @@ const Page = async () => {
             </ProfileLine>
           ))}
           <Box align="center" my={4}>
-            <NextLink href="/work" passHref>
-              <Button colorScheme="teal" variant="outline">
-                {t('buttons.job_history')}
-              </Button>
-            </NextLink>
+            <InternalIconButton href="/work" icon="time">
+              {t('buttons.job_history')}
+            </InternalIconButton>
           </Box>
         </Section>
         <Section>
@@ -205,9 +201,7 @@ const Page = async () => {
           <List spacing={1}>
             {INTERESTS.map((interest, index) => (
               <ListItem key={index}>
-                <ListIcon as="span" color={interest.color}>
-                  {'\u2665'}
-                </ListIcon>
+                <HeartListIcon color={interest.color} />
                 {tProfile(`Interests.${interest.nameKey}`)}
               </ListItem>
             ))}

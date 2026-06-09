@@ -1,6 +1,6 @@
-import { Container, Button, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
-import { Link as NextLink } from '../../../i18n/routing'
+import { Container, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
 import { getTranslations } from 'next-intl/server'
+import { InternalIconButton } from '../../../components/icon-actions'
 
 export const metadata = {
   title: 'Work - Ricky Burgin'
@@ -18,11 +18,9 @@ const jobs = [
 
 const HireMeButton = ({ children }) => (
   <Box align="center" my={4}>
-    <NextLink href="/contact?hireme" passHref>
-      <Button colorScheme="teal" variant="outline">
-        {children}
-      </Button>
-    </NextLink>
+    <InternalIconButton href="/contact?hireme" icon="chat">
+      {children}
+    </InternalIconButton>
   </Box>
 )
 
