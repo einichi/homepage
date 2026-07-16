@@ -10,8 +10,8 @@
   },
   "HomePage": {
     "title": "Ricky Burgin",
-    "hero_text": "Hi there! I'm an SRE Manager based in Japan.",
-    "role": "SRE Manager 🇬🇧→🇯🇵",
+    "hero_text": "Hi there! I'm a technology professional based in Japan.",
+    "role": "SRE · Infrastructure · Security 🇬🇧→🇯🇵",
     "links": {
       "github": "GitHub",
       "designs": "3D Designs",
@@ -19,9 +19,9 @@
     },
     "about": {
       "title": "About Ricky",
-      "intro": "SRE Manager, Leader and Engineer.",
-      "p1": "With a robust background in IT Infrastructure and DevOps, complemented by leadership and team management experience, as well as significant exposure to security and corporate IT, I bring a broad range of expertise to cross-functional organizations. My holistic approach brings about an environment where teams are empowered and creates a culture of self-improvement and collaboration. My strong passion for team mentoring, combined with a proven track record in ensuring employee satisfaction, significantly contributes to the retention of high-performing team members.",
-      "p2": "Drawing on my experience as an accomplished engineer I am not only able to bridge the gap between technical and leadership roles, but can also drive smart solutions and inspire the trust and confidence of my team. My background allows me and my teams to approach problems with a solution-oriented mindset, fostering an environment of technical excellence, innovation, and continuous improvement.",
+      "intro": "Engineer with experience across SRE, infrastructure, security and corporate IT.",
+      "p1": "With a broad, hands-on background spanning IT infrastructure, DevOps, cloud platforms, security and corporate IT, I bring practical technical experience to a wide range of systems and organizational contexts. I enjoy understanding how complex environments fit together and using that perspective to build reliable, secure and maintainable solutions.",
+      "p2": "I approach problems with curiosity and a solution-oriented mindset, working across functions, regions and cultures to turn technical challenges into clear, effective outcomes. I value knowledge sharing, thoughtful collaboration and continuous improvement, and aim to help create environments where technical excellence and innovation can thrive.",
       "p3": "Japanese Language JLPT N1 certified and Japan permanent resident"
     },
     "headers": {
