@@ -45,20 +45,15 @@ const ThreeDModel = () => {
     let renderer
     try {
       // No WebGL (blocklisted GPU, headless, disabled context) must degrade to
-      // "no model", never to a thrown effect that unmounts the page.
-      const context =
-        container.ownerDocument.createElement('canvas').getContext('webgl2') ||
-        container.ownerDocument.createElement('canvas').getContext('webgl')
-
-      if (!context) {
-        setLoading(false)
-        return undefined
-      }
-
+      // "no model", never to a thrown effect that unmounts the page. three
+      // itself throws when it cannot create a context, so a plain try/catch
+      // is the whole guard — do NOT create a probe canvas and hand its
+      // context to the renderer: in three r144 the renderer would keep
+      // domElement as its own blank canvas while rendering into the
+      // detached probe canvas, i.e. an invisible model.
       renderer = new THREE.WebGLRenderer({
         antialias: true,
-        alpha: true,
-        context
+        alpha: true
       })
     } catch (error) {
       console.error('WebGL unavailable, skipping 3D model', {

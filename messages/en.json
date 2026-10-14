@@ -195,7 +195,7 @@
     },
     "privacy": {
       "consent": "I agree that my details above may be used to reply to me.",
-      "notice": "What you type here is emailed straight to Ricky over AWS SES and is not stored, logged or shared with anyone else. Your email address is only used to reply to you."
+      "notice": "What you type here is emailed straight to Ricky and is not stored, logged or shared with anyone else. Your email address is only used to reply to you."
     }
   }
 }
