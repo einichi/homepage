@@ -1,0 +1,12 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "YOUR_STACK_NAME"
+s3_bucket = "YOUR_S3_BUCKET"
+s3_prefix = "YOUR_STACK_NAME"
+region = "ap-northeast-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "FromEmail=\"website-contact@example.com\" ToEmail=\"you@example.com\" CorsOrigin=\"https://ricky.burg.in\""
+image_repositories = []
