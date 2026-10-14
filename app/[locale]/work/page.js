@@ -2,8 +2,40 @@ import { Container, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
 import { getTranslations } from 'next-intl/server'
 import { InternalIconButton } from '../../../components/icon-actions'
 
-export const metadata = {
-  title: 'Work - Ricky Burgin'
+const SITE_URL = 'https://ricky.burg.in'
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Metadata' })
+
+  const canonical = `/${locale}/work`
+  const title = t('work_title')
+  const description = t('work_description')
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: '/en/work',
+        ja: '/ja/work',
+        'x-default': '/en/work'
+      }
+    },
+    openGraph: {
+      type: 'website',
+      title,
+      description,
+      url: canonical
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${SITE_URL}/images/ricky/ricky.jpg`]
+    }
+  }
 }
 
 const jobs = [

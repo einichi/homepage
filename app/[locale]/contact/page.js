@@ -1,8 +1,41 @@
 import { Suspense } from 'react'
+import { getTranslations } from 'next-intl/server'
 import Contact from './client-page'
 
-export const metadata = {
-  title: 'Contact - Ricky Burgin'
+const SITE_URL = 'https://ricky.burg.in'
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Metadata' })
+
+  const canonical = `/${locale}/contact`
+  const title = t('contact_title')
+  const description = t('contact_description')
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: '/en/contact',
+        ja: '/ja/contact',
+        'x-default': '/en/contact'
+      }
+    },
+    openGraph: {
+      type: 'website',
+      title,
+      description,
+      url: canonical
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${SITE_URL}/images/ricky/ricky.jpg`]
+    }
+  }
 }
 
 // client-page.js reads useSearchParams(); without a Suspense boundary the

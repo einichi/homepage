@@ -1,4 +1,13 @@
 {
+  "Metadata": {
+    "site_name": "Ricky Burgin | Homepage",
+    "title": "Ricky Burgin | Homepage",
+    "description": "Ricky's homepage — SRE, infrastructure, security and corporate IT engineer based in Japan.",
+    "work_title": "Work History | Ricky Burgin",
+    "work_description": "Ricky's job history: SRE management, security engineering, DevOps, corporate IT and senior technical analyst roles.",
+    "contact_title": "Contact | Ricky Burgin",
+    "contact_description": "Get in touch with Ricky, or hire him for SRE, infrastructure and security roles."
+  },
   "NotFound": {
     "title": "Page not found",
     "body": "The page you've landed on was not found.",

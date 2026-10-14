@@ -4,7 +4,7 @@ import { ColorModeScript } from '@chakra-ui/react'
 import config from '../../libs/theme-config'
 import SiteLayout from '../../components/site-layout'
 import {NextIntlClientProvider} from 'next-intl';
-import {getMessages, setRequestLocale} from 'next-intl/server';
+import {getMessages, getTranslations, setRequestLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 
 // Client-side only model loader needs to be handled carefully in App Router
@@ -12,28 +12,59 @@ import {notFound} from 'next/navigation';
 
 const mplus = M_PLUS_Rounded_1c({ subsets: ['latin'], weight: ['400', '700'] })
 
-export const metadata = {
-  metadataBase: new URL('https://ricky.burg.in'),
-  title: 'Ricky Burgin バーギン　リッキー | Homepage',
-  description: "Ricky's homepage",
-  authors: [{ name: 'Ricky Burgin' }],
-  icons: {
-    icon: [
-      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
-    ],
-    shortcut: '/favicon/favicon.ico',
-    apple: '/favicon/apple-touch-icon.png',
-    other: [
-      { rel: 'mask-icon', url: '/favicon/safari-pinned-tab.svg', color: '#5bbad5' },
-      { rel: 'manifest', url: '/favicon/site.webmanifest' }
-    ]
-  },
-  alternates: {
-    canonical: './',
-    languages: {
-      en: '/en',
-      ja: '/ja'
+const SITE_URL = 'https://ricky.burg.in'
+const OG_IMAGE = '/images/ricky/ricky.jpg'
+const OG_LOCALES = { en: 'en_US', ja: 'ja_JP' }
+
+const hreflang = (path) => ({
+  en: `/en${path}`,
+  ja: `/ja${path}`,
+  'x-default': `/en${path}`
+})
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Metadata' })
+
+  const canonical = `/${locale}`
+  const description = t('description')
+  const title = t('title')
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    authors: [{ name: 'Ricky Burgin' }],
+    icons: {
+      icon: [
+        { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' }
+      ],
+      shortcut: '/favicon/favicon.ico',
+      apple: '/favicon/apple-touch-icon.png',
+      other: [
+        { rel: 'mask-icon', url: '/favicon/safari-pinned-tab.svg', color: '#5bbad5' },
+        { rel: 'manifest', url: '/favicon/site.webmanifest' }
+      ]
+    },
+    alternates: {
+      canonical,
+      languages: hreflang('')
+    },
+    openGraph: {
+      type: 'website',
+      siteName: t('site_name'),
+      title,
+      description,
+      url: canonical,
+      locale: OG_LOCALES[locale] ?? OG_LOCALES.en,
+      images: [{ url: OG_IMAGE, alt: title }]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [OG_IMAGE]
     }
   }
 }
