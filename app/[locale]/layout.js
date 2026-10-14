@@ -10,7 +10,15 @@ import {notFound} from 'next/navigation';
 // Client-side only model loader needs to be handled carefully in App Router
 
 
-const mplus = M_PLUS_Rounded_1c({ subsets: ['latin'], weight: ['400', '700'] })
+// Exposed as a CSS variable because libs/theme.js sets `fonts.heading` to
+// var(--font-mplus). preload: false — the preloads were ~1.5 MB of font data
+// blocking first paint on a page that never renders a heading above the fold.
+const mplus = M_PLUS_Rounded_1c({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-mplus',
+  preload: false
+})
 
 const SITE_URL = 'https://ricky.burg.in'
 const OG_IMAGE = '/images/ricky/ricky.jpg'
@@ -95,7 +103,7 @@ export default async function RootLayout({ children, params }) {
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={mplus.className} suppressHydrationWarning>
+      <body className={`${mplus.className} ${mplus.variable}`} suppressHydrationWarning>
         <ColorModeScript initialColorMode={config.initialColorMode} />
         <NextIntlClientProvider messages={messages}>
           <Chakra>
