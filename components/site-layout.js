@@ -5,7 +5,6 @@ import Navbar from './navbar'
 import Footer from './footer'
 import LazyModel from './lazy-model'
 import ModelErrorBoundary from './model-error-boundary'
-import PageTransition from './page-transition'
 import { usePathname } from '../i18n/routing'
 
 // SiteLayout handles Client-Side Chakra UI rendering to prevent hydration mismatches
@@ -25,7 +24,7 @@ const SiteLayout = ({ children }) => {
             <LazyModel />
           </ModelErrorBoundary>
         )}
-        <PageTransition>{children}</PageTransition>
+        {children}
       </Container>
       <Footer />
     </Box>
