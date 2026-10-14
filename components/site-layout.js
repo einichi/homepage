@@ -4,6 +4,7 @@ import { Box, Container } from '@chakra-ui/react'
 import Navbar from './navbar'
 import Footer from './footer'
 import LazyModel from './lazy-model'
+import ModelErrorBoundary from './model-error-boundary'
 import PageTransition from './page-transition'
 import { usePathname } from '../i18n/routing'
 
@@ -15,9 +16,15 @@ const SiteLayout = ({ children }) => {
   return (
     <Box as="main" pb={8}>
       <Navbar path={pathname} />
-      
+
       <Container maxW="container.md" pt={{ base: 12, md: 16 }}>
-        <LazyModel />
+        {/* The model is only part of the home page; keeping it off /work and
+            /contact drops three.js and the GLB from those routes entirely. */}
+        {pathname === '/' && (
+          <ModelErrorBoundary>
+            <LazyModel />
+          </ModelErrorBoundary>
+        )}
         <PageTransition>{children}</PageTransition>
       </Container>
       <Footer />
