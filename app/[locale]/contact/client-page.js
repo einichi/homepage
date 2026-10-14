@@ -54,7 +54,7 @@ const postContactInfo = async ({
   email,
   message,
   recruiting,
-  consent,
+  consent: _consent,
   ...rest
 }) => {
   if (!CONTACT_API_URL) {
@@ -71,8 +71,8 @@ const postContactInfo = async ({
     message
   }
   if (recruiting) {
-    // `consent` is destructured away on purpose: it is a UI acknowledgement,
-    // never part of the payload the Lambda expects.
+    // `consent` is destructured away above (as `_consent`) on purpose: it is a
+    // UI acknowledgement, never part of the payload the Lambda expects.
     valuesToPost = { ...valuesToPost, recruiting, ...rest }
   }
 
