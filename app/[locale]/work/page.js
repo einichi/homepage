@@ -24,8 +24,9 @@ const HireMeButton = ({ children }) => (
   </Box>
 )
 
-export default async function Page() {
-  const t = await getTranslations('Work')
+export default async function Page({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Work' })
 
   return (
     <Box as="article" position="relative">

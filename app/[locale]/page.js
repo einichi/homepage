@@ -59,9 +59,10 @@ const SkillLine = ({ name, value }) => (
   </Box>
 )
 
-const Page = async () => {
-  const t = await getTranslations('HomePage')
-  const tProfile = await getTranslations('Profile')
+const Page = async ({ params }) => {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'HomePage' })
+  const tProfile = await getTranslations({ locale, namespace: 'Profile' })
 
   return (
     <Box as="article" position="relative">

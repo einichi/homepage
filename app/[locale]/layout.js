@@ -1,11 +1,10 @@
-import { cookies } from 'next/headers'
 import Chakra from '../../components/chakra'
 import { M_PLUS_Rounded_1c } from 'next/font/google'
 import { ColorModeScript } from '@chakra-ui/react'
 import config from '../../libs/theme-config'
 import SiteLayout from '../../components/site-layout'
 import {NextIntlClientProvider} from 'next-intl';
-import {getMessages} from 'next-intl/server';
+import {getMessages, setRequestLocale} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 
 // Client-side only model loader needs to be handled carefully in App Router
@@ -45,26 +44,30 @@ export const viewport = {
   themeColor: '#ffffff'
 }
 
+export function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'ja' }]
+}
+
 export default async function RootLayout({ children, params }) {
   const {locale} = await params;
-  
+
   if (!['en', 'ja'].includes(locale)) {
     notFound();
   }
 
+  // Opt into static rendering: without this the locale-less server APIs fall
+  // back to reading headers and silently keep every route dynamic.
+  setRequestLocale(locale)
+
   // Provide messages to the client-side via NextIntlClientProvider
-  const messages = await getMessages();
-  const cookieStore = await cookies()
-  const colorMode = cookieStore.get('chakra-ui-color-mode')?.value
-  // cookieStorageManagerSSR expects a cookie string, not just the value
-  const cookieString = colorMode ? `chakra-ui-color-mode=${colorMode}` : ''
+  const messages = await getMessages({locale})
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={mplus.className} suppressHydrationWarning>
         <ColorModeScript initialColorMode={config.initialColorMode} />
         <NextIntlClientProvider messages={messages}>
-          <Chakra cookies={cookieString}>
+          <Chakra>
             <SiteLayout>{children}</SiteLayout>
           </Chakra>
         </NextIntlClientProvider>
