@@ -6,6 +6,10 @@ import {routing} from './i18n/routing';
 export default createMiddleware(routing);
  
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ['/', '/(ja|en)/:path*']
+  // Match locale-prefixed internationalized pathnames, plus any unprefixed
+  // path so the middleware can redirect it to the active locale. Previously
+  // `/work` and `/contact` never reached the middleware and 404'd.
+  // The dot-exclusion keeps static assets (/models/*, /images/*, /favicon/*,
+  // /_next/*) and future /sitemap.xml out of the middleware.
+  matcher: ['/', '/(en|ja)/:path*', '/((?!api|_next|_vercel|.*\\.).*)']
 };

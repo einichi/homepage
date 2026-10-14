@@ -1,4 +1,11 @@
 {
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you've landed on was not found.",
+    "body_action": "If you think something should've been here, please feel free to let me know.",
+    "contact_cta": "Let me know",
+    "back_cta": "Back to main"
+  },
   "Navbar": {
     "work": "Work",
     "contact": "Contact",
