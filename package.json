@@ -19,7 +19,6 @@
     "@chakra-ui/react": "^2.10.4",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "axios": "^1.16.1",
     "eslint-plugin-prettier": "^4.2.1",
     "formik": "^2.2.9",
     "framer-motion": "^11.5.6",

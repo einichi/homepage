@@ -41,32 +41,56 @@ import { EmailIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Layout from '../../../components/layouts/article'
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import axios from 'axios'
 import { formatJPY, jpyToUSD } from '../../../libs/numberFormat'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 
-const CONTACT_API_URL =
-  process.env.NEXT_PUBLIC_CONTACT_API_URL ||
-  'https://qsp2z496q5.execute-api.ap-northeast-1.amazonaws.com/Prod/send'
+// No hardcoded fallback: the endpoint is deployment configuration. If it is
+// missing the submit fails loudly and the error alert points at mailto:.
+const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
 
 const postContactInfo = async ({
   sender,
   email,
   message,
   recruiting,
+  _consent,
   ...rest
 }) => {
+  if (!CONTACT_API_URL) {
+    const error = new Error(
+      'NEXT_PUBLIC_CONTACT_API_URL is not configured for this deployment'
+    )
+    error.status = null
+    throw error
+  }
+
   let valuesToPost = {
     sender,
     email,
     message
   }
   if (recruiting) {
+    // `_consent` is destructured away on purpose: it is a UI acknowledgement,
+    // never part of the payload the Lambda expects.
     valuesToPost = { ...valuesToPost, recruiting, ...rest }
   }
 
-  return axios.post(CONTACT_API_URL, valuesToPost)
+  const response = await fetch(CONTACT_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(valuesToPost)
+  })
+
+  // The Lambda answers 204 on success; anything else is a failure worth
+  // showing the user and logging the status of.
+  if (!response.ok) {
+    const error = new Error(`Contact API responded ${response.status}`)
+    error.status = response.status
+    throw error
+  }
+
+  return response
 }
 
 const usePostContactInfo = () => {
@@ -85,7 +109,7 @@ const usePostContactInfo = () => {
       .catch((err) => {
         // Deliberately no PII (name, email, company) in the log.
         console.error('Contact form failed', {
-          status: err.response?.status ?? null
+          status: err.status ?? null
         })
         setSubmitStatus('error')
       })
@@ -162,7 +186,8 @@ const Contact = () => {
       benefitHybridRemote: false,
       benefitFlexibleHours: false,
       benefitOther: false,
-      recruiting: isHireMeLink
+      recruiting: isHireMeLink,
+      consent: false
     },
     validateOnMount: true,
     validate: (values) => {
@@ -176,6 +201,7 @@ const Contact = () => {
         errors.email = t('validation.email')
       }
       if (!values.message.trim()) errors.message = required
+      if (!values.consent) errors.consent = t('validation.consent')
 
       if (values.recruiting) {
         if (values.jobSource === 'agency' && !values.fromAgency.trim()) {
@@ -571,6 +597,30 @@ const Contact = () => {
               <FormErrorMessage>{formik.errors.message}</FormErrorMessage>
             </FormControl>
             <br />
+            <Spacer h="1rem" />
+            <FormControl
+              isRequired
+              isInvalid={Boolean(
+                formik.submitCount > 0 && formik.errors.consent
+              )}
+            >
+              <Checkbox
+                id="consent"
+                name="consent"
+                colorScheme="teal"
+                isChecked={formik.values.consent}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                {t('privacy.consent')}
+              </Checkbox>
+              <FormHelperText mt="0.5rem">
+                {t('privacy.notice')}
+              </FormHelperText>
+              {/* Only surfaced once the user has actually tried to send, so a
+                  pristine form is not painted with errors. */}
+              <FormErrorMessage>{formik.errors.consent}</FormErrorMessage>
+            </FormControl>
             <Spacer h="1rem" />
             <SubmitButton
               status={submitStatus}
