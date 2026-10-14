@@ -50,30 +50,6 @@ const CONTACT_API_URL =
   process.env.NEXT_PUBLIC_CONTACT_API_URL ||
   'https://qsp2z496q5.execute-api.ap-northeast-1.amazonaws.com/Prod/send'
 
-const hashString = (value) => {
-  let hash = 0
-  const input = String(value || '')
-    .trim()
-    .toLowerCase()
-
-  for (let index = 0; index < input.length; index += 1) {
-    hash = (hash << 5) - hash + input.charCodeAt(index)
-    hash |= 0
-  }
-
-  return Math.abs(hash).toString(36)
-}
-
-const anonymizedContactLog = (values) => ({
-  contactId: hashString([values.sender, values.email].join('|')),
-  companyId: values.fromCompany ? hashString(values.fromCompany) : undefined,
-  agencyId: values.fromAgency ? hashString(values.fromAgency) : undefined,
-  recruiting: Boolean(values.recruiting),
-  hasMessage: Boolean(values.message?.trim()),
-  role: values.role || undefined,
-  jobSource: values.jobSource || undefined
-})
-
 const postContactInfo = async ({
   sender,
   email,
@@ -90,28 +66,28 @@ const postContactInfo = async ({
     valuesToPost = { ...valuesToPost, recruiting, ...rest }
   }
 
-  console.info('Submitting contact form', anonymizedContactLog(valuesToPost))
-
   return axios.post(CONTACT_API_URL, valuesToPost)
 }
 
 const usePostContactInfo = () => {
   const [submitStatus, setSubmitStatus] = useState(null)
 
-  const onSubmit = (values, onFinishSubmit) => {
+  // Returns the promise chain so Formik keeps `isSubmitting` true until the
+  // request settles, which is what actually disables the submit button.
+  const onSubmit = (values, onSuccess) => {
     setSubmitStatus('sending')
-    postContactInfo(values)
+
+    return postContactInfo(values)
       .then(() => {
         setSubmitStatus('sent')
-        onFinishSubmit()
+        onSuccess()
       })
       .catch((err) => {
+        // Deliberately no PII (name, email, company) in the log.
         console.error('Contact form failed', {
-          status: err.response?.status,
-          contactId: hashString([values.sender, values.email].join('|'))
+          status: err.response?.status ?? null
         })
         setSubmitStatus('error')
-        onFinishSubmit()
       })
   }
   return [submitStatus, onSubmit]
@@ -143,6 +119,7 @@ const SubmitButton = ({ status, isDisabled }) => {
         size="lg"
         colorScheme="red"
         loadingText={t('buttons.sending')}
+        isDisabled={isDisabled}
       >
         {t('buttons.retry')}
       </Button>
@@ -216,7 +193,7 @@ const Contact = () => {
 
       return errors
     },
-    onSubmit: (value) => onSubmit(value, () => formik.setSubmitting(false))
+    onSubmit: (value) => onSubmit(value, () => formik.resetForm())
   })
 
   return (
