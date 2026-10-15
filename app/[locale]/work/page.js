@@ -1,5 +1,6 @@
 import { Container, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
 import { getTranslations } from 'next-intl/server'
+import Layout from '../../../components/layouts/article'
 import { InternalIconButton } from '../../../components/icon-actions'
 
 const SITE_URL = 'https://ricky.burg.in'
@@ -63,7 +64,7 @@ export default async function Page({ params }) {
   const t = await getTranslations({ locale, namespace: 'Work' })
 
   return (
-    <Box as="article" position="relative">
+    <Layout>
       <Container>
         <Box as="section" mb={6}>
           <Heading as="h3" variant="section-title">
@@ -101,6 +102,6 @@ export default async function Page({ params }) {
           <HireMeButton>{t('hire_me')}</HireMeButton>
         </Box>
       </Container>
-    </Box>
+    </Layout>
   )
 }

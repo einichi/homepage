@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
+import Layout from '../../components/layouts/article'
 import {
   EXPERIENCE,
   SKILLS,
@@ -65,15 +66,9 @@ const Page = async ({ params }) => {
   const tProfile = await getTranslations({ locale, namespace: 'Profile' })
 
   return (
-    <Box as="article" position="relative">
+    <Layout>
       <Container>
-        <Box
-          borderRadius="lg"
-          bg="heroBg"
-          p={3}
-          mb={6}
-          align="center"
-        >
+        <Box borderRadius="lg" bg="heroBg" p={3} mb={6} align="center">
           {t('hero_text')}
         </Box>
 
@@ -166,7 +161,11 @@ const Page = async ({ params }) => {
           {chunkPairs(SKILLS.infrastructure).map((row, index) => (
             <Flex key={index}>
               {row.map((skill) => (
-                <SkillLine key={skill.name} name={skill.name} value={skill.value} />
+                <SkillLine
+                  key={skill.name}
+                  name={skill.name}
+                  value={skill.value}
+                />
               ))}
             </Flex>
           ))}
@@ -177,7 +176,11 @@ const Page = async ({ params }) => {
           {chunkPairs(SKILLS.programming).map((row, index) => (
             <Flex key={index}>
               {row.map((skill) => (
-                <SkillLine key={skill.name} name={skill.name} value={skill.value} />
+                <SkillLine
+                  key={skill.name}
+                  name={skill.name}
+                  value={skill.value}
+                />
               ))}
             </Flex>
           ))}
@@ -209,7 +212,7 @@ const Page = async ({ params }) => {
           </List>
         </Section>
       </Container>
-    </Box>
+    </Layout>
   )
 }
 

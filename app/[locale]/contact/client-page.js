@@ -36,7 +36,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper
 } from '@chakra-ui/react'
-import Section from '../../../components/section'
 import { EmailIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Layout from '../../../components/layouts/article'
 import React, { useState } from 'react'
@@ -225,7 +224,7 @@ const Contact = () => {
   return (
     <Layout>
       <Container>
-        <Section>
+        <Box as="section" mb={6}>
           <Heading as="h3" variant="section-title">
             {t('title')}
           </Heading>
@@ -614,9 +613,7 @@ const Contact = () => {
               >
                 {t('privacy.consent')}
               </Checkbox>
-              <FormHelperText mt="0.5rem">
-                {t('privacy.notice')}
-              </FormHelperText>
+              <FormHelperText mt="0.5rem">{t('privacy.notice')}</FormHelperText>
               {/* Only surfaced once the user has actually tried to send, so a
                   pristine form is not painted with errors. */}
               <FormErrorMessage>{formik.errors.consent}</FormErrorMessage>
@@ -658,7 +655,7 @@ const Contact = () => {
               </Alert>
             )}
           </form>
-        </Section>
+        </Box>
       </Container>
     </Layout>
   )
