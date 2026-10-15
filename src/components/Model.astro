@@ -1,0 +1,14 @@
+---
+const { locale } = Astro.props
+---
+<section class="model-hero" aria-label={locale === 'ja' ? '3Dモデル' : 'Interactive 3D model'}>
+  <img data-model-fallback src="/images/ricky/ricky.jpg" alt={locale === 'ja' ? 'リッキー・バーギンの写真' : 'Portrait of Ricky Burgin'} width="144" height="144" />
+  <p data-model-status role="status" class="model-status">{locale === 'ja' ? '3Dモデルを読み込み中…' : 'Loading interactive model…'}</p>
+  <button type="button" class="button secondary model-retry" data-model-retry hidden>{locale === 'ja' ? '再試行' : 'Retry'}</button>
+  <div data-model-host></div>
+  <noscript><style>[data-model-status] { display: none; }</style></noscript>
+</section>
+<script>
+  import { enableLazyModel } from '../scripts/lazy-model.js'
+  enableLazyModel()
+</script>

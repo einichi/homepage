@@ -1,0 +1,78 @@
+---
+import en from '../../messages/en.json'
+import ja from '../../messages/ja.json'
+import Model from '../components/Model.astro'
+import '@fontsource/m-plus-rounded-1c/latin-400.css'
+import '@fontsource/m-plus-rounded-1c/latin-700.css'
+const { locale, page = 'home', title, description, canonicalPath = '', noindex = false } = Astro.props
+const messages = locale === 'ja' ? ja : en
+const metaTitle = title ?? messages.Metadata.title
+const metaDescription = description ?? messages.Metadata.description
+const base = 'https://ricky.burg.in'
+const path = `/${locale}${canonicalPath || '/'}`
+const preview = import.meta.env.PUBLIC_SITE_MODE !== 'production'
+const canonicalUrl = preview ? undefined : `${base}${path}`
+const query = Astro.url.search
+const switchPath = `/${locale === 'en' ? 'ja' : 'en'}${canonicalPath || '/'}${query}`
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#319795" />
+    <title>{metaTitle}</title>
+    <meta name="description" content={metaDescription} />
+    {!preview && !noindex && <link rel="canonical" href={canonicalUrl} />}
+    {!preview && !noindex && <link rel="alternate" hreflang="en" href={`${base}/en${canonicalPath || '/'}`} />}
+    {!preview && !noindex && <link rel="alternate" hreflang="ja" href={`${base}/ja${canonicalPath || '/'}`} />}
+    {!preview && !noindex && <link rel="alternate" hreflang="x-default" href={`${base}/en${canonicalPath || '/'}`} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={messages.Metadata.site_name} />
+    <meta property="og:title" content={metaTitle} />
+    <meta property="og:description" content={metaDescription} />
+    {!preview && <meta property="og:url" content={canonicalUrl} />}
+    <meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta property="og:image" content={`${preview ? '' : base}/images/ricky/ricky.jpg`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {(preview || noindex) && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      let saved = null;
+      try { saved = localStorage.getItem('theme'); } catch {}
+      const dark = saved ? saved === 'dark' : window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    </script>
+    <link rel="stylesheet" href="/styles/site.css" />
+    <script>
+      import { initTheme, initNavigation, initLanguageSwitch } from '../scripts/site.js'
+      initTheme()
+      initNavigation()
+      initLanguageSwitch()
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{locale === 'ja' ? '本文へ' : 'Skip to content'}</a>
+    <header class="site-header"><div class="header-inner">
+      <a class="brand" href={`/${locale}/`}><img src="/images/logo.png" width="20" height="20" alt="" />Ricky Burgin</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span class="sr-only">{messages.Navbar.open_menu}</span><span aria-hidden="true">☰</span>
+      </button>
+      <nav id="primary-nav" class="primary-nav" aria-label={locale === 'ja' ? 'メインナビゲーション' : 'Main navigation'}>
+        <a href={`/${locale}/work/`} aria-current={canonicalPath === '/work/' ? 'page' : undefined}>{messages.Navbar.work}</a>
+        <a href={`/${locale}/contact/`} aria-current={canonicalPath === '/contact/' ? 'page' : undefined}>{messages.Navbar.contact}</a>
+        <a href={switchPath} data-language-switch lang={locale === 'en' ? 'ja' : 'en'}>{locale === 'en' ? '日本語' : 'English'}</a>
+        <button class="theme-toggle" type="button" aria-label={messages.Navbar.switch_to_dark} data-light-label={messages.Navbar.switch_to_light} data-dark-label={messages.Navbar.switch_to_dark}>◐</button>
+      </nav>
+    </div></header>
+    <main id="main" class="container">
+      {page !== 'work' && page !== 'contact' && <Model locale={locale} />}
+      <slot />
+    </main>
+    <footer class="site-footer"><span>© {new Date().getFullYear()} Ricky Burgin</span><a href="/sitemap.xml">Sitemap</a></footer>
+  </body>
+</html>

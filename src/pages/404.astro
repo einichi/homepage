@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import en from '../../messages/en.json'
+import ja from '../../messages/ja.json'
+const locale = Astro.url.pathname.startsWith('/ja/') ? 'ja' : 'en'
+const m = locale === 'ja' ? ja.NotFound : en.NotFound
+---
+<BaseLayout locale={locale} title={m.title} noindex>
+  <section class="not-found content-section"><h1>{m.title}</h1><p>{m.body}</p><p>{m.body_action}</p><p><a class="button" href={`/${locale}/contact/`}>{m.contact_cta}</a> <a href={`/${locale}/`}>{m.back_cta}</a></p></section>
+</BaseLayout>

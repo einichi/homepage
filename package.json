@@ -1,40 +1,32 @@
 {
   "name": "ricky-homepage",
-  "version": "1.0.0",
-  "description": "Ricky's homepage",
-  "main": "index.js",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev -H 127.0.0.1",
-    "build": "next build",
-    "start": "next start",
-    "prettier": "prettier --write .",
-    "lint": "eslint ."
+    "dev": "npm run build && vite --mode development --host 127.0.0.1 --port 8787",
+    "build": "SITE_MODE=preview node scripts/build-site.mjs && vite build --mode preview && node scripts/check-build.mjs preview",
+    "preview:build": "npm run build",
+    "production:build": "SITE_MODE=production node scripts/build-site.mjs && SITE_MODE=production vite build --mode production && node scripts/check-build.mjs production",
+    "typecheck": "astro check && cf workers types && tsc --noEmit",
+    "test": "node --test src/lib/*.test.ts scripts/*.test.mjs"
   },
-  "keywords": [],
-  "author": "Ricky Burgin<ricky@burg.in>",
-  "license": "MIT",
   "dependencies": {
-    "@chakra-ui/icons": "^2.2.4",
-    "@chakra-ui/next-js": "^2.4.2",
-    "@chakra-ui/react": "^2.10.4",
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "formik": "^2.2.9",
-    "framer-motion": "^11.5.6",
-    "next": "^16.2.6",
-    "next-intl": "^4.12.0",
+    "@astrojs/react": "^4.4.2",
+    "@fontsource/m-plus-rounded-1c": "^5.2.6",
+    "astro": "^5.16.6",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-icons": "^4.3.1",
     "three": "^0.144.0"
   },
   "devDependencies": {
-    "eslint": "^9.0.0",
-    "eslint-config-next": "^16.2.6",
-    "prettier": "^2.7.1"
+    "@astrojs/check": "^0.9.10",
+    "@cloudflare/vite-plugin": "beta",
+    "cf": "^1.0.0-beta.17",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.0"
   },
-  "overrides": {
-    "postcss": "^8.5.15",
-    "underscore": "^1.13.8"
+  "engines": {
+    "node": ">=24"
   }
 }

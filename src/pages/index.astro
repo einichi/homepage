@@ -1,0 +1,4 @@
+---
+const target = `/en/${Astro.url.search}${Astro.url.hash}`
+---
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="robots" content="noindex" /><meta http-equiv="refresh" content={`0;url=${target}`} /><title>Ricky Burgin</title></head><body><p><a href={target}>Continue to English</a></p><script is:inline>location.replace('/en/' + location.search + location.hash)</script></body></html>

@@ -35,10 +35,9 @@
     },
     "about": {
       "title": "About Ricky",
-      "intro": "Engineer with experience across SRE, infrastructure, security and corporate IT.",
-      "p1": "With a broad, hands-on background spanning IT infrastructure, DevOps, cloud platforms, security and corporate IT, I bring practical technical experience to a wide range of systems and organizational contexts. I enjoy understanding how complex environments fit together and using that perspective to build reliable, secure and maintainable solutions.",
-      "p2": "I approach problems with curiosity and a solution-oriented mindset, working across functions, regions and cultures to turn technical challenges into clear, effective outcomes. I value knowledge sharing, thoughtful collaboration and continuous improvement, and aim to help create environments where technical excellence and innovation can thrive.",
-      "p3": "Japanese Language JLPT N1 certified and Japan permanent resident"
+      "intro": "I’m an engineer based in Japan, with experience across infrastructure, DevOps, security and corporate IT. My work has included leading teams across APAC, migrating applications to AWS, and building the systems people rely on every day.",
+      "p1": "I enjoy understanding how systems fit together, getting to the root of difficult problems, and making things simpler to operate. I value practical solutions, clear communication and sharing what I learn.",
+      "p2": "I work in English and Japanese, hold JLPT N1 certification, and am a permanent resident of Japan."
     },
     "headers": {
       "experience": "Experience",
@@ -140,15 +139,18 @@
       "agency_name": "Agency name",
       "company_name": "Company name",
       "role_type": "Role type",
-      "employment_type": "Employment Type",
       "salary_range": "Salary range",
-      "exchange_rate": "Exchange Rate",
       "benefits": "Benefits",
-      "message": "Message"
+      "message": "Message",
+      "job_title": "Job title",
+      "job_url": "Job posting URL",
+      "job_location": "Job location / time zone",
+      "work_arrangement": "Work arrangement",
+      "salary_basis": "Salary basis"
     },
     "placeholders": {
       "name": "John Doe | タレント太郎",
-      "email": "you@some.domain",
+      "email": "you@example.test",
       "agency": "Executive Recruiters Inc | 案件豊富株式会社",
       "company": "Come Pany Ltd. | 来手星意株式会社",
       "select": "Select one",
@@ -161,15 +163,9 @@
       "other": "Something different"
     },
     "employment": {
-      "full_time": "Full Time Employee",
-      "contractor": "Contractor",
-      "dispatch": "Dispatch",
-      "part_time": "Part Time",
-      "helper": "Only interested in full-time roles right now, sorry!"
+      "helper": "Full-time roles only."
     },
     "benefits": {
-      "full_remote": "Full Remote",
-      "hybrid_remote": "Hybrid Remote",
       "flexible_hours": "Flexible Hours",
       "other": "Other (mention in Message)"
     },
@@ -181,21 +177,43 @@
     },
     "alerts": {
       "error_title": "Sending failed",
-      "error_desc": "Please wait a moment and try again. Or contact me at {email} if the problem persists.",
+      "error_desc": "Please wait a moment and try again. Your details remain in this form.",
       "success_title": "Message sent",
-      "success_desc": "Thanks for getting in touch. I will reply when I can."
+      "success_desc": "Thanks for getting in touch. Your message was accepted for sending, and I will reply when I can."
     },
     "validation": {
       "email": "Please enter a valid email address",
       "email_helper": "Used only to reply to your message",
       "required": "This field is required",
       "consent": "Please agree to the privacy notice before sending",
-      "salary_order": "The upper salary must be higher than the lower salary",
-      "exchange_rate": "Enter an exchange rate greater than 0"
+      "salary_order": "The upper salary must be at least the lower salary.",
+      "salary_bounds": "Enter annual salaries between ¥1,000,000 and ¥30,000,000.",
+      "invalid": "Please check your entries for unsupported characters or values.",
+      "url": "Enter a complete http:// or https:// URL without login credentials."
     },
     "privacy": {
-      "consent": "I agree that my details above may be used to reply to me.",
-      "notice": "What you type here is emailed straight to Ricky and is not stored, logged or shared with anyone else. Your email address is only used to reply to you."
+      "consent": "I agree that my details above may be processed to reply to me.",
+      "notice": "Your contact details and message are processed by Cloudflare and emailed to Ricky so he can reply. This site does not keep a contact database."
+    },
+    "turnstile_pending": "The contact form is temporarily unavailable. Please try again later.",
+    "noscript": "Enable JavaScript to verify this form and send your message.",
+    "salary_lower": "Lower annual salary",
+    "salary_upper": "Upper annual salary",
+    "local_notice": "Local test: submissions are checked but no email is sent.",
+    "local_success": "Local test passed; no email was sent.",
+    "verification_error": "Bot verification could not load. Please reload and try again.",
+    "required_label": "required",
+    "optional_label": "optional",
+    "work_arrangements": {
+      "unspecified": "Not specified",
+      "remote": "Remote",
+      "hybrid": "Hybrid",
+      "onsite": "Onsite"
+    },
+    "salary": {
+      "base": "Base salary",
+      "total": "Total compensation (including bonus / equity)",
+      "helper": "Required annual amounts in JPY, between ¥1,000,000 and ¥30,000,000. For a fixed salary, enter the same amount in both fields."
     }
   }
 }

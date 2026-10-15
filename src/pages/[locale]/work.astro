@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import en from '../../../messages/en.json'
+import ja from '../../../messages/ja.json'
+export function getStaticPaths() { return [{ params: { locale: 'en' } }, { params: { locale: 'ja' } }] }
+const locale = Astro.params.locale === 'ja' ? 'ja' : 'en'
+const m = locale === 'ja' ? ja : en
+const jobs = ['marigold_sre','cheetah_security','cheetah_it','cheetah_devops','experian_uk','appliansys','exoware'] as const
+const href = `/${locale}/contact/?hireme`
+---
+<BaseLayout locale={locale} page="work" title={m.Metadata.work_title} description={m.Metadata.work_description} canonicalPath="/work/">
+  <section class="content-section">
+    <h1>{m.Work.title}</h1><p class="center"><a class="button" href={href}>{m.Work.hire_me}</a></p>
+    {jobs.map((key) => <article class="job"><div class="job-heading"><h2>{m.Work.jobs[key].title}</h2><strong>{m.Work.jobs[key].company}</strong></div><p class="job-date">{m.Work.jobs[key].date}</p><p>{m.Work.jobs[key].details}</p></article>)}
+    <div class="section-actions"><a class="button" href={href}>{m.Work.hire_me}</a></div>
+  </section>
+</BaseLayout>

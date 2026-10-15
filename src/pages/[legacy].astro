@@ -1,0 +1,6 @@
+---
+export function getStaticPaths() { return ['work', 'contact'].map((legacy) => ({ params: { legacy } })) }
+const { legacy } = Astro.params
+const target = `/en/${legacy}/${Astro.url.search}${Astro.url.hash}`
+---
+<!doctype html><html lang="en"><head><meta charset="utf-8" /><meta name="robots" content="noindex" /><meta http-equiv="refresh" content={`0;url=${target}`} /><title>Ricky Burgin</title></head><body><p><a href={target}>Continue</a></p><script is:inline data-legacy={legacy}>location.replace('/en/' + document.currentScript.dataset.legacy + '/' + location.search + location.hash)</script></body></html>

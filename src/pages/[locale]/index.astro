@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import en from '../../../messages/en.json'
+import ja from '../../../messages/ja.json'
+import { EXPERIENCE, SKILLS, LANGUAGES, INTERESTS } from '../../../lib/profile-data.js'
+export function getStaticPaths() { return [{ params: { locale: 'en' } }, { params: { locale: 'ja' } }] }
+const locale = Astro.params.locale === 'ja' ? 'ja' : 'en'
+const m = locale === 'ja' ? ja : en
+---
+<BaseLayout locale={locale}>
+  <section class="hero-card">{m.HomePage.hero_text}</section>
+  <section class="profile-head">
+    <div>
+      <h1>{m.HomePage.title}</h1><p class="role">{m.HomePage.role}</p>
+      <div class="social-links">
+        <a href="https://www.github.com/einichi" target="_blank" rel="me noopener noreferrer">GitHub ↗</a>
+        <a href="https://www.printables.com/@einichi_862656/models" target="_blank" rel="noopener noreferrer">{m.HomePage.links.designs} ↗</a>
+        <a href="https://www.linkedin.com/in/rickyburgin/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      </div>
+    </div>
+    <img class="avatar" src="/images/ricky/ricky.jpg" alt="Ricky Burgin" width="100" height="100" />
+  </section>
+  <section class="content-section">
+    <h2>{m.HomePage.about.title}</h2><p>{m.HomePage.about.intro}</p>
+    <p>{m.HomePage.about.p1}</p><p>{m.HomePage.about.p2}</p>
+  </section>
+  <section class="content-section">
+    <h2>{m.HomePage.headers.experience}</h2>
+    {EXPERIENCE.map((item) => <p class="profile-line"><strong>{item.years}</strong>{m.Profile.Experience[item.titleKey as keyof typeof m.Profile.Experience]}</p>)}
+    <div class="section-actions"><a class="button secondary" href={`/${locale}/work/`}>{m.HomePage.buttons.job_history}</a></div>
+  </section>
+  <section class="content-section">
+    <h2>{m.HomePage.headers.technical_skills}</h2>
+    {Object.entries(SKILLS).map(([key, items]) => <><h3>{m.HomePage.headers[key === 'infrastructure' ? 'infrastructure' : 'programming']}</h3><div class="skills-grid">{items.map((skill) => <div class="skill"><span>{skill.name}</span><progress max="100" value={skill.value}>{skill.value}%</progress></div>)}</div></>)}
+  </section>
+  <section class="content-section"><h2>{m.HomePage.headers.languages}</h2>{LANGUAGES.map((item) => <p class="profile-line"><strong>{m.Profile.Levels[item.levelKey as keyof typeof m.Profile.Levels]}</strong>{m.Profile.Languages[item.nameKey as keyof typeof m.Profile.Languages]}</p>)}</section>
+  <section class="content-section"><h2>{m.HomePage.headers.interests}</h2><ul class="interest-list">{INTERESTS.map((item) => <li>♥ {m.Profile.Interests[item.nameKey as keyof typeof m.Profile.Interests]}</li>)}</ul></section>
+</BaseLayout>
