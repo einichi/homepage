@@ -1,9 +1,44 @@
 import { Container, Box, Heading, Flex, Spacer } from '@chakra-ui/react'
 import { getTranslations } from 'next-intl/server'
+import Layout from '../../../components/layouts/article'
 import { InternalIconButton } from '../../../components/icon-actions'
 
-export const metadata = {
-  title: 'Work - Ricky Burgin'
+const SITE_URL = 'https://ricky.burg.in'
+
+export async function generateMetadata({ params }, parent) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Metadata' })
+
+  const canonical = `/${locale}/work`
+  const title = t('work_title')
+  const description = t('work_description')
+  const { openGraph } = await parent
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: '/en/work',
+        ja: '/ja/work',
+        'x-default': '/en/work'
+      }
+    },
+    openGraph: {
+      ...openGraph,
+      type: 'website',
+      title,
+      description,
+      url: canonical
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [`${SITE_URL}/images/ricky/ricky.jpg`]
+    }
+  }
 }
 
 const jobs = [
@@ -24,11 +59,12 @@ const HireMeButton = ({ children }) => (
   </Box>
 )
 
-export default async function Page() {
-  const t = await getTranslations('Work')
+export default async function Page({ params }) {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'Work' })
 
   return (
-    <Box as="article" position="relative">
+    <Layout>
       <Container>
         <Box as="section" mb={6}>
           <Heading as="h3" variant="section-title">
@@ -66,6 +102,6 @@ export default async function Page() {
           <HireMeButton>{t('hire_me')}</HireMeButton>
         </Box>
       </Container>
-    </Box>
+    </Layout>
   )
 }

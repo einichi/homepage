@@ -1,4 +1,20 @@
 {
+  "Metadata": {
+    "site_name": "Ricky Burgin | Homepage",
+    "title": "Ricky Burgin | Homepage",
+    "description": "Ricky's homepage — SRE, infrastructure, security and corporate IT engineer based in Japan.",
+    "work_title": "Work History | Ricky Burgin",
+    "work_description": "Ricky's job history: SRE management, security engineering, DevOps, corporate IT and senior technical analyst roles.",
+    "contact_title": "Contact | Ricky Burgin",
+    "contact_description": "Get in touch with Ricky, or hire him for SRE, infrastructure and security roles."
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you've landed on was not found.",
+    "body_action": "If you think something should've been here, please feel free to let me know.",
+    "contact_cta": "Let me know",
+    "back_cta": "Back to main"
+  },
   "Navbar": {
     "work": "Work",
     "contact": "Contact",
@@ -173,8 +189,13 @@
       "email": "Please enter a valid email address",
       "email_helper": "Used only to reply to your message",
       "required": "This field is required",
+      "consent": "Please agree to the privacy notice before sending",
       "salary_order": "The upper salary must be higher than the lower salary",
       "exchange_rate": "Enter an exchange rate greater than 0"
+    },
+    "privacy": {
+      "consent": "I agree that my details above may be used to reply to me.",
+      "notice": "What you type here is emailed straight to Ricky and is not stored, logged or shared with anyone else. Your email address is only used to reply to you."
     }
   }
 }

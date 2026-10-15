@@ -1,32 +1,18 @@
 'use client'
 
-import {
-  ChakraProvider,
-  cookieStorageManagerSSR,
-  localStorageManager
-} from '@chakra-ui/react'
+import { ChakraProvider, localStorageManager } from '@chakra-ui/react'
 import { CacheProvider } from '@chakra-ui/next-js'
 import theme from '../libs/theme'
 
-export default function Chakra({ cookies, children }) {
-  const colorModeManager =
-    typeof cookies === 'string'
-      ? cookieStorageManagerSSR(cookies)
-      : localStorageManager
-
+// Color mode is persisted to localStorage; the layout's ColorModeScript sets
+// it before paint. Reading cookies() here would opt every route into dynamic
+// rendering for no benefit.
+export default function Chakra({ children }) {
   return (
     <CacheProvider>
-      <ChakraProvider theme={theme} colorModeManager={colorModeManager}>
+      <ChakraProvider theme={theme} colorModeManager={localStorageManager}>
         {children}
       </ChakraProvider>
     </CacheProvider>
   )
-}
-
-export async function getServerSideProps({ req }) {
-  return {
-    props: {
-      cookies: req.headers.cookie ?? ''
-    }
-  }
 }

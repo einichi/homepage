@@ -12,18 +12,18 @@ import {
 import { ArrowBackIcon, EmailIcon } from '@chakra-ui/icons'
 // Layout article isn't strictly needed for 404 but provides consistent spacing/animation
 import Layout from '../../components/layouts/article'
+import { useTranslations } from 'next-intl'
 
 const NotFound = () => {
+  const t = useTranslations('NotFound')
+
   return (
     <Layout>
       <Container>
-        <Heading as="h1">Page not found</Heading>
+        <Heading as="h1">{t('title')}</Heading>
 
-        <Text>The page you&apos;ve landed on was not found.</Text>
-        <Text>
-          If you think something should&apos;ve been here, please feel free to
-          let me know.
-        </Text>
+        <Text>{t('body')}</Text>
+        <Text>{t('body_action')}</Text>
         <Box my={6} align="center">
           <ButtonGroup gap="2">
             <Button
@@ -32,7 +32,7 @@ const NotFound = () => {
               leftIcon={<EmailIcon />}
               colorScheme="teal"
             >
-              Let me know
+              {t('contact_cta')}
             </Button>
             <Button
               as={NextLink}
@@ -40,7 +40,7 @@ const NotFound = () => {
               leftIcon={<ArrowBackIcon />}
               colorScheme="teal"
             >
-              Back to main
+              {t('back_cta')}
             </Button>
           </ButtonGroup>
         </Box>

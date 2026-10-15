@@ -36,82 +36,81 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper
 } from '@chakra-ui/react'
-import Section from '../../../components/section'
 import { EmailIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import Layout from '../../../components/layouts/article'
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import axios from 'axios'
 import { formatJPY, jpyToUSD } from '../../../libs/numberFormat'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 
-const CONTACT_API_URL =
-  process.env.NEXT_PUBLIC_CONTACT_API_URL ||
-  'https://qsp2z496q5.execute-api.ap-northeast-1.amazonaws.com/Prod/send'
-
-const hashString = (value) => {
-  let hash = 0
-  const input = String(value || '')
-    .trim()
-    .toLowerCase()
-
-  for (let index = 0; index < input.length; index += 1) {
-    hash = (hash << 5) - hash + input.charCodeAt(index)
-    hash |= 0
-  }
-
-  return Math.abs(hash).toString(36)
-}
-
-const anonymizedContactLog = (values) => ({
-  contactId: hashString([values.sender, values.email].join('|')),
-  companyId: values.fromCompany ? hashString(values.fromCompany) : undefined,
-  agencyId: values.fromAgency ? hashString(values.fromAgency) : undefined,
-  recruiting: Boolean(values.recruiting),
-  hasMessage: Boolean(values.message?.trim()),
-  role: values.role || undefined,
-  jobSource: values.jobSource || undefined
-})
+// No hardcoded fallback: the endpoint is deployment configuration. If it is
+// missing the submit fails loudly and the error alert points at mailto:.
+const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
 
 const postContactInfo = async ({
   sender,
   email,
   message,
   recruiting,
+  consent: _consent,
   ...rest
 }) => {
+  if (!CONTACT_API_URL) {
+    const error = new Error(
+      'NEXT_PUBLIC_CONTACT_API_URL is not configured for this deployment'
+    )
+    error.status = null
+    throw error
+  }
+
   let valuesToPost = {
     sender,
     email,
     message
   }
   if (recruiting) {
+    // `consent` is destructured away above (as `_consent`) on purpose: it is a
+    // UI acknowledgement, never part of the payload the Lambda expects.
     valuesToPost = { ...valuesToPost, recruiting, ...rest }
   }
 
-  console.info('Submitting contact form', anonymizedContactLog(valuesToPost))
+  const response = await fetch(CONTACT_API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(valuesToPost)
+  })
 
-  return axios.post(CONTACT_API_URL, valuesToPost)
+  // The Lambda answers 204 on success; anything else is a failure worth
+  // showing the user and logging the status of.
+  if (!response.ok) {
+    const error = new Error(`Contact API responded ${response.status}`)
+    error.status = response.status
+    throw error
+  }
+
+  return response
 }
 
 const usePostContactInfo = () => {
   const [submitStatus, setSubmitStatus] = useState(null)
 
-  const onSubmit = (values, onFinishSubmit) => {
+  // Returns the promise chain so Formik keeps `isSubmitting` true until the
+  // request settles, which is what actually disables the submit button.
+  const onSubmit = (values, onSuccess) => {
     setSubmitStatus('sending')
-    postContactInfo(values)
+
+    return postContactInfo(values)
       .then(() => {
         setSubmitStatus('sent')
-        onFinishSubmit()
+        onSuccess()
       })
       .catch((err) => {
+        // Deliberately no PII (name, email, company) in the log.
         console.error('Contact form failed', {
-          status: err.response?.status,
-          contactId: hashString([values.sender, values.email].join('|'))
+          status: err.status ?? null
         })
         setSubmitStatus('error')
-        onFinishSubmit()
       })
   }
   return [submitStatus, onSubmit]
@@ -143,6 +142,7 @@ const SubmitButton = ({ status, isDisabled }) => {
         size="lg"
         colorScheme="red"
         loadingText={t('buttons.sending')}
+        isDisabled={isDisabled}
       >
         {t('buttons.retry')}
       </Button>
@@ -185,7 +185,8 @@ const Contact = () => {
       benefitHybridRemote: false,
       benefitFlexibleHours: false,
       benefitOther: false,
-      recruiting: isHireMeLink
+      recruiting: isHireMeLink,
+      consent: false
     },
     validateOnMount: true,
     validate: (values) => {
@@ -199,6 +200,7 @@ const Contact = () => {
         errors.email = t('validation.email')
       }
       if (!values.message.trim()) errors.message = required
+      if (!values.consent) errors.consent = t('validation.consent')
 
       if (values.recruiting) {
         if (values.jobSource === 'agency' && !values.fromAgency.trim()) {
@@ -216,13 +218,13 @@ const Contact = () => {
 
       return errors
     },
-    onSubmit: (value) => onSubmit(value, () => formik.setSubmitting(false))
+    onSubmit: (value) => onSubmit(value, () => formik.resetForm())
   })
 
   return (
     <Layout>
       <Container>
-        <Section>
+        <Box as="section" mb={6}>
           <Heading as="h3" variant="section-title">
             {t('title')}
           </Heading>
@@ -595,6 +597,28 @@ const Contact = () => {
             </FormControl>
             <br />
             <Spacer h="1rem" />
+            <FormControl
+              isRequired
+              isInvalid={Boolean(
+                formik.submitCount > 0 && formik.errors.consent
+              )}
+            >
+              <Checkbox
+                id="consent"
+                name="consent"
+                colorScheme="teal"
+                isChecked={formik.values.consent}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
+                {t('privacy.consent')}
+              </Checkbox>
+              <FormHelperText mt="0.5rem">{t('privacy.notice')}</FormHelperText>
+              {/* Only surfaced once the user has actually tried to send, so a
+                  pristine form is not painted with errors. */}
+              <FormErrorMessage>{formik.errors.consent}</FormErrorMessage>
+            </FormControl>
+            <Spacer h="1rem" />
             <SubmitButton
               status={submitStatus}
               isDisabled={formik.isSubmitting || !formik.isValid}
@@ -631,7 +655,7 @@ const Contact = () => {
               </Alert>
             )}
           </form>
-        </Section>
+        </Box>
       </Container>
     </Layout>
   )
