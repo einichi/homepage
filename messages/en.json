@@ -178,6 +178,8 @@
     "alerts": {
       "error_title": "Sending failed",
       "error_desc": "Please wait a moment and try again. Your details remain in this form.",
+      "sending_title": "Sending your message",
+      "sending_desc": "This can take a few seconds. Please keep this page open while your message is sent.",
       "success_title": "Message sent",
       "success_desc": "Thanks for getting in touch. Your message was accepted for sending, and I will reply when I can."
     },

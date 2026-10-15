@@ -118,6 +118,7 @@ export default function ContactForm({
   const [widgetReady, setWidgetReady] = useState(false)
   const [errors, setErrors] = useState<FieldErrors>({})
   const formRef = useRef<HTMLFormElement>(null)
+  const feedbackRef = useRef<HTMLDivElement>(null)
   const focusError = useRef(false)
   const widget = useRef<string | number | null>(null)
   const tokenRef = useRef('')
@@ -203,6 +204,12 @@ export default function ContactForm({
       ?.querySelector<HTMLElement>('[aria-invalid="true"], [data-form-error]')
       ?.focus()
   }, [errors])
+
+  useEffect(() => {
+    if (status !== 'idle') {
+      feedbackRef.current?.scrollIntoView({ block: 'nearest' })
+    }
+  }, [status])
 
   useEffect(() => {
     if (!sitekey) return
@@ -344,9 +351,12 @@ export default function ContactForm({
       className="contact-form"
       onSubmit={submit}
       noValidate
-      aria-busy={status === 'sending'}
     >
-      <fieldset className="form-fields" disabled={status === 'sending'}>
+      <fieldset
+        className="form-fields"
+        disabled={status === 'sending'}
+        aria-busy={status === 'sending'}
+      >
         <label>
           <span>
             {t.labels.name} {marker(true)}
@@ -676,12 +686,46 @@ export default function ContactForm({
           </button>
         </div>
       </fieldset>
-      {status === 'sent' && (
-        <p className="form-status success" role="status">
-          <strong>{local ? t.local_success : t.alerts.success_title}</strong>{' '}
-          {!local && t.alerts.success_desc}
-        </p>
-      )}
+      <div ref={feedbackRef} role="status" aria-live="polite" aria-atomic="true">
+        {(status === 'sending' || status === 'sent') && (
+          <div
+            className={`form-status ${status === 'sent' ? 'success' : 'sending'}`}
+          >
+            <span className="status-icon" aria-hidden="true">
+              {status === 'sending' ? (
+                <span className="sending-spinner" />
+              ) : (
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m6 12 4 4 8-8" />
+                </svg>
+              )}
+            </span>
+            <div className="status-copy">
+              <p className="status-title">
+                {status === 'sending'
+                  ? t.alerts.sending_title
+                  : local
+                    ? t.local_success
+                    : t.alerts.success_title}
+              </p>
+              {(status === 'sending' || !local) && (
+                <p className="status-description">
+                  {status === 'sending'
+                    ? t.alerts.sending_desc
+                    : t.alerts.success_desc}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
       {status === 'error' && (
         <p className="form-status error" role="alert">
           <strong>{t.alerts.error_title}</strong> {t.alerts.error_desc}

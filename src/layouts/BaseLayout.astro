@@ -4,6 +4,7 @@ import ja from '../../messages/ja.json'
 import Model from '../components/Model.astro'
 import '@fontsource/m-plus-rounded-1c/latin-400.css'
 import '@fontsource/m-plus-rounded-1c/latin-700.css'
+import headingFont from '@fontsource/m-plus-rounded-1c/files/m-plus-rounded-1c-latin-700-normal.woff2?url'
 const { locale, page = 'home', title, description, canonicalPath = '', noindex = false } = Astro.props
 const messages = locale === 'ja' ? ja : en
 const metaTitle = title ?? messages.Metadata.title
@@ -21,6 +22,13 @@ const switchPath = `/${locale === 'en' ? 'ja' : 'en'}${canonicalPath || '/'}${qu
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#319795" />
+    <link
+      rel="preload"
+      href={headingFont}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
     <title>{metaTitle}</title>
     <meta name="description" content={metaDescription} />
     {!preview && !noindex && <link rel="canonical" href={canonicalUrl} />}
