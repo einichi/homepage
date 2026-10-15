@@ -177,7 +177,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# SAM CLI local deployment config (contains the AWS account's bucket/stack
-# names and SES addresses). Copy samconfig.toml.example and fill it in.
-ses-api/samconfig.toml
