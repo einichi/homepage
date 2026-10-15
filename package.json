@@ -8,7 +8,7 @@
     "build": "SITE_MODE=preview node scripts/build-site.mjs && vite build --mode preview && node scripts/check-build.mjs preview",
     "preview:build": "npm run build",
     "production:build": "SITE_MODE=production node scripts/build-site.mjs && SITE_MODE=production vite build --mode production && node scripts/check-build.mjs production",
-    "typecheck": "astro check && cf workers types && tsc --noEmit",
+    "typecheck": "cf workers types && astro check && tsc --noEmit",
     "test": "node --test src/lib/*.test.ts scripts/*.test.mjs"
   },
   "dependencies": {
