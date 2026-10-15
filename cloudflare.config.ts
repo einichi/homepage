@@ -5,6 +5,7 @@ export default defineConfig(({ mode, isPreview }) => {
   const production = mode === 'production' && !isPreview
   const localStub = mode === 'development' || mode === 'local'
   return {
+    accountId: '50aeca1f034c4aa61ffbcf17b31e6c64',
     worker: {
       name: production ? 'ricky-homepage' : 'ricky-homepage-preview',
       compatibilityDate: '2026-10-15',

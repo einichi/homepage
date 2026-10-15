@@ -26,11 +26,27 @@ npm run build
 
 `npm run build` creates a preview package by default. Preview HTML and response headers carry `noindex`. The cf configuration defaults to the distinct `ricky-homepage-preview` Worker without custom domains. Production builds target `ricky-homepage` and attach `ricky.burg.in`. CI performs checks and a dry run only; deployment is manual.
 
+## Preview deployment
+
+After installing dependencies, sign in once with the project's pinned CLI:
+
+```sh
+npx cf auth login
+```
+
+Then deploy preview with:
+
+```sh
+npm run deploy:preview
+```
+
+This rebuilds and validates the current working copy, including uncommitted changes, then deploys it to `https://ricky-homepage-preview.contingent.workers.dev`. The account ID is configured in `cloudflare.config.ts`, and `scripts/build-site.mjs` selects the environment's public Turnstile key. No manual environment variables are required. Authentication is stored by the cf CLI; repeat sign-in only if needed. CI can instead use a protected `CLOUDFLARE_API_TOKEN` secret.
+
 Each build runs `scripts/check-build.mjs` against the finished upload artifact to verify the Worker identity, asset routing, secret declarations, disabled local stub, and indexing policy. Neither build script deploys. The lazy Three.js library produces a large-chunk build warning; it is loaded separately from the page and form code.
 
 ## Contact Worker configuration
 
-The Worker uses the native email sending binding, the native rate-limit binding, and Turnstile Siteverify. Set `FROM_EMAIL`, `TO_EMAIL`, and `TURNSTILE_SECRET` as Worker secrets. The recipient is intentionally absent from this repository. Set `PUBLIC_TURNSTILE_SITEKEY` in the build environment to the appropriate preview or production widget's public key. Each environment uses its own widget and secrets. Allowed hostnames and preview/production limiter namespaces are declared by mode in `cloudflare.config.ts`.
+The Worker uses the native email sending binding, the native rate-limit binding, and Turnstile Siteverify. Set `FROM_EMAIL`, `TO_EMAIL`, and `TURNSTILE_SECRET` as Worker secrets during initial environment setup; normal deployments retain them. The recipient is intentionally absent from this repository. Public Turnstile keys are configured by environment in `scripts/build-site.mjs`; `PUBLIC_TURNSTILE_SITEKEY` can optionally override them for builds. Local development always omits the widget. Each deployed environment uses its own widget and secrets. Allowed hostnames and preview/production limiter namespaces are declared by mode in `cloudflare.config.ts`.
 
 The endpoint accepts same-origin `POST application/json` at `/api/contact`, bounds streamed input, validates all required values server-side, and fails closed if live verification, rate limiting, or mail configuration is unavailable. It uses the visitor email only as Reply-To and waits for Cloudflare to accept the message before returning success. Acceptance does not confirm inbox delivery. Contact content and tokens are not logged or persisted.
 
@@ -40,10 +56,16 @@ Validation and message formatting live in `src/lib/contact-schema.ts`; the provi
 
 ## Production deployment
 
-Build with the production widget's public key, review the package, then deploy:
+To rebuild, validate, and deploy production:
 
 ```sh
-PUBLIC_TURNSTILE_SITEKEY=<production-public-key> npm run production:build
+npm run deploy:production
+```
+
+To inspect the production package before deploying, run these steps separately:
+
+```sh
+npm run production:build
 cf deploy --prebuilt --mode production --dry-run --provision false
 cf deploy --prebuilt --mode production --provision false
 ```
