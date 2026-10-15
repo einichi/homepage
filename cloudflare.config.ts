@@ -10,6 +10,7 @@ export default defineConfig(({ mode, isPreview }) => {
       compatibilityDate: '2026-10-15',
       entrypoint,
       workersDev: true,
+      domains: production ? ['ricky.burg.in'] : [],
       assets: {
         htmlHandling: 'auto-trailing-slash',
         notFoundHandling: 'none',

@@ -21,10 +21,12 @@ assert.equal(
   worker.name,
   mode === 'production' ? 'ricky-homepage' : 'ricky-homepage-preview'
 )
-assert.ok(
-  !worker.domains?.length && !worker.triggers?.length,
-  'This package must not attach production domains'
+assert.deepEqual(
+  worker.domains ?? [],
+  mode === 'production' ? ['ricky.burg.in'] : [],
+  'Only the production package may attach the production hostname'
 )
+assert.ok(!worker.triggers?.length, 'Unexpected Worker triggers')
 assert.equal(
   worker.env.LOCAL_CONTACT_STUB.value,
   'false',
