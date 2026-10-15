@@ -97,31 +97,56 @@ const ThreeDModel = () => {
     let req = null
     let frame = reducedMotion ? SKIPPED_INTRO_FRAMES : 0
     let loadedModel = null
-    let visible = true
+    // Wait for the first intersection result before starting the animation.
+    let visible = typeof IntersectionObserver !== 'function'
+
+    const canRender = () =>
+      !disposed &&
+      loadedModel &&
+      visible &&
+      document.visibilityState === 'visible'
 
     const animate = () => {
-      req = requestAnimationFrame(animate)
+      req = null
+      if (!canRender() || reducedMotion) return
+
       frame = frame <= INTRO_FRAMES ? frame + 1 : frame
 
       if (frame <= INTRO_FRAMES) {
         const p = initialCameraPosition
         const rotSpeed = -easeOutCirc(frame / 120) * Math.PI * 20
 
-        camera.position.x =
-          p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
-        camera.position.z =
-          p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
+        camera.position.x = p.x * Math.cos(rotSpeed) + p.z * Math.sin(rotSpeed)
+        camera.position.z = p.z * Math.cos(rotSpeed) - p.x * Math.sin(rotSpeed)
         camera.lookAt(target)
       } else {
         controls.update()
       }
 
       renderer.render(scene, camera)
+      req = requestAnimationFrame(animate)
     }
 
     // Reduced motion still has to repaint while the user drags, so render on
     // demand instead of running an idle rAF loop.
-    const renderOnce = () => renderer.render(scene, camera)
+    const renderOnce = () => {
+      if (canRender()) renderer.render(scene, camera)
+    }
+
+    const stopAnimation = () => {
+      if (req !== null) cancelAnimationFrame(req)
+      req = null
+    }
+
+    const syncAnimation = () => {
+      if (!canRender()) {
+        stopAnimation()
+      } else if (reducedMotion) {
+        renderOnce()
+      } else if (req === null) {
+        req = requestAnimationFrame(animate)
+      }
+    }
 
     if (reducedMotion) {
       controls.addEventListener('change', renderOnce)
@@ -138,6 +163,7 @@ const ThreeDModel = () => {
     }
 
     window.addEventListener('resize', handleWindowResize, false)
+    document.addEventListener('visibilitychange', syncAnimation)
 
     // Stop burning GPU time when the model has scrolled out of view.
     let observer
@@ -148,12 +174,7 @@ const ThreeDModel = () => {
           if (nextVisible === visible) return
           visible = nextVisible
 
-          if (visible && !reducedMotion) {
-            animate()
-          } else {
-            cancelAnimationFrame(req)
-            req = null
-          }
+          syncAnimation()
         },
         { threshold: 0 }
       )
@@ -174,11 +195,7 @@ const ThreeDModel = () => {
           return
         }
         setLoading(false)
-        if (reducedMotion) {
-          renderOnce()
-        } else if (visible) {
-          animate()
-        }
+        syncAnimation()
       })
       .catch((error) => {
         // Never leave the spinner up forever when the GLB 404s or is corrupt.
@@ -190,8 +207,9 @@ const ThreeDModel = () => {
 
     return () => {
       disposed = true
-      cancelAnimationFrame(req)
+      stopAnimation()
       if (observer) observer.disconnect()
+      document.removeEventListener('visibilitychange', syncAnimation)
       controls.removeEventListener('change', renderOnce)
       window.removeEventListener('resize', handleWindowResize, false)
       controls.dispose()

@@ -4,13 +4,14 @@ import Contact from './client-page'
 
 const SITE_URL = 'https://ricky.burg.in'
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }, parent) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'Metadata' })
 
   const canonical = `/${locale}/contact`
   const title = t('contact_title')
   const description = t('contact_description')
+  const { openGraph } = await parent
 
   return {
     title,
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }) {
       }
     },
     openGraph: {
+      ...openGraph,
       type: 'website',
       title,
       description,
