@@ -3,11 +3,9 @@ export function enableLazyModel() {
   const fallback = document.querySelector('[data-model-fallback]')
   const status = document.querySelector('[data-model-status]')
   const retry = document.querySelector('[data-model-retry]')
-  const turnButton = document.querySelector('[data-model-turn]')
-  if (!host || !fallback || !status || !retry || !turnButton) return
+  if (!host || !fallback || !status || !retry) return
 
   const ja = document.documentElement.lang === 'ja'
-  let turn = () => {}
   let booted = false
   let dispose = () => {}
   const disposeObject = (root) => {
@@ -36,6 +34,7 @@ export function enableLazyModel() {
       : 'Loading 3D portrait…'
     retry.hidden = true
     let disposed = false
+    let animationFrame = 0
     let renderer,
       controls,
       observer,
@@ -45,8 +44,7 @@ export function enableLazyModel() {
     dispose = () => {
       if (disposed) return
       disposed = true
-      turn = () => {}
-      turnButton.hidden = true
+      cancelAnimationFrame(animationFrame)
       observer?.disconnect()
       resizeObserver?.disconnect()
       removers.forEach((remove) => remove())
@@ -90,8 +88,8 @@ export function enableLazyModel() {
       renderer.domElement.setAttribute(
         'aria-label',
         ja
-          ? 'リッキーの3Dポートレート。ドラッグまたは下のボタンで回転できます。'
-          : '3D portrait of Ricky. Drag or use the button below to turn.'
+          ? 'リッキーの3Dポートレート。ドラッグで回転できます。'
+          : '3D portrait of Ricky. Drag to turn.'
       )
       host.append(renderer.domElement)
       controls = new OrbitControls(camera, renderer.domElement)
@@ -104,10 +102,48 @@ export function enableLazyModel() {
       // OrbitControls sets an inline touchAction; keep vertical page scrolling.
       renderer.domElement.style.touchAction = 'pan-y pinch-zoom'
       let visible = typeof IntersectionObserver !== 'function'
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const startAngle = -Math.PI
+      const restingAngle = -Math.PI / 9
+      let introActive = !reducedMotion.matches
+      let elapsed = 0
+      let lastFrameTime
       const renderOnce = () => {
         if (!disposed && model && visible && !document.hidden)
           renderer.render(scene, camera)
       }
+      const animateIntro = (time) => {
+        animationFrame = 0
+        if (disposed || !model || !introActive || !visible || document.hidden) return
+        if (lastFrameTime !== undefined) elapsed += time - lastFrameTime
+        lastFrameTime = time
+        // Let the initial pose register, then make one gentle turn toward the text.
+        const progress = Math.min(1, Math.max(0, (elapsed - 300) / 2600))
+        const eased = progress * progress * (3 - 2 * progress)
+        model.rotation.y = startAngle + (restingAngle - startAngle) * eased
+        renderOnce()
+        if (progress < 1) animationFrame = requestAnimationFrame(animateIntro)
+        else introActive = false
+      }
+      const syncIntro = () => {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = 0
+        lastFrameTime = undefined
+        renderOnce()
+        if (!disposed && model && introActive && visible && !document.hidden)
+          animationFrame = requestAnimationFrame(animateIntro)
+      }
+      const stopIntro = () => {
+        introActive = false
+        syncIntro()
+      }
+      listen(controls, 'start', stopIntro)
+      listen(reducedMotion, 'change', () => {
+        if (reducedMotion.matches && introActive) {
+          if (model) model.rotation.y = restingAngle
+          stopIntro()
+        }
+      })
       const framePortrait = () => {
         const bounds = new THREE.Box3().setFromObject(model)
         const size = bounds.getSize(new THREE.Vector3())
@@ -131,7 +167,7 @@ export function enableLazyModel() {
         renderOnce()
       }
       listen(controls, 'change', renderOnce)
-      listen(document, 'visibilitychange', renderOnce)
+      listen(document, 'visibilitychange', syncIntro)
       listen(window, 'resize', resize)
       if (typeof ResizeObserver === 'function') {
         resizeObserver = new ResizeObserver(resize)
@@ -140,7 +176,7 @@ export function enableLazyModel() {
       if (typeof IntersectionObserver === 'function') {
         observer = new IntersectionObserver(([entry]) => {
           visible = entry.isIntersecting
-          renderOnce()
+          syncIntro()
         })
         observer.observe(host)
       }
@@ -155,17 +191,12 @@ export function enableLazyModel() {
       model = gltf.scene
       model.name = 'model'
       model.position.set(0, 0, 0)
-      model.rotation.y = -Math.PI / 9
+      model.rotation.y = introActive ? startAngle : restingAngle
       scene.add(model)
       fallback.hidden = true
       status.textContent = ''
-      turnButton.hidden = false
-      turn = () => {
-        model.rotation.y += Math.PI / 4
-        framePortrait()
-        renderOnce()
-      }
       resize()
+      syncIntro()
     } catch {
       if (disposed) return
       dispose()
@@ -176,7 +207,6 @@ export function enableLazyModel() {
       retry.hidden = false
     }
   }
-  turnButton.addEventListener('click', () => turn())
   retry.addEventListener('click', () => {
     dispose()
     load()

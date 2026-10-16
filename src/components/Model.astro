@@ -8,9 +8,6 @@ const { locale } = Astro.props
     <button type="button" class="button secondary model-retry" data-model-retry hidden>{locale === 'ja' ? '再試行' : 'Retry'}</button>
     <div data-model-host></div>
   </div>
-  <div class="model-controls">
-    <button class="model-turn" type="button" data-model-turn hidden>{locale === 'ja' ? '向きを変える' : 'Turn portrait'}<span aria-hidden="true">↻</span></button>
-  </div>
   <noscript><style>[data-model-status] { display: none; }</style></noscript>
 </section>
 <script>
