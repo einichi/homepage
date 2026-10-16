@@ -8,6 +8,7 @@ interface Window {
         sitekey: string
         action: string
         language: string
+        size?: 'normal' | 'compact' | 'flexible'
         callback(token: string): void
         'expired-callback'(): void
         'error-callback'(): void
