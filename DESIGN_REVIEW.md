@@ -32,7 +32,7 @@ An editorial portfolio with warm paper, ink, fine dividing rules, generous spaci
 
 English and Japanese receive equivalent content and controls. Theme preference and language-switch query/hash preservation remain intact. On the first overview visit per tab, the portrait starts facing away, gently turns toward the introduction once visible, and then rests. Returning through navigation, browser Back, reloading, or switching languages loads the final pose directly. Reduced-motion preferences skip the introductory motion, and dragging interrupts it. It has a photo fallback and is absent from career, contact, and error pages.
 
-All four focus labels are centered at desktop and mobile widths. Language names in page content follow the current locale. The switcher alone uses its destination language, including its accessible label: 日本語 on English pages and English on Japanese pages. An accent border, soft fill, and stronger weight distinguish it while retaining the existing 48 × 44 px desktop and 44 × 44 px mobile footprint.
+All four focus labels are centered at desktop and mobile widths. Language names in page content follow the current locale. The switcher alone uses its destination language, including its accessible label: 日本語 on English pages and English on Japanese pages. An accent border, soft fill, and stronger weight distinguish it. It is 60 × 44 px on desktop and 56 × 44 px on mobile, giving the labels more room while retaining the existing height.
 
 ## Content and operational boundaries
 
