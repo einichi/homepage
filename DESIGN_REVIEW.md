@@ -14,7 +14,7 @@ Heuristic review of the English and Japanese portfolio, career history, contact 
 
 | Priority | Criticism | Visitor impact | Redesign response |
 | --- | --- | --- | --- |
-| High | The animated 3D portrait precedes the introduction and consumes much of the first screen. A second portrait then repeats the identity. | A visitor sees decoration before learning what Ricky does or how to engage. The model also starts loading without an explicit request. | Lead with a concrete introduction, expertise, and work/contact actions. Use one small real portrait; move the 3D model into an optional disclosure below the main content. |
+| High | The animated 3D portrait precedes the introduction and consumes much of the first screen. A second portrait then repeats the identity. | A visitor sees decoration before learning what Ricky does or how to engage. The model also starts loading without an explicit request. | Lead with the introduction and work/contact actions. Use a modest standalone portrait alongside the text, with a still initial pose and a photo fallback. |
 | High | The home page has no primary work/contact action near its introduction. External social links receive greater prominence. | The next useful step is unclear, especially to someone evaluating professional experience. | A primary experience action and secondary contact action appear directly under the introduction. Relevant experience is linked by role, with another contact action at the end. |
 | High | Recruiting expands many nested fields, including optional questions before compensation and the actual message. | The form feels longer than necessary and hides the important questions among secondary information. | Choose general message or role discussion first. Name, email, and message precede role details. Keep required role/compensation fields visible and group optional details in a disclosure. Preserve the existing validation requirements. |
 | High | Career entries are long paragraphs with little distinction between responsibility, employer, and time period. | A reader must read every paragraph to establish relevance. | A structured timeline separates dates, employer, title, and a factual short summary. Full original descriptions remain accessible under native disclosures. |
@@ -28,9 +28,9 @@ Heuristic review of the English and Japanese portfolio, career history, contact 
 
 ## Design direction
 
-An editorial portfolio with warm paper, ink, fine dividing rules, generous spacing, and a serif accent in the introduction. A small diagram suggests connected systems, while the real portrait keeps the page personal. Work is shown as readable rows rather than a grid of generic cards. The home, experience, contact, and error pages use the same navigation, typography, buttons, and spacing.
+An editorial portfolio with warm paper, ink, fine dividing rules, generous spacing, and a serif accent in the introduction. A standalone 3D portrait adds personality without a paper panel, diagram, or repeated profile information. Work is shown as readable rows rather than a grid of generic cards. The home, experience, contact, and error pages use the same navigation, typography, buttons, and spacing.
 
-English and Japanese receive equivalent content and controls. Theme preference and language-switch query/hash preservation remain intact. The animated portrait is an optional extra, with its existing fallback and reduced-motion handling. It is absent from career, contact, and error pages.
+English and Japanese receive equivalent content and controls. Theme preference and language-switch query/hash preservation remain intact. The portrait starts still and only changes when the visitor drags it or uses the keyboard-accessible turn button. It has a photo fallback and is absent from career, contact, and error pages.
 
 ## Content and operational boundaries
 
@@ -52,9 +52,15 @@ English and Japanese receive equivalent content and controls. Theme preference a
 - General and agency role inquiries submit successfully through the local stub; no email is sent in these tests. The salary inputs retain their formatting and validation.
 - A deliberately invalid optional URL is detected even after its disclosure is closed; validation reopens the disclosure and focuses that input.
 - Switching between English and Japanese preserves the recruiting query parameter and the fragment.
-- Career disclosures expose the complete original descriptions. The home page creates no 3D canvas before opt-in; opening its disclosure successfully creates the model.
+- Career disclosures expose the complete original descriptions.
 - Checked 132 internal links and asset references across eight localized pages; all files and anchor targets exist.
 - `npm audit --audit-level=low` reports zero known vulnerabilities.
 - A missing Japanese path shows the localized error page without a model or a misleading active navigation item.
 
 Preview deployment target: [ricky-homepage-preview.contingent.workers.dev](https://ricky-homepage-preview.contingent.workers.dev). Production deployment is outside this request.
+
+## Portrait iteration
+
+The first version used a tilted paper panel, a systems diagram, and repeated name/language information. On review, this added little value. The selected alternative replaces it with a standalone 3D portrait, framed from the model bounds. It keeps a still pose, supports pointer and button rotation, and allows wheel, vertical touch scrolling, and native pinch zoom. The lower-page duplicate model is replaced by the existing Printables link.
+
+This alternative loads the existing 3D assets when the hero approaches the viewport. It trades that initial download for a personal visual, while keeping the introduction available as static HTML. Rendering happens on interaction, resize, and visibility changes; there is no continuous animation loop. The portrait remains below the main actions on mobile.
