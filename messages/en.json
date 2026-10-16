@@ -74,7 +74,7 @@
       "drones": "Flying Drones 🛸",
       "ml": "Machine Learning (not just LLMs) 🤖",
       "3d_design": "3D Design / Printing 🖨️",
-      "languages": "Languages (🇯🇵流暢な日本語に加えて我也在学习中文🇨🇳)",
+      "languages": "Languages (fluent Japanese, learning Chinese)",
       "games": "Games 🎮",
       "travel": "Travel ✈️"
     }
@@ -240,7 +240,7 @@
     "focus_infra": "Infrastructure & SRE",
     "focus_security": "Security engineering",
     "focus_people": "People & teams",
-    "focus_languages": "English + 日本語",
+    "focus_languages": "English + Japanese",
     "selected_work": "A few chapters so far.",
     "full_experience": "The full story",
     "about_label": "The approach",

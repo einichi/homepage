@@ -74,7 +74,7 @@
       "drones": "ドローン操縦 🛸",
       "ml": "機械学習 (LLM以外も) 🤖",
       "3d_design": "3Dデザイン / プリンティング 🖨️",
-      "languages": "語学 (🇯🇵流暢な日本語に加えて我也在学习中文🇨🇳)",
+      "languages": "語学（日本語は流暢、中国語を学習中）",
       "games": "ゲーム 🎮",
       "travel": "旅行 ✈️"
     }
@@ -240,7 +240,7 @@
     "focus_infra": "インフラ・SRE",
     "focus_security": "セキュリティ",
     "focus_people": "チーム・人材育成",
-    "focus_languages": "English + 日本語",
+    "focus_languages": "英語 + 日本語",
     "selected_work": "これまでの歩み。",
     "full_experience": "職務経歴をすべて見る",
     "about_label": "大切にしていること",

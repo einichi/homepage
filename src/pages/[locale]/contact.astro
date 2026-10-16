@@ -9,7 +9,7 @@ const m = locale === 'ja' ? ja : en
 ---
 <BaseLayout locale={locale} page="contact" title={m.Metadata.contact_title} description={m.Metadata.contact_description} canonicalPath="/contact/">
   <section class="contact-layout">
-    <div class="contact-intro"><p class="eyebrow">{m.UI.contact_label}</p><h1>{m.UI.contact_page_heading}</h1><p class="large-copy">{m.UI.contact_intro}</p><dl class="contact-facts"><div><dt>{m.UI.location_label}</dt><dd>{m.UI.location}</dd></div><div><dt>{m.HomePage.headers.languages}</dt><dd>English / 日本語</dd></div><div><dt>{m.UI.discuss_role}</dt><dd>{m.Contact.employment.helper}</dd></div></dl><p class="contact-aside-note">{m.UI.contact_privacy_short}</p></div>
+    <div class="contact-intro"><p class="eyebrow">{m.UI.contact_label}</p><h1>{m.UI.contact_page_heading}</h1><p class="large-copy">{m.UI.contact_intro}</p><dl class="contact-facts"><div><dt>{m.UI.location_label}</dt><dd>{m.UI.location}</dd></div><div><dt>{m.HomePage.headers.languages}</dt><dd>{m.Profile.Languages.english} / {m.Profile.Languages.japanese}</dd></div><div><dt>{m.UI.discuss_role}</dt><dd>{m.Contact.employment.helper}</dd></div></dl><p class="contact-aside-note">{m.UI.contact_privacy_short}</p></div>
     <div class="contact-form-panel"><p class="form-intro">{m.Contact.form_intro}</p><ContactForm client:load locale={locale} messages={m.Contact} isHireMe={Astro.url.searchParams.has('hireme')} sitekey={import.meta.env.PUBLIC_TURNSTILE_SITEKEY ?? ''} /></div>
   </section>
 </BaseLayout>
