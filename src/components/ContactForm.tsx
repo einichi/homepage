@@ -215,41 +215,58 @@ export default function ContactForm({
 
   useEffect(() => {
     if (!sitekey) return
+    const container = document.querySelector<HTMLElement>('#turnstile-widget')
+    if (!container) return
     let active = true
+    let widgetSize: 'compact' | 'flexible' | undefined
+    let renderVersion = 0
     const mount = () => {
-      if (
-        !active ||
-        !window.turnstile ||
-        !document.querySelector('#turnstile-widget')
-      )
-        return
+      if (!active || !window.turnstile) return
+      const size = container.getBoundingClientRect().width < 300 ? 'compact' : 'flexible'
+      if (widget.current !== null && widgetSize === size) return
+      const version = ++renderVersion
+      const isCurrent = () => active && version === renderVersion
       try {
+        if (widget.current !== null) window.turnstile.remove(widget.current)
+        widget.current = null
+        tokenRef.current = ''
+        setWidgetReady(false)
+        setVerificationError(false)
         widget.current = window.turnstile.render('#turnstile-widget', {
           sitekey,
           action: 'contact',
           language: locale,
-          // The compact widget fits narrow forms without scaling its controls.
-          size: 'compact',
+          // Flexible needs 300px; use compact below that without scaling controls.
+          size,
           callback: (next) => {
+            if (!isCurrent()) return
             tokenRef.current = next
             setWidgetReady(true)
             setVerificationError(false)
           },
           'expired-callback': () => {
+            if (!isCurrent()) return
             tokenRef.current = ''
             setWidgetReady(false)
             if (widget.current !== null) window.turnstile?.reset(widget.current)
           },
           'error-callback': () => {
+            if (!isCurrent()) return
             tokenRef.current = ''
             setWidgetReady(false)
             setVerificationError(true)
           }
         })
+        widgetSize = size
       } catch {
         setVerificationError(true)
       }
     }
+    const resizeObserver = typeof ResizeObserver === 'function'
+      ? new ResizeObserver(mount)
+      : undefined
+    resizeObserver?.observe(container)
+    if (!resizeObserver) window.addEventListener('resize', mount)
     if (window.turnstile) mount()
     else {
       const script = document.createElement('script')
@@ -265,8 +282,11 @@ export default function ContactForm({
     }
     return () => {
       active = false
+      resizeObserver?.disconnect()
+      window.removeEventListener('resize', mount)
       if (widget.current !== null && window.turnstile)
         window.turnstile.remove(widget.current)
+      widget.current = null
     }
   }, [sitekey, locale])
 
