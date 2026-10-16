@@ -30,7 +30,7 @@ Heuristic review of the English and Japanese portfolio, career history, contact 
 
 An editorial portfolio with warm paper, ink, fine dividing rules, generous spacing, and a serif accent in the introduction. A standalone 3D portrait adds personality without a paper panel, diagram, or repeated profile information. Work is shown as readable rows rather than a grid of generic cards. The home, experience, contact, and error pages use the same navigation, typography, buttons, and spacing.
 
-English and Japanese receive equivalent content and controls. Theme preference and language-switch query/hash preservation remain intact. The portrait starts facing away, gently turns toward the introduction once visible, and then rests. Reduced-motion preferences skip the introductory motion, and dragging interrupts it. It has a photo fallback and is absent from career, contact, and error pages.
+English and Japanese receive equivalent content and controls. Theme preference and language-switch query/hash preservation remain intact. On the first overview visit per tab, the portrait starts facing away, gently turns toward the introduction once visible, and then rests. Returning through navigation, browser Back, reloading, or switching languages loads the final pose directly. Reduced-motion preferences skip the introductory motion, and dragging interrupts it. It has a photo fallback and is absent from career, contact, and error pages.
 
 ## Content and operational boundaries
 
@@ -64,3 +64,5 @@ Preview deployment target: [ricky-homepage-preview.contingent.workers.dev](https
 The first version used a tilted paper panel, a systems diagram, and repeated name/language information. On review, this added little value. The selected alternative replaces it with a standalone 3D portrait, framed from the model bounds. It makes one introductory turn, supports pointer rotation without a separate control, and allows wheel, vertical touch scrolling, and native pinch zoom. The lower-page duplicate model is replaced by the existing Printables link.
 
 This alternative loads the existing 3D assets when the hero approaches the viewport. It trades that initial download for a personal visual, while keeping the introduction available as static HTML. The introductory animation pauses offscreen or in a hidden tab and stops after one turn. Subsequent rendering happens on interaction, resize, and visibility changes; there is no ongoing animation loop. The portrait remains below the main actions on mobile.
+
+The first successful visible render records the visit in session storage, shared by both languages. Leaving midway through the turn still skips it on return. Failed or offscreen model loads do not consume the intro; unavailable storage falls back to remembering within the current page without breaking the portrait.

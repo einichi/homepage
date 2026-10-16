@@ -6,6 +6,8 @@ export function enableLazyModel() {
   if (!host || !fallback || !status || !retry) return
 
   const ja = document.documentElement.lang === 'ja'
+  const introSeenKey = 'ricky-portrait-intro-seen'
+  let introSeen = false
   let booted = false
   let dispose = () => {}
   const disposeObject = (root) => {
@@ -26,6 +28,9 @@ export function enableLazyModel() {
 
   const load = async () => {
     if (booted) return
+    try {
+      introSeen ||= window.sessionStorage.getItem(introSeenKey) === 'true'
+    } catch {}
     booted = true
     host.hidden = false
     fallback.hidden = false
@@ -105,12 +110,20 @@ export function enableLazyModel() {
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
       const startAngle = -Math.PI
       const restingAngle = -Math.PI / 9
-      let introActive = !reducedMotion.matches
+      let introActive = !reducedMotion.matches && !introSeen
       let elapsed = 0
       let lastFrameTime
       const renderOnce = () => {
-        if (!disposed && model && visible && !document.hidden)
+        if (!disposed && model && visible && !document.hidden) {
           renderer.render(scene, camera)
+          // Remember only a successfully displayed portrait, including an interrupted intro.
+          if (!introSeen) {
+            introSeen = true
+            try {
+              window.sessionStorage.setItem(introSeenKey, 'true')
+            } catch {}
+          }
+        }
       }
       const animateIntro = (time) => {
         animationFrame = 0
