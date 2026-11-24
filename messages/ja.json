@@ -74,7 +74,7 @@
       "drones": "ドローン操縦 🛸",
       "ml": "機械学習 (LLM以外も) 🤖",
       "3d_design": "3Dデザイン / プリンティング 🖨️",
-      "languages": "語学 (🇯🇵流暢な日本語に加えて我也在学习中文🇨🇳)",
+      "languages": "語学（日本語は流暢、中国語を学習中）",
       "games": "ゲーム 🎮",
       "travel": "旅行 ✈️"
     }
@@ -83,11 +83,17 @@
     "title": "職務経歴",
     "hire_me": "スカウトする",
     "jobs": {
+      "locationmind": {
+        "title": "AWSのセキュリティ・コストレビュー",
+        "company": "LocationMind",
+        "date": "2026 - 現在",
+        "details": "LocationMindのAWS環境全体を見直し、セキュリティ上のリスクとコスト削減の余地を調べる予定です。"
+      },
       "marigold_sre": {
         "title": "SREマネージャー - APAC",
         "company": "Marigold / チーターデジタル株式会社",
-        "date": "2022 - 現在",
-        "details": "現在、チーターデジタルのAPAC地域のSREマネージャーとして、リソース計画、プロジェクト管理、チーム/ピープルマネジメント、採用、そして多様な地域的・文化的背景を持つチーム間のコラボレーション促進など、多岐にわたる責任を担っています。さらに、オンプレミスインフラの拡張や、大規模エンタープライズアプリケーションのオンプレミスからAWSへの移行を含む重要なプロジェクトを統括しています。チーターデジタルは2023年にMarigoldブランドへと移行しました。"
+        "date": "2022 - 2026",
+        "details": "チーターデジタルのAPAC SREチームを率い、リソース計画、プロジェクト管理、採用、チーム運営を担当しました。地域をまたいでチーム間の連携を進めながら、オンプレミス環境の拡張と大規模な業務アプリケーションのAWS移行を統括しました。チーターデジタルは2023年にMarigoldブランドへ移行しました。"
       },
       "cheetah_security": {
         "title": "セキュリティエンジニア",
@@ -170,9 +176,9 @@
       "other": "その他（メッセージに記載）"
     },
     "buttons": {
-      "send": "送信",
+      "send": "メッセージを送信",
       "sending": "送信中...",
-      "retry": "再試行",
+      "retry": "もう一度送信",
       "sent": "送信済み！"
     },
     "alerts": {
@@ -216,6 +222,59 @@
       "base": "基本給",
       "total": "総報酬（賞与・株式報酬を含む）",
       "helper": "年額を日本円で入力してください（必須・100万〜3000万円）。固定額の場合は、下限と上限に同じ金額を入力してください。"
+    },
+    "form_intro": "お問い合わせの種類をお選びください。「必須」の項目は入力が必要です。",
+    "intent_label": "どのようなご用件ですか？",
+    "general_message": "一般のお問い合わせ",
+    "role_message": "採用・お仕事のご相談",
+    "additional_details": "任意の求人情報を追加",
+    "recruiting_details": "お仕事について",
+    "verification_pending": "セキュリティ確認中です。完了するとメッセージを送信できます。"
+  },
+  "UI": {
+    "overview": "ホーム",
+    "experience": "職務経歴",
+    "intro_label": "バーギン リッキー / エンジニア・チームリーダー",
+    "hero_line_one": "複雑なシステムに、",
+    "hero_line_two": "明快な思考を。",
+    "hero_description_lead": "日本に住んで10年以上になります。",
+    "hero_description": "イギリス出身で、インフラの構築やセキュリティ対策、その運用を担うチームのマネジメントに携わってきました。",
+    "explore_work": "職務経歴を見る",
+    "get_in_touch": "連絡する",
+    "location": "日本在住 · 国を越えてチームをつなぐ",
+    "profile_label": "リッキーについて",
+    "focus_label": "専門分野",
+    "focus_infra": "インフラ・SRE",
+    "focus_security": "セキュリティ",
+    "focus_people": "チーム・人材育成",
+    "focus_languages": "英語 + 日本語",
+    "selected_work": "最近の職務経歴",
+    "full_experience": "職務経歴をすべて見る",
+    "about_heading": "プロフィール",
+    "toolkit_heading": "使用技術",
+    "personal_heading": "仕事以外のこと",
+    "contact_label": "会話のきっかけに",
+    "contact_heading": "質問でも、ひとことでも。気軽にどうぞ。",
+    "contact_button": "メッセージを送る",
+    "footer_note": "仕事のことと、趣味で作ったもの。",
+    "work_heading": "職務経歴",
+    "work_intro": "ホスティング事業の経営から、APACのSREチームのリードまで。システムを理解し、課題を解決し、人が力を発揮できる環境をつくってきました。",
+    "discuss_role": "採用のご相談",
+    "current_role": "現在の職務",
+    "role_details": "詳しい職務内容を見る",
+    "work_cta": "お問い合わせ",
+    "contact_page_heading": "お話ししましょう。",
+    "contact_intro": "ご質問、共通の趣味、興味深いお仕事の話など。お気軽にご連絡ください。",
+    "location_label": "拠点",
+    "contact_privacy_short": "メッセージは直接メールで届きます。ご連絡先は返信にのみ使用し、メーリングリストには登録しません。",
+    "job_summaries": {
+      "marigold_sre": "APACのSREチームを率い、リソース計画、インフラ拡張、大規模アプリケーションのAWS移行を統括。",
+      "cheetah_security": "AWS環境のセキュリティ強化、EDR導入、TLS 1.2移行を支援。日本とグローバルのセキュリティチームの橋渡し。",
+      "cheetah_it": "日本のIT環境を再構築。約250台のPCを入れ替え、3名のチームを採用・管理。",
+      "cheetah_devops": "ConcourseによるCI/CDを構築し、AWSの新規プロジェクトを支援。その後、新しいコーポレートIT組織の立ち上げに参画。",
+      "experian_uk": "決済・信用情報アプリケーションの3次サポートを担当。重大なPCI脆弱性の修正対応を調整。",
+      "appliansys": "Webキャッシュ、DNS、IPアドレス管理アプライアンスのプリセールス・ポストセールスを担当。",
+      "exoware": "Webホスティング・仮想サーバー事業を創業し、技術、運用、経営全般を担当。2014年に事業売却。"
     }
   }
 }

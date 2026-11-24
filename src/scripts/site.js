@@ -32,17 +32,6 @@ export function initTheme() {
   })
 }
 
-export function initNavigation() {
-  const button = document.querySelector('.menu-toggle')
-  const nav = document.querySelector('#primary-nav')
-  if (!button || !nav) return
-  button.addEventListener('click', () => {
-    const open = button.getAttribute('aria-expanded') !== 'true'
-    button.setAttribute('aria-expanded', String(open))
-    nav.classList.toggle('is-open', open)
-  })
-}
-
 export function initLanguageSwitch() {
   document.querySelectorAll('[data-language-switch]').forEach((link) => {
     const update = () => {

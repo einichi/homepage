@@ -200,9 +200,11 @@ export default function ContactForm({
   useEffect(() => {
     if (!focusError.current) return
     focusError.current = false
-    formRef.current
+    const invalid = formRef.current
       ?.querySelector<HTMLElement>('[aria-invalid="true"], [data-form-error]')
-      ?.focus()
+    const disclosure = invalid?.closest('details')
+    if (disclosure) disclosure.open = true
+    invalid?.focus()
   }, [errors])
 
   useEffect(() => {
@@ -213,39 +215,58 @@ export default function ContactForm({
 
   useEffect(() => {
     if (!sitekey) return
+    const container = document.querySelector<HTMLElement>('#turnstile-widget')
+    if (!container) return
     let active = true
+    let widgetSize: 'compact' | 'flexible' | undefined
+    let renderVersion = 0
     const mount = () => {
-      if (
-        !active ||
-        !window.turnstile ||
-        !document.querySelector('#turnstile-widget')
-      )
-        return
+      if (!active || !window.turnstile) return
+      const size = container.getBoundingClientRect().width < 300 ? 'compact' : 'flexible'
+      if (widget.current !== null && widgetSize === size) return
+      const version = ++renderVersion
+      const isCurrent = () => active && version === renderVersion
       try {
+        if (widget.current !== null) window.turnstile.remove(widget.current)
+        widget.current = null
+        tokenRef.current = ''
+        setWidgetReady(false)
+        setVerificationError(false)
         widget.current = window.turnstile.render('#turnstile-widget', {
           sitekey,
           action: 'contact',
           language: locale,
+          // Flexible needs 300px; use compact below that without scaling controls.
+          size,
           callback: (next) => {
+            if (!isCurrent()) return
             tokenRef.current = next
             setWidgetReady(true)
             setVerificationError(false)
           },
           'expired-callback': () => {
+            if (!isCurrent()) return
             tokenRef.current = ''
             setWidgetReady(false)
             if (widget.current !== null) window.turnstile?.reset(widget.current)
           },
           'error-callback': () => {
+            if (!isCurrent()) return
             tokenRef.current = ''
             setWidgetReady(false)
             setVerificationError(true)
           }
         })
+        widgetSize = size
       } catch {
         setVerificationError(true)
       }
     }
+    const resizeObserver = typeof ResizeObserver === 'function'
+      ? new ResizeObserver(mount)
+      : undefined
+    resizeObserver?.observe(container)
+    if (!resizeObserver) window.addEventListener('resize', mount)
     if (window.turnstile) mount()
     else {
       const script = document.createElement('script')
@@ -261,8 +282,11 @@ export default function ContactForm({
     }
     return () => {
       active = false
+      resizeObserver?.disconnect()
+      window.removeEventListener('resize', mount)
       if (widget.current !== null && window.turnstile)
         window.turnstile.remove(widget.current)
+      widget.current = null
     }
   }, [sitekey, locale])
 
@@ -357,56 +381,70 @@ export default function ContactForm({
         disabled={status === 'sending'}
         aria-busy={status === 'sending'}
       >
+        <fieldset className="intent-picker">
+          <legend>{t.intent_label}</legend>
+          <div className="intent-options">
+            <label><input type="radio" name="messageIntent" checked={!values.recruiting} onChange={() => updateValue('recruiting', false)} /><span>{t.general_message}</span></label>
+            <label><input type="radio" name="messageIntent" checked={values.recruiting} onChange={() => updateValue('recruiting', true)} /><span>{t.role_message}</span></label>
+          </div>
+        </fieldset>
+        <div className="identity-fields">
+          <label>
+            <span>
+              {t.labels.name} {marker(true)}
+            </span>
+            <input
+              name="sender"
+              aria-describedby={errors.sender ? 'sender-error' : undefined}
+              value={values.sender}
+              onChange={update}
+              autoComplete="name"
+              required
+              maxLength={100}
+              aria-invalid={Boolean(errors.sender)}
+            />
+            {fieldError('sender')}
+          </label>
+          <label>
+            <span>
+              {t.labels.email} {marker(true)}
+            </span>
+            <input
+              name="email"
+              aria-describedby={
+                errors.email ? 'email-helper email-error' : 'email-helper'
+              }
+              type="email"
+              value={values.email}
+              onChange={update}
+              autoComplete="email"
+              required
+              maxLength={254}
+              aria-invalid={Boolean(errors.email)}
+            />
+            {fieldError('email')}
+            <small id="email-helper">{t.validation.email_helper}</small>
+          </label>
+        </div>
         <label>
           <span>
-            {t.labels.name} {marker(true)}
+            {t.labels.message} {marker(true)}
           </span>
-          <input
-            name="sender"
-            aria-describedby={errors.sender ? 'sender-error' : undefined}
-            value={values.sender}
+          <textarea
+            aria-invalid={Boolean(errors.message)}
+            name="message"
+            aria-describedby={errors.message ? 'message-error' : undefined}
+            rows={7}
+            value={values.message}
             onChange={update}
-            autoComplete="name"
             required
-            maxLength={100}
-            aria-invalid={Boolean(errors.sender)}
+            maxLength={5000}
           />
-          {fieldError('sender')}
-        </label>
-        <label>
-          <span>
-            {t.labels.email} {marker(true)}
-          </span>
-          <input
-            name="email"
-            aria-describedby={
-              errors.email ? 'email-helper email-error' : 'email-helper'
-            }
-            type="email"
-            value={values.email}
-            onChange={update}
-            autoComplete="email"
-            required
-            maxLength={254}
-            aria-invalid={Boolean(errors.email)}
-          />
-          {fieldError('email')}
-          <small id="email-helper">{t.validation.email_helper}</small>
-        </label>
-        <label className="switch-row">
-          <input
-            name="recruiting"
-            type="checkbox"
-            checked={values.recruiting}
-            onChange={update}
-          />
-          <span>
-            {t.labels.recruiting} {marker()}
-          </span>
+          {fieldError('message')}
         </label>
         {values.recruiting && (
           <fieldset className="recruiting-fields">
-            <legend>{t.labels.recruiting}</legend>
+            <legend>{t.recruiting_details}</legend>
             <fieldset>
               <legend>
                 {t.labels.job_source} {marker(true)}
@@ -481,67 +519,6 @@ export default function ContactForm({
               {fieldError('role')}
             </label>
             <p className="privacy-note">{t.employment.helper}</p>
-            <label>
-              <span>
-                {t.labels.job_title} {marker()}
-              </span>
-              <input
-                name="jobTitle"
-                value={values.jobTitle}
-                onChange={update}
-                maxLength={160}
-                {...errorProps('jobTitle')}
-              />
-              {fieldError('jobTitle')}
-            </label>
-            <label>
-              <span>
-                {t.labels.job_url} {marker()}
-              </span>
-              <input
-                type="url"
-                name="jobUrl"
-                value={values.jobUrl}
-                onChange={update}
-                maxLength={2048}
-                placeholder="https://"
-                {...errorProps('jobUrl')}
-              />
-              {fieldError('jobUrl')}
-            </label>
-            <label>
-              <span>
-                {t.labels.work_arrangement} {marker()}
-              </span>
-              <select
-                name="workArrangement"
-                value={values.workArrangement}
-                onChange={update}
-                {...errorProps('workArrangement')}
-              >
-                {(['unspecified', 'remote', 'hybrid', 'onsite'] as const).map(
-                  (key) => (
-                    <option key={key} value={key}>
-                      {t.work_arrangements[key]}
-                    </option>
-                  )
-                )}
-              </select>
-              {fieldError('workArrangement')}
-            </label>
-            <label>
-              <span>
-                {t.labels.job_location} {marker()}
-              </span>
-              <input
-                name="jobLocation"
-                value={values.jobLocation}
-                onChange={update}
-                maxLength={160}
-                {...errorProps('jobLocation')}
-              />
-              {fieldError('jobLocation')}
-            </label>
             <fieldset>
               <legend>{t.labels.salary_range} (JPY)</legend>
               <label className="stacked-field">
@@ -581,47 +558,97 @@ export default function ContactForm({
               </div>
               <small>{t.salary.helper}</small>
             </fieldset>
-            <fieldset>
-              <legend>
-                {t.labels.benefits} {marker()}
-              </legend>
-              <div className="choice-row wrap">
-                {(
-                  [
-                    ['benefitFlexibleHours', 'flexible_hours'],
-                    ['benefitOther', 'other']
-                  ] as const
-                ).map(([name, key]) => (
-                  <label key={name}>
-                    <input
-                      type="checkbox"
-                      name={name}
-                      checked={values[name]}
-                      onChange={update}
-                    />
-                    {t.benefits[key]}
-                  </label>
-                ))}
+            <details className="optional-fields">
+              <summary>{t.additional_details}<span aria-hidden="true">+</span></summary>
+              <div className="optional-fields-body">
+                <label>
+                  <span>
+                    {t.labels.job_title} {marker()}
+                  </span>
+                  <input
+                    name="jobTitle"
+                    value={values.jobTitle}
+                    onChange={update}
+                    maxLength={160}
+                    {...errorProps('jobTitle')}
+                  />
+                  {fieldError('jobTitle')}
+                </label>
+                <label>
+                  <span>
+                    {t.labels.job_url} {marker()}
+                  </span>
+                  <input
+                    type="url"
+                    name="jobUrl"
+                    value={values.jobUrl}
+                    onChange={update}
+                    maxLength={2048}
+                    placeholder="https://"
+                    {...errorProps('jobUrl')}
+                  />
+                  {fieldError('jobUrl')}
+                </label>
+                <label>
+                  <span>
+                    {t.labels.work_arrangement} {marker()}
+                  </span>
+                  <select
+                    name="workArrangement"
+                    value={values.workArrangement}
+                    onChange={update}
+                    {...errorProps('workArrangement')}
+                  >
+                    {(['unspecified', 'remote', 'hybrid', 'onsite'] as const).map(
+                      (key) => (
+                        <option key={key} value={key}>
+                          {t.work_arrangements[key]}
+                        </option>
+                      )
+                    )}
+                  </select>
+                  {fieldError('workArrangement')}
+                </label>
+                <label>
+                  <span>
+                    {t.labels.job_location} {marker()}
+                  </span>
+                  <input
+                    name="jobLocation"
+                    value={values.jobLocation}
+                    onChange={update}
+                    maxLength={160}
+                    {...errorProps('jobLocation')}
+                  />
+                  {fieldError('jobLocation')}
+                </label>
+                <fieldset>
+                  <legend>
+                    {t.labels.benefits} {marker()}
+                  </legend>
+                  <div className="choice-row wrap">
+                    {(
+                      [
+                        ['benefitFlexibleHours', 'flexible_hours'],
+                        ['benefitOther', 'other']
+                      ] as const
+                    ).map(([name, key]) => (
+                      <label key={name}>
+                        <input
+                          type="checkbox"
+                          name={name}
+                          checked={values[name]}
+                          onChange={update}
+                        />
+                        {t.benefits[key]}
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
               </div>
-            </fieldset>
+            </details>
           </fieldset>
         )}
-        <label>
-          <span>
-            {t.labels.message} {marker(true)}
-          </span>
-          <textarea
-            aria-invalid={Boolean(errors.message)}
-            name="message"
-            aria-describedby={errors.message ? 'message-error' : undefined}
-            rows={7}
-            value={values.message}
-            onChange={update}
-            required
-            maxLength={5000}
-          />
-          {fieldError('message')}
-        </label>
         <div className="honeypot" aria-hidden="true">
           <label>
             Leave this field empty
@@ -655,6 +682,11 @@ export default function ContactForm({
             {t.verification_error}
           </p>
         )}
+        {!local && sitekey && !widgetReady && !verificationError && (
+          <p className="privacy-note" role="status" id="verification-progress">
+            {t.verification_pending}
+          </p>
+        )}
         {!local && !sitekey && (
           <p role="status" className="privacy-note">
             {t.turnstile_pending}
@@ -670,6 +702,7 @@ export default function ContactForm({
           <button
             className="button"
             type="submit"
+            aria-describedby={!local && sitekey && !widgetReady && !verificationError ? 'verification-progress' : undefined}
             disabled={
               status === 'sending' ||
               (!local && !sitekey) ||

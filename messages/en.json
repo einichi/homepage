@@ -74,7 +74,7 @@
       "drones": "Flying Drones 🛸",
       "ml": "Machine Learning (not just LLMs) 🤖",
       "3d_design": "3D Design / Printing 🖨️",
-      "languages": "Languages (🇯🇵流暢な日本語に加えて我也在学习中文🇨🇳)",
+      "languages": "Languages (fluent Japanese, learning Chinese)",
       "games": "Games 🎮",
       "travel": "Travel ✈️"
     }
@@ -83,11 +83,17 @@
     "title": "Work History",
     "hire_me": "Hire me!",
     "jobs": {
+      "locationmind": {
+        "title": "AWS Security and Cost Review",
+        "company": "LocationMind",
+        "date": "2026 - Present",
+        "details": "I’ll be reviewing LocationMind’s AWS estate for security risks and ways to reduce costs."
+      },
       "marigold_sre": {
         "title": "SRE Manager - APAC",
         "company": "Marigold / Cheetah Digital Japan",
-        "date": "2022 - Present",
-        "details": "Currently working as the SRE Manager for the APAC region of Cheetah Digital, my role encompasses various responsibilities such as resource planning, project management, team/people management, hiring, and fostering collaboration across diverse regional and cultural contexts. Additionally, I oversee significant projects involving the expansion of on-premise infrastructure and the migration of a large enterprise application from on-premise to AWS. Cheetah Digital transitioned under the Marigold brand in 2023."
+        "date": "2022 - 2026",
+        "details": "I managed Cheetah Digital’s APAC SRE team, handling resource and project planning, hiring, and day-to-day team management. I worked with teams across regions and oversaw on-premises infrastructure expansion and the migration of a large enterprise application to AWS. Cheetah Digital moved under the Marigold brand in 2023."
       },
       "cheetah_security": {
         "title": "Security Engineer",
@@ -170,9 +176,9 @@
       "other": "Other (mention in Message)"
     },
     "buttons": {
-      "send": "Send",
+      "send": "Send message",
       "sending": "Sending...",
-      "retry": "Retry?",
+      "retry": "Try again",
       "sent": "Sent!"
     },
     "alerts": {
@@ -216,6 +222,59 @@
       "base": "Base salary",
       "total": "Total compensation (including bonus / equity)",
       "helper": "Required annual amounts in JPY, between ¥1,000,000 and ¥30,000,000. For a fixed salary, enter the same amount in both fields."
+    },
+    "form_intro": "Choose what you’d like to talk about. Fields marked “required” need an answer.",
+    "intent_label": "What brings you here?",
+    "general_message": "A general message",
+    "role_message": "A role or opportunity",
+    "additional_details": "Add optional role details",
+    "recruiting_details": "About the role",
+    "verification_pending": "Completing the security check. You can send your message once it finishes."
+  },
+  "UI": {
+    "overview": "Overview",
+    "experience": "Experience",
+    "intro_label": "Ricky Burgin / Engineer & team leader",
+    "hero_line_one": "Complex systems.",
+    "hero_line_two": "Clear thinking.",
+    "hero_description_lead": "I’ve lived in Japan for over a decade.",
+    "hero_description": "I’m originally from the UK, and I’ve spent my career building and securing infrastructure and helping teams run it.",
+    "explore_work": "Explore my work",
+    "get_in_touch": "Get in touch",
+    "location": "Based in Japan · Connecting teams across borders",
+    "profile_label": "A little about Ricky",
+    "focus_label": "Areas of focus",
+    "focus_infra": "Infrastructure & SRE",
+    "focus_security": "Security engineering",
+    "focus_people": "People & teams",
+    "focus_languages": "English + Japanese",
+    "selected_work": "Recent roles",
+    "full_experience": "View work history",
+    "about_heading": "About me",
+    "toolkit_heading": "Technologies",
+    "personal_heading": "Outside work",
+    "contact_label": "Start a conversation",
+    "contact_heading": "Have a question or just want to say hi?",
+    "contact_button": "Send me a message",
+    "footer_note": "My work and a few things I make.",
+    "work_heading": "Work history",
+    "work_intro": "From running a hosting business to leading SRE teams across APAC. A career spent understanding systems, solving problems, and helping people do their best work.",
+    "discuss_role": "Discuss a role",
+    "current_role": "Current role",
+    "role_details": "Read the full role",
+    "work_cta": "Get in touch",
+    "contact_page_heading": "Let’s talk.",
+    "contact_intro": "A question, a shared interest, or an interesting role? I’d like to hear about it.",
+    "location_label": "Where I am",
+    "contact_privacy_short": "Your message goes directly to my inbox. Your contact details are used to reply, never added to a mailing list.",
+    "job_summaries": {
+      "marigold_sre": "Led the APAC SRE team, planned resources, and oversaw infrastructure expansion and an enterprise migration to AWS.",
+      "cheetah_security": "Helping secure AWS environments, roll out EDR, and move to TLS 1.2. Connecting security teams in Japan and globally.",
+      "cheetah_it": "Rebuilt the Japan IT environment, replaced around 250 laptops, and hired and led a team of three.",
+      "cheetah_devops": "Built CI/CD with Concourse and supported a new AWS project before helping establish a new corporate IT organisation.",
+      "experian_uk": "Third-line support for payment and credit applications, including coordination of critical PCI vulnerability remediation.",
+      "appliansys": "Pre- and post-sales engineering for web caching, DNS, and IP address management appliances.",
+      "exoware": "Founded and ran a web hosting and virtual server business, covering engineering, operations, and the business itself. Sold in 2014."
     }
   }
 }

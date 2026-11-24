@@ -6,7 +6,8 @@ export function enableLazyModel() {
   if (!host || !fallback || !status || !retry) return
 
   const ja = document.documentElement.lang === 'ja'
-  const motion = matchMedia('(prefers-reduced-motion: reduce)')
+  const introSeenKey = 'ricky-portrait-intro-seen'
+  let introSeen = false
   let booted = false
   let dispose = () => {}
   const disposeObject = (root) => {
@@ -27,29 +28,28 @@ export function enableLazyModel() {
 
   const load = async () => {
     if (booted) return
+    try {
+      introSeen ||= window.sessionStorage.getItem(introSeenKey) === 'true'
+    } catch {}
     booted = true
     host.hidden = false
     fallback.hidden = false
     status.textContent = ja
-      ? '3Dモデルを読み込み中…'
-      : 'Loading interactive model…'
+      ? '3Dポートレートを読み込み中…'
+      : 'Loading 3D portrait…'
     retry.hidden = true
     let disposed = false
+    let animationFrame = 0
     let renderer,
       controls,
       observer,
       resizeObserver,
-      model,
-      frame = null
+      model
     const removers = []
-    const stop = () => {
-      if (frame !== null) cancelAnimationFrame(frame)
-      frame = null
-    }
     dispose = () => {
       if (disposed) return
       disposed = true
-      stop()
+      cancelAnimationFrame(animationFrame)
       observer?.disconnect()
       resizeObserver?.disconnect()
       removers.forEach((remove) => remove())
@@ -74,9 +74,8 @@ export function enableLazyModel() {
       if (disposed) return
       const scene = new THREE.Scene()
       const target = new THREE.Vector3(0, 0, 0)
-      const initialCameraPosition = new THREE.Vector3(0, 6, 24)
-      const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000)
-      camera.position.copy(initialCameraPosition)
+      const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000)
+      camera.position.set(0, 0, 24)
       camera.lookAt(target)
       for (const [x, y, z, intensity] of [
         [20, 30, 20, 1.25],
@@ -94,41 +93,81 @@ export function enableLazyModel() {
       renderer.domElement.setAttribute(
         'aria-label',
         ja
-          ? '回転・拡大縮小できる3Dモデル'
-          : 'Interactive 3D model you can rotate and zoom'
+          ? 'リッキーの3Dポートレート。ドラッグで回転できます。'
+          : '3D portrait of Ricky. Drag to turn.'
       )
       host.append(renderer.domElement)
       controls = new OrbitControls(camera, renderer.domElement)
       controls.target.copy(target)
-      controls.autoRotate = !motion.matches
-      // Keep vertical touch gestures available for scrolling the page.
+      controls.autoRotate = false
       controls.enablePan = false
+      controls.enableZoom = false
+      controls.minPolarAngle = Math.PI * 0.3
+      controls.maxPolarAngle = Math.PI * 0.65
+      // OrbitControls sets an inline touchAction; keep vertical page scrolling.
+      renderer.domElement.style.touchAction = 'pan-y pinch-zoom'
       let visible = typeof IntersectionObserver !== 'function'
-      let introFrame = motion.matches ? 101 : 0
-      const canRender = () => !disposed && model && visible && !document.hidden
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const startAngle = -Math.PI
+      const restingAngle = -Math.PI / 9
+      let introActive = !reducedMotion.matches && !introSeen
+      let elapsed = 0
+      let lastFrameTime
       const renderOnce = () => {
-        if (canRender()) renderer.render(scene, camera)
+        if (!disposed && model && visible && !document.hidden) {
+          renderer.render(scene, camera)
+          // Remember only a successfully displayed portrait, including an interrupted intro.
+          if (!introSeen) {
+            introSeen = true
+            try {
+              window.sessionStorage.setItem(introSeenKey, 'true')
+            } catch {}
+          }
+        }
       }
-      const animate = () => {
-        frame = null
-        if (!canRender() || motion.matches) return
-        if (introFrame <= 100) {
-          introFrame += 1
-          const turn =
-            -Math.sqrt(1 - Math.pow(introFrame / 120 - 1, 4)) * Math.PI * 20
-          camera.position.x = initialCameraPosition.z * Math.sin(turn)
-          camera.position.z = initialCameraPosition.z * Math.cos(turn)
-          camera.lookAt(target)
-        } else controls.update()
-        renderer.render(scene, camera)
-        frame = requestAnimationFrame(animate)
+      const animateIntro = (time) => {
+        animationFrame = 0
+        if (disposed || !model || !introActive || !visible || document.hidden) return
+        if (lastFrameTime !== undefined) elapsed += time - lastFrameTime
+        lastFrameTime = time
+        // Let the initial pose register, then make one gentle turn toward the text.
+        const progress = Math.min(1, Math.max(0, (elapsed - 300) / 2600))
+        const eased = progress * progress * (3 - 2 * progress)
+        model.rotation.y = startAngle + (restingAngle - startAngle) * eased
+        renderOnce()
+        if (progress < 1) animationFrame = requestAnimationFrame(animateIntro)
+        else introActive = false
       }
-      const sync = () => {
-        if (!canRender()) stop()
-        else if (motion.matches) {
-          stop()
-          renderOnce()
-        } else if (frame === null) frame = requestAnimationFrame(animate)
+      const syncIntro = () => {
+        cancelAnimationFrame(animationFrame)
+        animationFrame = 0
+        lastFrameTime = undefined
+        renderOnce()
+        if (!disposed && model && introActive && visible && !document.hidden)
+          animationFrame = requestAnimationFrame(animateIntro)
+      }
+      const stopIntro = () => {
+        introActive = false
+        syncIntro()
+      }
+      listen(controls, 'start', stopIntro)
+      listen(reducedMotion, 'change', () => {
+        if (reducedMotion.matches && introActive) {
+          if (model) model.rotation.y = restingAngle
+          stopIntro()
+        }
+      })
+      const framePortrait = () => {
+        const bounds = new THREE.Box3().setFromObject(model)
+        const size = bounds.getSize(new THREE.Vector3())
+        bounds.getCenter(target)
+        const halfFov = (camera.fov * Math.PI) / 360
+        const distance = Math.max(size.y, size.x / camera.aspect) /
+          (2 * Math.tan(halfFov)) * 1.05 + size.z / 2
+        controls.target.copy(target)
+        camera.position.set(target.x, target.y + size.y * 0.025, target.z + distance)
+        camera.lookAt(target)
+        controls.update()
       }
       const resize = () => {
         const width = Math.max(1, host.clientWidth),
@@ -137,18 +176,12 @@ export function enableLazyModel() {
         camera.updateProjectionMatrix()
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
         renderer.setSize(width, height)
+        if (model) framePortrait()
         renderOnce()
       }
-      listen(controls, 'change', () => {
-        if (motion.matches) renderOnce()
-      })
-      listen(document, 'visibilitychange', sync)
+      listen(controls, 'change', renderOnce)
+      listen(document, 'visibilitychange', syncIntro)
       listen(window, 'resize', resize)
-      listen(motion, 'change', () => {
-        controls.autoRotate = !motion.matches
-        if (motion.matches) introFrame = 101
-        sync()
-      })
       if (typeof ResizeObserver === 'function') {
         resizeObserver = new ResizeObserver(resize)
         resizeObserver.observe(host)
@@ -156,7 +189,7 @@ export function enableLazyModel() {
       if (typeof IntersectionObserver === 'function') {
         observer = new IntersectionObserver(([entry]) => {
           visible = entry.isIntersecting
-          sync()
+          syncIntro()
         })
         observer.observe(host)
       }
@@ -171,11 +204,12 @@ export function enableLazyModel() {
       model = gltf.scene
       model.name = 'model'
       model.position.set(0, 0, 0)
+      model.rotation.y = introActive ? startAngle : restingAngle
       scene.add(model)
       fallback.hidden = true
       status.textContent = ''
       resize()
-      sync()
+      syncIntro()
     } catch {
       if (disposed) return
       dispose()
