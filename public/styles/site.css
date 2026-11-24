@@ -79,6 +79,7 @@ h3 { font-size: 1.4rem; letter-spacing: -.025em; }
 .intro h1 em { font-family: Georgia, 'Yu Mincho', serif; font-weight: 400; color: var(--accent); letter-spacing: -.055em; }
 :lang(ja) .intro h1 { font-size: clamp(2rem, 4.25vw, 3.65rem); line-height: 1.4; }
 .intro-description { max-width: 44ch; color: var(--muted); font-size: 1.04rem; line-height: 1.85; margin: 26px 0 30px; }
+.intro-description strong { color: var(--text); }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 20px 28px; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 26px; min-height: 52px; padding: 13px 23px; border: 1px solid var(--accent); border-radius: 3px; background: var(--accent); color: var(--accent-ink); font-size: .88rem; line-height: 1.4; font-weight: 600; text-decoration: none; transition: background .18s, transform .18s; }
 .button:hover { text-decoration: none; filter: brightness(1.1); transform: translateY(-1px); }
@@ -239,7 +240,7 @@ details[open] > summary > span { transform: rotate(45deg); }
   .primary-nav { grid-column: 1/-1; grid-row: 2; margin: 0; justify-content: space-between; gap: 12px; }
   .primary-nav a { justify-content: center; min-height: 48px; flex: 1; font-size: .76rem; }
   .primary-nav a[aria-current='page']::after { bottom: 0; }
-  .intro { grid-template-columns: 1fr; gap: 36px; padding: 45px 0 36px; }
+  .intro { grid-template-columns: 1fr; gap: 18px; padding: 45px 0 18px; }
   .intro .eyebrow { font-size: .62rem; gap: 8px; margin-bottom: 21px; }
   .intro h1 { font-size: clamp(2.6rem, 8.4vw, 3.7rem); }
   :lang(ja) .intro h1 { font-size: clamp(1.8rem, 7.2vw, 3rem); }
