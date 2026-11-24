@@ -83,11 +83,17 @@
     "title": "Work History",
     "hire_me": "Hire me!",
     "jobs": {
+      "locationmind": {
+        "title": "AWS Security and Cost Review",
+        "company": "LocationMind",
+        "date": "2026 - Present",
+        "details": "I’ll be reviewing LocationMind’s AWS estate for security risks and ways to reduce costs."
+      },
       "marigold_sre": {
         "title": "SRE Manager - APAC",
         "company": "Marigold / Cheetah Digital Japan",
-        "date": "2022 - Present",
-        "details": "Currently working as the SRE Manager for the APAC region of Cheetah Digital, my role encompasses various responsibilities such as resource planning, project management, team/people management, hiring, and fostering collaboration across diverse regional and cultural contexts. Additionally, I oversee significant projects involving the expansion of on-premise infrastructure and the migration of a large enterprise application from on-premise to AWS. Cheetah Digital transitioned under the Marigold brand in 2023."
+        "date": "2022 - 2026",
+        "details": "I managed Cheetah Digital’s APAC SRE team, handling resource and project planning, hiring, and day-to-day team management. I worked with teams across regions and oversaw on-premises infrastructure expansion and the migration of a large enterprise application to AWS. Cheetah Digital moved under the Marigold brand in 2023."
       },
       "cheetah_security": {
         "title": "Security Engineer",
