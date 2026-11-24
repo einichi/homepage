@@ -8,7 +8,8 @@ export function getStaticPaths() { return [{ params: { locale: 'en' } }, { param
 const locale = Astro.params.locale === 'ja' ? 'ja' : 'en'
 const m = locale === 'ja' ? ja : en
 const u = m.UI
-const selected = ['marigold_sre', 'cheetah_security', 'cheetah_it'] as const
+const selected = ['locationmind', 'marigold_sre', 'cheetah_security'] as const
+const jobSummaries: Partial<Record<keyof typeof m.Work.jobs, string>> = u.job_summaries
 ---
 <BaseLayout locale={locale}>
   <section class="intro" aria-labelledby="intro-title">
@@ -27,7 +28,7 @@ const selected = ['marigold_sre', 'cheetah_security', 'cheetah_it'] as const
   <section class="editorial-section" aria-labelledby="experience-title">
     <div class="section-heading"><div><p class="eyebrow">01</p><h2 id="experience-title">{u.selected_work}</h2></div><a class="text-link" href={`/${locale}/work/`}>{u.full_experience}<span aria-hidden="true">→</span></a></div>
     <div class="selected-work">
-      {selected.map(key => <a class="work-row" href={`/${locale}/work/#${key}`}><span class="work-date mono">{m.Work.jobs[key].date}</span><div class="work-row-copy"><span class="company-label">{m.Work.jobs[key].company}</span><h3>{m.Work.jobs[key].title}</h3><p>{u.job_summaries[key]}</p></div><span class="row-arrow" aria-hidden="true">↗</span></a>)}
+      {selected.map(key => <a class="work-row" href={`/${locale}/work/#${key}`}><span class="work-date mono">{m.Work.jobs[key].date}</span><div class="work-row-copy"><span class="company-label">{m.Work.jobs[key].company}</span><h3>{m.Work.jobs[key].title}</h3><p>{jobSummaries[key] ?? m.Work.jobs[key].details}</p></div><span class="row-arrow" aria-hidden="true">↗</span></a>)}
     </div>
   </section>
   <section class="editorial-section about-section" aria-labelledby="about-title">
