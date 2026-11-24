@@ -15,15 +15,15 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.1.0",
-    "astro": "^7.4.0",
+    "astro": "^7.4.13",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "three": "^0.144.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@cloudflare/vite-plugin": "beta",
-    "cf": "^1.0.0-beta.17",
+    "@cloudflare/vite-plugin": "2.0.0-rc.3",
+    "cf": "1.0.0-rc.4",
     "typescript": "^6.0.3",
     "vite": "^8.3.0"
   },

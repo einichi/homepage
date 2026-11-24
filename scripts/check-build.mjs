@@ -6,7 +6,7 @@ assert.ok(
   ['preview', 'production'].includes(mode),
   'Specify preview or production'
 )
-const root = '.cloudflare/output/v0'
+const root = '.cloudflare/output/v1'
 const context = JSON.parse(await readFile(`${root}/config.json`, 'utf8'))
 const worker = JSON.parse(
   await readFile(`${root}/workers/default/worker.config.json`, 'utf8')
